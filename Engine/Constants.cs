@@ -2,6 +2,7 @@
 {
     public static class Constants
     {
-        public static int ZoomFactor = 2;
+        // dont like this class...
+        public static int ZoomFactor = 3;
     }
 }

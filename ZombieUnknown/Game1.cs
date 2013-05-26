@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
+using Engine.Entities;
+using Engine.Isometric;
+using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -58,6 +61,7 @@ namespace ZombieUnknown
             var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
             var wallsTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/walls.png"));
             var debugIconTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/debugIcons.png"));
+            var etherealTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/ethereal.png"));
 
             var terrainSpriteSheet = new SpriteSheet("terrain", terrainTexture);
             terrainSpriteSheet.AddFrame("grass", new Rectangle(0, 0, 32, 40));
@@ -81,33 +85,67 @@ namespace ZombieUnknown
             var debugIconsSpriteSheet = new SpriteSheet("debugIcons", debugIconTexture);
             debugIconsSpriteSheet.AddFrame("light", new Rectangle(0, 0, 32, 48));
 
-            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, "left", new Vector2(16, 40));
-            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, "right", new Vector2(16, 40));
-            var joinWallSprite = new StaticSprite("join", wallSpriteSheet, "join", new Vector2(16, 40));
+            var etherealSpriteSheet = new SpriteSheet("ethereal", etherealTexture);
+            etherealSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
+            etherealSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+
+            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), "left");
+            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), "right");
+            var joinWallSprite = new StaticSprite("join", wallSpriteSheet, new Vector2(16, 40), "join");
 
             var cursorSpriteSheet = new SpriteSheet("cursor", cursorTexture);
             cursorSpriteSheet.AddFrame("front", new Rectangle(0, 0, 32, 48));
             cursorSpriteSheet.AddFrame("back", new Rectangle(32, 0, 32, 48));
+            cursorSpriteSheet.AddFrame("selectedMarker1", new Rectangle(64, 0, 32, 48));
+            cursorSpriteSheet.AddFrame("selectedMarker2", new Rectangle(96, 0, 32, 48));
 
-            var frontCursorSprite = new StaticSprite("front", cursorSpriteSheet, "front", new Vector2(16, 40));
-            var backCursorSprite = new StaticSprite("back", cursorSpriteSheet, "back", new Vector2(16, 40));
+            var frontCursorSprite = new StaticSprite("front", cursorSpriteSheet, new Vector2(16, 40), "front");
+            var backCursorSprite = new StaticSprite("back", cursorSpriteSheet, new Vector2(16, 40), "back");
 
-            var lightSprite = new StaticSprite("light", debugIconsSpriteSheet, "light", new Vector2(16, 40));
+            var selectedMarkerAnimationList = new AnimationList();
+            var selectedMarkerAnimation = new Animation(AnimationType.Looped);
+            selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker1"), 0.2));
+            selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker2"), 0.2));
+            selectedMarkerAnimationList.Add("select", selectedMarkerAnimation);
+
+            ResourceManager.SelectMarkerSprite = new AnimatedSprite("selected", cursorSpriteSheet, new Vector2(16, 40), selectedMarkerAnimationList);
+
+            var lightSprite = new StaticSprite("light", debugIconsSpriteSheet, new Vector2(16, 40), "light");
+
+            var etherealAnimationList = new AnimationList();
+            var standingAnimation = new Animation(AnimationType.Looped);
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
+            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
+            etherealAnimationList.Add("standing", standingAnimation);
+
+            var etherealSprite = new AnimatedSprite("standingDown", etherealSpriteSheet, new Vector2(16, 40), etherealAnimationList);
 
             var terrainSprites = new List<Sprite>
                 {
-                    new StaticSprite("grass", terrainSpriteSheet, "grass", new Vector2(16, 32)),
-                    new StaticSprite("leaves1", terrainSpriteSheet, "leaves1", new Vector2(16, 32)),
-                    new StaticSprite("leaves2", terrainSpriteSheet, "leaves2", new Vector2(16, 32)),
-                    new StaticSprite("water", terrainSpriteSheet, "water", new Vector2(16, 32)),
-                    new StaticSprite("tallGrass1", terrainSpriteSheet, "tallGrass1", new Vector2(16, 32)),
-                    new StaticSprite("tallGrass2", terrainSpriteSheet, "tallGrass2", new Vector2(16, 32)),
-                    new StaticSprite("swamp1", terrainSpriteSheet, "swamp1", new Vector2(16, 32)),
-                    new StaticSprite("swamp2", terrainSpriteSheet, "swamp2", new Vector2(16, 32)),
-                    new StaticSprite("deadTree1", terrainSpriteSheet, "deadTree1", new Vector2(16, 32)),
-                    new StaticSprite("deadTree2", terrainSpriteSheet, "deadTree2", new Vector2(16, 32)),
-                    new StaticSprite("deadTree3", terrainSpriteSheet, "deadTree3", new Vector2(16, 32)),
-                    new StaticSprite("deadTree4", terrainSpriteSheet, "deadTree4", new Vector2(16, 32))
+                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "grass"),
+                    new StaticSprite("leaves1", terrainSpriteSheet, new Vector2(16, 32), "leaves1"),
+                    new StaticSprite("leaves2", terrainSpriteSheet, new Vector2(16, 32), "leaves2"),
+                    new StaticSprite("water", terrainSpriteSheet, new Vector2(16, 32), "water"),
+                    new StaticSprite("tallGrass1", terrainSpriteSheet, new Vector2(16, 32), "tallGrass1"),
+                    new StaticSprite("tallGrass2", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2"),
+                    new StaticSprite("swamp1", terrainSpriteSheet, new Vector2(16, 32), "swamp1"),
+                    new StaticSprite("swamp2", terrainSpriteSheet, new Vector2(16, 32), "swamp2"),
+                    new StaticSprite("deadTree1", terrainSpriteSheet, new Vector2(16, 32), "deadTree1"),
+                    new StaticSprite("deadTree2", terrainSpriteSheet, new Vector2(16, 32), "deadTree2"),
+                    new StaticSprite("deadTree3", terrainSpriteSheet, new Vector2(16, 32), "deadTree3"),
+                    new StaticSprite("deadTree4", terrainSpriteSheet, new Vector2(16, 32), "deadTree4")
                 };
 
             var random = new Random();
@@ -146,10 +184,14 @@ namespace ZombieUnknown
                 }
             }
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
-            _map.AddLight(new Vector2(4, 7), new Light(lightSprite, Color.Gray, 7));
-            _map.AddLight(new Vector2(8, 11), new Light(lightSprite, Color.Red, 10));
-            _map.AddLight(new Vector2(15, 4), new Light(lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
-            _map.AddLight(new Vector2(37, 16), new Light(lightSprite, Color.White, 12));
+
+            _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
+            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 10));
+            _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
+            _map.AddEntity(new Vector2(37, 16), new Light("BrightLight", lightSprite, Color.White, 12));
+
+            _map.AddEntity(new Vector2(3, 6), new MoveableEntity("Ethereal 1", etherealSprite));
+            _map.AddEntity(new Vector2(9, 10), new MoveableEntity("Ethereal 2", etherealSprite));
 
             _cursor = new Cursor(_map, frontCursorSprite, backCursorSprite);
         }
@@ -179,6 +221,8 @@ namespace ZombieUnknown
             _cursor.Update(gameTime);
             _map.Update(gameTime);
 
+            ResourceManager.SelectMarkerSprite.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -202,6 +246,8 @@ namespace ZombieUnknown
 
             var timeTaken = DateTime.Now - now;
             Console.WriteLine("TimeToDraw: " + timeTaken.TotalSeconds);
+
+            if (GameState.Selected != null) Console.WriteLine("SelectedEntity: " + GameState.Selected.Name);
         }
     }
 }

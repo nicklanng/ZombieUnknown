@@ -81,6 +81,9 @@
     <Content Include="Content\SpriteSheets\debugIcons.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\SpriteSheets\ethereal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\SpriteSheets\walls.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
