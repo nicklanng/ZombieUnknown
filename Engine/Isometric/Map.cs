@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Engine.Entities;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -121,6 +120,12 @@ namespace Engine.Isometric
             return true;
         }
 
+        public MoveableEntity GetSelected(Vector2 mapPosition)
+        {
+            var tile = _tiles[(int)mapPosition.X, (int)mapPosition.Y];
+            return tile.MoveableEntity;
+        }
+
         private bool GetScreenCoordinates(Vector2 mapCoordinates, Sprite tileSprite, out Vector2 screenCoordinates)
         {
             screenCoordinates = Vector2.Zero;
@@ -165,7 +170,15 @@ namespace Engine.Isometric
         {
             var lightMap = new byte[_width,_height,3];
 
-            // set ambient light
+            SetAmbientLightLevels(lightMap);
+
+            AddLightEntities(lightMap);
+
+            SaveLightMapToTiles(lightMap);
+        }
+
+        private void SetAmbientLightLevels(byte[, ,] lightMap)
+        {
             for (var x = 0; x < _width; x++)
             {
                 for (var y = 0; y < _height; y++)
@@ -175,28 +188,30 @@ namespace Engine.Isometric
                     lightMap[x, y, 2] = _ambientLight.B;
                 }
             }
+        }
 
-            // add light maps
+        private void AddLightEntities(byte[,,] lightMap)
+        {
             foreach (var light in _lights)
             {
                 var lightColor = light.Color;
                 var lightPosition = light.Parent.Position;
                 var intensityMap = light.IntensityMap;
 
-                for (var x = 0; x < light.Range * 2 + 1; x++)
+                for (var x = 0; x < light.Range*2 + 1; x++)
                 {
-                    var mapX = x - light.Range + (int)lightPosition.X;
+                    var mapX = x - light.Range + (int) lightPosition.X;
                     if (mapX < 0 || mapX >= _width) continue;
 
-                    for (var y = 0; y < light.Range * 2 + 1; y++)
+                    for (var y = 0; y < light.Range*2 + 1; y++)
                     {
-                        var mapY = y - light.Range + (int)lightPosition.Y;
+                        var mapY = y - light.Range + (int) lightPosition.Y;
                         if (mapY < 0 || mapY >= _height) continue;
 
                         var intensityMapScalar = intensityMap[x, y];
-                        var scaledColorR = (byte)(intensityMapScalar * lightColor.R);
-                        var scaledColorG = (byte)(intensityMapScalar * lightColor.G);
-                        var scaledColorB = (byte)(intensityMapScalar * lightColor.B);
+                        var scaledColorR = (byte) (intensityMapScalar*lightColor.R);
+                        var scaledColorG = (byte) (intensityMapScalar*lightColor.G);
+                        var scaledColorB = (byte) (intensityMapScalar*lightColor.B);
 
                         if (scaledColorR > lightMap[mapX, mapY, 0])
                         {
@@ -215,8 +230,10 @@ namespace Engine.Isometric
                     }
                 }
             }
+        }
 
-            // output to tiles
+        private void SaveLightMapToTiles(byte[, ,] lightMap)
+        {
             for (var x = 0; x < _width; x++)
             {
                 for (var y = 0; y < _height; y++)
@@ -224,12 +241,6 @@ namespace Engine.Isometric
                     _tiles[x, y].SetLight(new Color(lightMap[x, y, 0], lightMap[x, y, 1], lightMap[x, y, 2]));
                 }
             }
-        }
-
-        public MoveableEntity GetSelected(Vector2 mapPosition)
-        {
-            var tile = _tiles[(int) mapPosition.X, (int) mapPosition.Y];
-            return tile.MoveableEntity;
         }
     }
 }

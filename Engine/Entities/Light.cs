@@ -1,5 +1,4 @@
-﻿using System;
-using Engine.Sprites;
+﻿using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -23,7 +22,7 @@ namespace Engine.Entities
             Color = color;
             Range = range;
 
-            _mapSize = 2 * (int)Range + 1;
+            _mapSize = 2 * Range + 1;
 
             IntensityMap = new float[_mapSize, _mapSize];
             VisiblityMap = new byte[_mapSize, _mapSize];

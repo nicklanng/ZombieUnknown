@@ -186,7 +186,7 @@ namespace ZombieUnknown
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
 
             _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
-            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 10));
+            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
             _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
             _map.AddEntity(new Vector2(37, 16), new Light("BrightLight", lightSprite, Color.White, 5));
 
