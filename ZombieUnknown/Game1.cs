@@ -21,7 +21,7 @@ namespace ZombieUnknown
         private Camera _camera;
         private Cursor _cursor;
 
-        private Vector2 _mapSize = new Vector2(100, 100);
+        private Vector2 _mapSize = new Vector2(10, 10);
 
         public Game1()
         {
@@ -185,13 +185,13 @@ namespace ZombieUnknown
             }
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
 
-            _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
-            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
-            _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
-            _map.AddEntity(new Vector2(37, 16), new Light("BrightLight", lightSprite, Color.White, 5));
+            //_map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
+            //_map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
+            //_map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
+            _map.AddEntity(new Vector2(3, 3), new Light("BrightLight", lightSprite, Color.White, 3));
 
-            _map.AddEntity(new Vector2(3, 6), new MoveableEntity("Ethereal 1", etherealSprite));
-            _map.AddEntity(new Vector2(9, 10), new MoveableEntity("Ethereal 2", etherealSprite));
+            //_map.AddEntity(new Vector2(3, 6), new MoveableEntity("Ethereal 1", etherealSprite));
+            //_map.AddEntity(new Vector2(9, 10), new MoveableEntity("Ethereal 2", etherealSprite));
 
             _cursor = new Cursor(_map, frontCursorSprite, backCursorSprite);
         }

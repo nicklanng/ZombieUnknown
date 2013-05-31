@@ -1,4 +1,5 @@
-﻿using Engine.Sprites;
+﻿using System.Collections.Generic;
+using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -33,6 +34,14 @@ namespace Engine.Entities
         public override void Draw(SpriteBatch spriteBatch, Vector2 position, Color light)
         {
             Sprite.Draw(spriteBatch, position, Color);
+        }
+
+        public void GenerateVisibiltyMap(List<Line> walls)
+        {
+            foreach (var wall in walls)
+            {
+                System.Console.WriteLine("Wall: {0} {1} - {2} {3}", wall.Start.X, wall.Start.Y, wall.End.X, wall.End.Y);
+            }
         }
 
         private void GenerateIntensityMap()

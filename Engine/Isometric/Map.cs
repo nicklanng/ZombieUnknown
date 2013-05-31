@@ -174,7 +174,45 @@ namespace Engine.Isometric
 
             AddLightEntities(lightMap);
 
+            AddWallsToLight();
+
             SaveLightMapToTiles(lightMap);
+        }
+
+        private void AddWallsToLight()
+        {
+            foreach (var light in _lights)
+            {
+                var walls = new List<Line>();
+
+                var lightPosition = light.Parent.Position;
+
+                var lightMapSize = light.Range*2 + 1;
+
+                for (var x = 0; x < lightMapSize; x++)
+                {
+                    var mapX = x - light.Range + (int) lightPosition.X;
+                    if (mapX < 0 || mapX >= _width) continue;
+
+                    for (var y = 0; y < lightMapSize; y++)
+                    {
+                        var mapY = y - light.Range + (int)lightPosition.Y;
+                        if (mapY < 0 || mapY >= _height) continue;
+
+                        var tile = _tiles[mapX, mapY];
+                        if (tile.LeftWallSprite != null)
+                        {
+                            walls.Add(new Line(new Vector2(x, y), new Vector2(x, y + 1)));
+                        }
+                        if (tile.RightWallSprite != null)
+                        {
+                            walls.Add(new Line(new Vector2(x, y + 1), new Vector2(x + 1, y + 1)));
+                        }
+                    }
+                }
+
+                light.GenerateVisibiltyMap(walls);
+            }
         }
 
         private void SetAmbientLightLevels(byte[, ,] lightMap)
@@ -197,13 +235,14 @@ namespace Engine.Isometric
                 var lightColor = light.Color;
                 var lightPosition = light.Parent.Position;
                 var intensityMap = light.IntensityMap;
+                var lightMapSize = light.Range*2 + 1;
 
-                for (var x = 0; x < light.Range*2 + 1; x++)
+                for (var x = 0; x < lightMapSize; x++)
                 {
                     var mapX = x - light.Range + (int) lightPosition.X;
                     if (mapX < 0 || mapX >= _width) continue;
 
-                    for (var y = 0; y < light.Range*2 + 1; y++)
+                    for (var y = 0; y < lightMapSize; y++)
                     {
                         var mapY = y - light.Range + (int) lightPosition.Y;
                         if (mapY < 0 || mapY >= _height) continue;
