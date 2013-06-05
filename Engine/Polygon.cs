@@ -20,7 +20,7 @@ namespace Engine
 
             foreach (var side in _lines) 
             {
-                if (point.Y > Math.Min(side.Start.Y, side.End.Y))
+                if (point.Y >= Math.Min(side.Start.Y, side.End.Y))
                 {
                     if (point.Y <= Math.Max(side.Start.Y, side.End.Y))
                     {
