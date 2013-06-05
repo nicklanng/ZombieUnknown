@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Engine.Entities;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -104,8 +105,8 @@ namespace Engine.Isometric
         {
             const int mouseVerticalOffset = 10;
 
-            var xStripped = (screenCoordinates.X / Constants.ZoomFactor) - (int)(_camera.Size.X / 2) + (int)_camera.Position.X + TileWidth / 2;
-            var yStripped = ((screenCoordinates.Y / Constants.ZoomFactor) - (int)(_camera.Size.Y / 2) + (int)_camera.Position.Y) + mouseVerticalOffset;
+            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(_camera.Size.X / 2) + (int)_camera.Position.X + TileWidth / 2;
+            var yStripped = ((screenCoordinates.Y / EngineSettings.ZoomFactor) - (int)(_camera.Size.Y / 2) + (int)_camera.Position.Y) + mouseVerticalOffset;
 
             var isoX = yStripped / (TileHeight) + xStripped / (TileWidth);
             var isoY = -(yStripped / (TileHeight) - xStripped / (TileWidth));
@@ -168,13 +169,11 @@ namespace Engine.Isometric
 
         private void RegenerateLightMap()
         {
-            var lightMap = new byte[_width,_height,3];
-
-            SetAmbientLightLevels(lightMap);
-
-            AddLightEntities(lightMap);
+            var lightMap = new byte[_width, _height, 3];
 
             AddWallsToLight();
+
+            AddLightEntities(lightMap);
 
             SaveLightMapToTiles(lightMap);
         }
@@ -191,12 +190,12 @@ namespace Engine.Isometric
 
                 for (var x = 0; x < lightMapSize; x++)
                 {
-                    var mapX = x - light.Range + (int) lightPosition.X;
+                    var mapX = (int) lightPosition.X - light.Range + x;
                     if (mapX < 0 || mapX >= _width) continue;
 
                     for (var y = 0; y < lightMapSize; y++)
                     {
-                        var mapY = y - light.Range + (int)lightPosition.Y;
+                        var mapY = (int)lightPosition.Y - light.Range + y;
                         if (mapY < 0 || mapY >= _height) continue;
 
                         var tile = _tiles[mapX, mapY];
@@ -215,19 +214,6 @@ namespace Engine.Isometric
             }
         }
 
-        private void SetAmbientLightLevels(byte[, ,] lightMap)
-        {
-            for (var x = 0; x < _width; x++)
-            {
-                for (var y = 0; y < _height; y++)
-                {
-                    lightMap[x, y, 0] = _ambientLight.R;
-                    lightMap[x, y, 1] = _ambientLight.G;
-                    lightMap[x, y, 2] = _ambientLight.B;
-                }
-            }
-        }
-
         private void AddLightEntities(byte[,,] lightMap)
         {
             foreach (var light in _lights)
@@ -235,6 +221,7 @@ namespace Engine.Isometric
                 var lightColor = light.Color;
                 var lightPosition = light.Parent.Position;
                 var intensityMap = light.IntensityMap;
+                var visibilityMap = light.VisiblityMap;
                 var lightMapSize = light.Range*2 + 1;
 
                 for (var x = 0; x < lightMapSize; x++)
@@ -247,7 +234,7 @@ namespace Engine.Isometric
                         var mapY = y - light.Range + (int) lightPosition.Y;
                         if (mapY < 0 || mapY >= _height) continue;
 
-                        var intensityMapScalar = intensityMap[x, y];
+                        var intensityMapScalar = intensityMap[x, y] * visibilityMap[x, y];
                         var scaledColorR = (byte) (intensityMapScalar*lightColor.R);
                         var scaledColorG = (byte) (intensityMapScalar*lightColor.G);
                         var scaledColorB = (byte) (intensityMapScalar*lightColor.B);
@@ -277,7 +264,10 @@ namespace Engine.Isometric
             {
                 for (var y = 0; y < _height; y++)
                 {
-                    _tiles[x, y].SetLight(new Color(lightMap[x, y, 0], lightMap[x, y, 1], lightMap[x, y, 2]));
+                    var r = (byte)Math.Max(lightMap[x, y, 0], _ambientLight.R);
+                    var g = (byte)Math.Max(lightMap[x, y, 1], _ambientLight.G);
+                    var b = (byte)Math.Max(lightMap[x, y, 2], _ambientLight.B);
+                    _tiles[x, y].SetLight(new Color(r, g, b));
                 }
             }
         }

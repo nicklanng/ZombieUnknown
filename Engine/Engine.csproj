@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="EngineSettings.cs" />
     <Compile Include="Isometric\Cursor.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Light.cs" />

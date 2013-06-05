@@ -13,5 +13,10 @@ namespace Engine
             Start = start;
             End = end;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Line: ({0}, {1}) - ({2}, {3})", Start.X, Start.Y, End.X, End.Y);
+        }
     }
 }
