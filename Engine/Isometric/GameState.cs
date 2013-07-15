@@ -1,4 +1,4 @@
-﻿using Engine.Entities;
+﻿using Engine.Isometric.Entities;
 
 namespace Engine.Isometric
 {

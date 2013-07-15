@@ -1,16 +1,15 @@
-﻿using Engine.Isometric;
-using Engine.Sprites;
+﻿using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Entities
+namespace Engine.Isometric.Entities
 {
     public abstract class Entity
     {
         protected readonly Sprite Sprite;
 
         public string Name { get; private set; }
-        public Tile Parent { get; set; }
+        public Tile Parent { get; set; } // see if I can remove this
 
         protected Entity(string name, Sprite sprite)
         {

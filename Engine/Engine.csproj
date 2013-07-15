@@ -44,9 +44,9 @@
     <Compile Include="Camera.cs" />
     <Compile Include="EngineSettings.cs" />
     <Compile Include="Isometric\Cursor.cs" />
-    <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Light.cs" />
-    <Compile Include="Entities\MoveableEntity.cs" />
+    <Compile Include="Isometric\Entities\Entity.cs" />
+    <Compile Include="Isometric\Entities\Light.cs" />
+    <Compile Include="Isometric\Entities\MoveableEntity.cs" />
     <Compile Include="Isometric\GameState.cs" />
     <Compile Include="Input\Mouse.cs" />
     <Compile Include="Isometric\Map.cs" />

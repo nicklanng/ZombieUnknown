@@ -48,7 +48,11 @@ namespace Engine.Sprites
         {
             spriteBatch.Draw(
                 SpriteSheet.Texture,
-                new Rectangle((int)position.X * EngineSettings.ZoomFactor, (int)position.Y * EngineSettings.ZoomFactor, SpriteSheetRectangle.Width * EngineSettings.ZoomFactor, SpriteSheetRectangle.Height * EngineSettings.ZoomFactor),
+                new Rectangle(
+                    (int)position.X * EngineSettings.ZoomFactor, 
+                    (int)position.Y * EngineSettings.ZoomFactor, 
+                    SpriteSheetRectangle.Width * EngineSettings.ZoomFactor, 
+                    SpriteSheetRectangle.Height * EngineSettings.ZoomFactor),
                 SpriteSheetRectangle,
                 lightColor,
                 0.0f,

@@ -1,6 +1,6 @@
 ﻿using Engine.Sprites;
 
-namespace Engine.Entities
+namespace Engine.Isometric.Entities
 {
     public class MoveableEntity : Entity
     {

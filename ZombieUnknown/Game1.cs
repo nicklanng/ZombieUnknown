@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
-using Engine.Entities;
 using Engine.Isometric;
+using Engine.Isometric.Entities;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,15 +21,15 @@ namespace ZombieUnknown
         private Camera _camera;
         private Cursor _cursor;
 
-        private Vector2 _mapSize = new Vector2(10, 10);
+        private Vector2 _mapSize = new Vector2(100, 100);
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
-                    PreferredBackBufferWidth = 800,
-                    PreferredBackBufferHeight = 600
+                    PreferredBackBufferWidth = 1280,
+                    PreferredBackBufferHeight = 720
                 };
             Content.RootDirectory = "Content";
         }
@@ -164,21 +164,16 @@ namespace ZombieUnknown
                     }
 
                     Sprite leftWall = null;
-                    //if (random.NextDouble() > 0.95)
-                    //{
-                    //    leftWall = leftWallSprite;
-                    //}
-                    if (x == 5 && y == 5) leftWall = leftWallSprite;
-                    //if (x == 5 && y == 3) leftWall = leftWallSprite;
-                    if (x == 6 && y == 5) leftWall = leftWallSprite;
+                    if (random.NextDouble() > 0.99)
+                    {
+                        leftWall = leftWallSprite;
+                    }
 
                     Sprite rightWall = null;
-                    //if (random.NextDouble() > 0.95)
-                    //{
-                    //    rightWall = rightWallSprite;
-                    //}
-                    //if (x == 5 && y == 4) rightWall = rightWallSprite;
-                    if (x == 5 && y == 5) rightWall = rightWallSprite;
+                    if (random.NextDouble() > 0.99)
+                    {
+                        rightWall = rightWallSprite;
+                    }
 
                     Sprite joinWall = null;
                     if (leftWall != null && rightWall != null)
@@ -189,15 +184,15 @@ namespace ZombieUnknown
                     tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
                 }
             }
-            _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.0f, 0.0f, 0.0f), _camera);
+            _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
 
-            //_map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
-            //_map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
-            //_map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
-            _map.AddEntity(new Vector2(5, 5), new Light("BrightLight", lightSprite, Color.White, 10));
+            _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
+            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
+            _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
+            _map.AddEntity(new Vector2(5, 5), new Light("BrightLight", lightSprite, Color.White, 20));
 
             _map.AddEntity(new Vector2(3, 6), new MoveableEntity("Ethereal 1", etherealSprite));
-            //_map.AddEntity(new Vector2(9, 10), new MoveableEntity("Ethereal 2", etherealSprite));
+            _map.AddEntity(new Vector2(9, 10), new MoveableEntity("Ethereal 2", etherealSprite));
 
             _cursor = new Cursor(_map, frontCursorSprite, backCursorSprite);
         }

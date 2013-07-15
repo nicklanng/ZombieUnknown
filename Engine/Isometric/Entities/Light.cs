@@ -5,7 +5,7 @@ using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Entities
+namespace Engine.Isometric.Entities
 {
     public class Light : Entity
     {
