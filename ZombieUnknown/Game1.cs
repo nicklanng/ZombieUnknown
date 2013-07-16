@@ -18,7 +18,7 @@ namespace ZombieUnknown
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Map _map;
-        private Camera _camera;
+        private Manual2dCamera _camera;
         private Cursor _cursor;
 
         private Vector2 _mapSize = new Vector2(100, 100);
@@ -53,7 +53,7 @@ namespace ZombieUnknown
         /// </summary>
         protected override void LoadContent()
         {
-            _camera = new Camera(new Vector2(_graphics.PreferredBackBufferWidth / EngineSettings.ZoomFactor, _graphics.PreferredBackBufferHeight / EngineSettings.ZoomFactor), 200.0f);
+            _camera = new Manual2dCamera(new Vector2(_graphics.PreferredBackBufferWidth / EngineSettings.ZoomFactor, _graphics.PreferredBackBufferHeight / EngineSettings.ZoomFactor), 200.0f);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             

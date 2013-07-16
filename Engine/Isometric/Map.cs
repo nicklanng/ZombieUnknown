@@ -13,7 +13,7 @@ namespace Engine.Isometric
         private readonly short _height;
 
         private readonly Tile[,] _tiles;
-        private readonly Camera _camera;
+        private readonly Manual2dCamera _manual2DCamera;
 
         private readonly List<Light> _lights; 
 
@@ -22,13 +22,13 @@ namespace Engine.Isometric
 
         private Color _ambientLight;
 
-        public Map(short width, short height, Tile[,] tiles, Color ambientLight, Camera camera)
+        public Map(short width, short height, Tile[,] tiles, Color ambientLight, Manual2dCamera manual2DCamera)
         {
             _width = width;
             _height = height;
             _tiles = tiles;
             _ambientLight = ambientLight;
-            _camera = camera;
+            _manual2DCamera = manual2DCamera;
 
             _lights = new List<Light>();
 
@@ -105,8 +105,8 @@ namespace Engine.Isometric
         {
             const int mouseVerticalOffset = 10;
 
-            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(_camera.Size.X / 2) + (int)_camera.Position.X + TileWidth / 2;
-            var yStripped = ((screenCoordinates.Y / EngineSettings.ZoomFactor) - (int)(_camera.Size.Y / 2) + (int)_camera.Position.Y) + mouseVerticalOffset;
+            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.X / 2) + (int)_manual2DCamera.Position.X + TileWidth / 2;
+            var yStripped = ((screenCoordinates.Y / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.Y / 2) + (int)_manual2DCamera.Position.Y) + mouseVerticalOffset;
 
             var isoX = yStripped / (TileHeight) + xStripped / (TileWidth);
             var isoY = -(yStripped / (TileHeight) - xStripped / (TileWidth));
@@ -131,7 +131,7 @@ namespace Engine.Isometric
         {
             screenCoordinates = Vector2.Zero;
 
-            var xCoord = ((mapCoordinates.X + mapCoordinates.Y)*TileWidth/2) -(int)_camera.Position.X + (int)(_camera.Size.X / 2);
+            var xCoord = ((mapCoordinates.X + mapCoordinates.Y)*TileWidth/2) -(int)_manual2DCamera.Position.X + (int)(_manual2DCamera.Size.X / 2);
             if (xCoord <= 0)
             {
                 if (xCoord + tileSprite.Width < 0)
@@ -139,15 +139,15 @@ namespace Engine.Isometric
                     return false;
                 }
             }
-            if (xCoord >= _camera.Size.X)
+            if (xCoord >= _manual2DCamera.Size.X)
             {
-                if (xCoord - tileSprite.Width > _camera.Size.X)
+                if (xCoord - tileSprite.Width > _manual2DCamera.Size.X)
                 {
                     return false;
                 }
             }
 
-            var yCoord = ((mapCoordinates.X - mapCoordinates.Y)*TileHeight/2) - (int)_camera.Position.Y + (int)(_camera.Size.Y / 2);
+            var yCoord = ((mapCoordinates.X - mapCoordinates.Y)*TileHeight/2) - (int)_manual2DCamera.Position.Y + (int)(_manual2DCamera.Size.Y / 2);
             if (yCoord <= 0)
             {
                 if (yCoord + tileSprite.Height < 0)
@@ -155,9 +155,9 @@ namespace Engine.Isometric
                     return false;
                 }
             }
-            if (yCoord >= _camera.Size.Y)
+            if (yCoord >= _manual2DCamera.Size.Y)
             {
-                if (yCoord - tileSprite.Height > _camera.Size.Y)
+                if (yCoord - tileSprite.Height > _manual2DCamera.Size.Y)
                 {
                     return false;
                 }

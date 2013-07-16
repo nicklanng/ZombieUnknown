@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Engine
 {
-    public class Camera
+    public class Manual2dCamera
     {
         public Vector2 Size { get; set; }
 
@@ -11,7 +11,7 @@ namespace Engine
 
         public Vector2 Position { get; set; }
 
-        public Camera(Vector2 size, float moveSpeed)
+        public Manual2dCamera(Vector2 size, float moveSpeed)
         {
             Size = size;
             MoveSpeed = moveSpeed;
