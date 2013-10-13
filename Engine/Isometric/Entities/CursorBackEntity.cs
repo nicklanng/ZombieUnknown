@@ -9,5 +9,5 @@ namespace Engine.Isometric.Entities
         {
             ZIndex = short.MinValue;
         }
-    }g
+    }
 }
