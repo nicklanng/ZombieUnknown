@@ -11,10 +11,14 @@ namespace Engine.Isometric.Entities
         public string Name { get; private set; }
         public Tile Parent { get; set; } // see if I can remove this
 
+        public short ZIndex { get; protected set; }
+
         protected Entity(string name, Sprite sprite)
         {
             Name = name;
             Sprite = sprite;
+
+            ZIndex = 0;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, Color light)

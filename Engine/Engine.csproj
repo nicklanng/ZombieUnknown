@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Isometric\Entities\CursorBackEntity.cs" />
+    <Compile Include="Isometric\Entities\CursorFrontEntity.cs" />
     <Compile Include="Manual2dCamera.cs" />
     <Compile Include="Isometric\EngineSettings.cs" />
     <Compile Include="Isometric\Cursor.cs" />

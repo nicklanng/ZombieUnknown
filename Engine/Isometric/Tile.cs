@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Engine.Isometric.Entities;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -8,8 +9,7 @@ namespace Engine.Isometric
 {
     public class Tile
     {
-        private Color _light;
-        private readonly List<Entity> _entities;
+        private List<Entity> _entities;
 
         public Vector2 Position { get; private set; }
 
@@ -17,6 +17,7 @@ namespace Engine.Isometric
         public Sprite LeftWallSprite { get; private set; }
         public Sprite RightWallSprite { get; private set; }
         public Sprite WallJoinSprite { get; private set; }
+        public Color Light { get; set; }
 
         public MoveableEntity MoveableEntity { get; private set; }
 
@@ -29,12 +30,7 @@ namespace Engine.Isometric
             WallJoinSprite = wallJoinSprite;
 
             _entities = new List<Entity>();
-            _light = Color.White;
-        }
-
-        public void SetLight(Color light)
-        {
-            _light = light;
+            Light = Color.White;
         }
 
         public void Update(GameTime gameTime)
@@ -49,21 +45,21 @@ namespace Engine.Isometric
 
         public void DrawWalls(SpriteBatch spriteBatch, Vector2 position)
         {
-            if (LeftWallSprite != null) LeftWallSprite.Draw(spriteBatch, position, _light);
-            if (RightWallSprite != null) RightWallSprite.Draw(spriteBatch, position, _light);
-            if (WallJoinSprite != null) WallJoinSprite.Draw(spriteBatch, position, _light);
+            if (LeftWallSprite != null) LeftWallSprite.Draw(spriteBatch, position, Light);
+            if (RightWallSprite != null) RightWallSprite.Draw(spriteBatch, position, Light);
+            if (WallJoinSprite != null) WallJoinSprite.Draw(spriteBatch, position, Light);
         }
 
         public void DrawFloor(SpriteBatch spriteBatch, Vector2 position)
         {
-            if (FloorSprite != null) FloorSprite.Draw(spriteBatch, position, _light);
+            if (FloorSprite != null) FloorSprite.Draw(spriteBatch, position, Light);
         }
 
         public void DrawEntities(SpriteBatch spriteBatch, Vector2 position)
         {
             foreach (var entity in _entities)
             {
-                entity.Draw(spriteBatch, position, _light);
+                entity.Draw(spriteBatch, position, Light);
             }
         }
 
@@ -77,6 +73,13 @@ namespace Engine.Isometric
 
             entity.Parent = this;
             _entities.Add(entity);
+
+            _entities = new List<Entity>(_entities.OrderBy(x => x.ZIndex));
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            _entities.Remove(entity);
         }
     }
 }

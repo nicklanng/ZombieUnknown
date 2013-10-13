@@ -59,24 +59,11 @@ namespace Engine.Isometric
                         continue;
                     }
 
-                    var isCursorHere = cursor.IsOnMap && (int)cursor.MapPosition.X == x && (int)cursor.MapPosition.Y == y;
-
                     _tiles[x, y].DrawWalls(spriteBatch, screenCoordinates);
-
-                    if (isCursorHere)
-                    {
-                        cursor.DrawBackSprite(spriteBatch, screenCoordinates);
-                    }
-
                     _tiles[x, y].DrawFloor(spriteBatch, screenCoordinates);
 
                     _tiles[x, y].DrawEntities(spriteBatch, screenCoordinates);
                     
-                    if (isCursorHere)
-                    {
-                        cursor.DrawFrontSprite(spriteBatch, screenCoordinates);
-                    }
-
                     if (GameState.Selected != null)
                     {
                         if ((int) GameState.Selected.Parent.Position.X == x &&
@@ -94,11 +81,29 @@ namespace Engine.Isometric
             var parentTile = _tiles[(int)position.X, (int)position.Y];
             parentTile.AddEntity(entity);
 
-            if (entity is Light)
+            var lightEntity = entity as Light;
+            if (lightEntity == null)
             {
-                _lights.Add(entity as Light);
-                RegenerateLightMap();
+                return;
             }
+            
+            _lights.Add(lightEntity);
+            RegenerateLightMap();
+        }
+
+        public void RemoveEntity(Vector2 position, Entity entity)
+        {
+            var parentTile = _tiles[(int)position.X, (int)position.Y];
+            parentTile.RemoveEntity(entity);
+
+            var lightEntity = entity as Light;
+            if (lightEntity == null)
+            {
+                return;
+            }
+
+            _lights.Remove(lightEntity);
+            RegenerateLightMap();
         }
 
         public bool GetMapCoordinates(Vector2 screenCoordinates, out Vector2 mapCoordinates)
@@ -267,7 +272,7 @@ namespace Engine.Isometric
                     var r = (byte)Math.Max(lightMap[x, y, 0], _ambientLight.R);
                     var g = (byte)Math.Max(lightMap[x, y, 1], _ambientLight.G);
                     var b = (byte)Math.Max(lightMap[x, y, 2], _ambientLight.B);
-                    _tiles[x, y].SetLight(new Color(r, g, b));
+                    _tiles[x, y].Light = new Color(r, g, b);
                 }
             }
         }
