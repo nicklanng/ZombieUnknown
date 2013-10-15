@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine.Isometric.Entities;
-using Engine.Sprites;
+using Engine.Pathfinding;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,10 +15,13 @@ namespace Engine.Isometric
         private readonly Tile[,] _tiles;
         private readonly Manual2dCamera _manual2DCamera;
 
-        private readonly List<Light> _lights; 
+        private readonly List<Light> _lights;
 
-        private const float TileWidth = 32;
-        private const float TileHeight = 16;
+        private readonly Node[,] _nodes;
+
+        private const float TileHeight = 48;
+        private const float FloorWidth = 32;
+        private const float FloorHeight = 16;
 
         private Color _ambientLight;
 
@@ -29,6 +32,17 @@ namespace Engine.Isometric
             _tiles = tiles;
             _ambientLight = ambientLight;
             _manual2DCamera = manual2DCamera;
+
+            _nodes = new Node[width, height];
+            for (var x = 0; x < _width; x++)
+            {
+                for (var y = 0; y < _height; y++)
+                {
+                    var node = new Node(new Vector2(x, y));
+                    _nodes[x, y] = node;
+                }
+            }
+            RegeneratePathfindingMap();
 
             _lights = new List<Light>();
 
@@ -53,7 +67,7 @@ namespace Engine.Isometric
                 for (var y = _height - 1; y >= 0; y--)
                 {
                     Vector2 screenCoordinates;
-                    var isTileOnScreen = GetScreenCoordinates(new Vector2(x, y), _tiles[x,y].FloorSprite, out screenCoordinates);
+                    var isTileOnScreen = GetScreenCoordinates(new Vector2(x, y), out screenCoordinates);
                     if (!isTileOnScreen)
                     {
                         continue;
@@ -110,11 +124,11 @@ namespace Engine.Isometric
         {
             const int mouseVerticalOffset = 10;
 
-            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.X / 2) + (int)_manual2DCamera.Position.X + TileWidth / 2;
+            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.X / 2) + (int)_manual2DCamera.Position.X + FloorWidth / 2;
             var yStripped = ((screenCoordinates.Y / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.Y / 2) + (int)_manual2DCamera.Position.Y) + mouseVerticalOffset;
 
-            var isoX = yStripped / (TileHeight) + xStripped / (TileWidth);
-            var isoY = -(yStripped / (TileHeight) - xStripped / (TileWidth));
+            var isoX = yStripped / (FloorHeight) + xStripped / (FloorWidth);
+            var isoY = -(yStripped / (FloorHeight) - xStripped / (FloorWidth));
 
             mapCoordinates = new Vector2(isoX, isoY);
 
@@ -132,37 +146,37 @@ namespace Engine.Isometric
             return tile.MoveableEntity;
         }
 
-        private bool GetScreenCoordinates(Vector2 mapCoordinates, Sprite tileSprite, out Vector2 screenCoordinates)
+        private bool GetScreenCoordinates(Vector2 mapCoordinates, out Vector2 screenCoordinates)
         {
             screenCoordinates = Vector2.Zero;
 
-            var xCoord = ((mapCoordinates.X + mapCoordinates.Y)*TileWidth/2) -(int)_manual2DCamera.Position.X + (int)(_manual2DCamera.Size.X / 2);
+            var xCoord = ((mapCoordinates.X + mapCoordinates.Y)*FloorWidth/2) -(int)_manual2DCamera.Position.X + (int)(_manual2DCamera.Size.X / 2);
             if (xCoord <= 0)
             {
-                if (xCoord + tileSprite.Width < 0)
+                if (xCoord + FloorWidth < 0)
                 {
                     return false;
                 }
             }
             if (xCoord >= _manual2DCamera.Size.X)
             {
-                if (xCoord - tileSprite.Width > _manual2DCamera.Size.X)
+                if (xCoord - FloorWidth > _manual2DCamera.Size.X)
                 {
                     return false;
                 }
             }
 
-            var yCoord = ((mapCoordinates.X - mapCoordinates.Y)*TileHeight/2) - (int)_manual2DCamera.Position.Y + (int)(_manual2DCamera.Size.Y / 2);
+            var yCoord = ((mapCoordinates.X - mapCoordinates.Y)*FloorHeight/2) - (int)_manual2DCamera.Position.Y + (int)(_manual2DCamera.Size.Y / 2);
             if (yCoord <= 0)
             {
-                if (yCoord + tileSprite.Height < 0)
+                if (yCoord + TileHeight < 0)
                 {
                     return false;
                 }
             }
             if (yCoord >= _manual2DCamera.Size.Y)
             {
-                if (yCoord - tileSprite.Height > _manual2DCamera.Size.Y)
+                if (yCoord - TileHeight > _manual2DCamera.Size.Y)
                 {
                     return false;
                 }
@@ -204,11 +218,11 @@ namespace Engine.Isometric
                         if (mapY < 0 || mapY >= _height) continue;
 
                         var tile = _tiles[mapX, mapY];
-                        if (tile.LeftWallSprite != null)
+                        if (tile.HasLeftWall)
                         {
                             walls.Add(new Line(new Vector2(x, y), new Vector2(x, y + 1)));
                         }
-                        if (tile.RightWallSprite != null)
+                        if (tile.HasRightWall)
                         {
                             walls.Add(new Line(new Vector2(x, y + 1), new Vector2(x + 1, y + 1)));
                         }
@@ -275,6 +289,63 @@ namespace Engine.Isometric
                     _tiles[x, y].Light = new Color(r, g, b);
                 }
             }
+        }
+
+        private void RegeneratePathfindingMap()
+        {
+            for (var x = 0; x < _width; x++)
+            {
+                for (var y = 0; y < _height; y++)
+                {
+                    var node = _nodes[x, y];
+
+                    if (IsPositionOnMap(x - 1, y))
+                    {
+                        if (!_tiles[x, y].HasLeftWall)
+                        {
+                            node.AddNeighbor(_nodes[x - 1, y]);
+                        }
+                    }
+
+                    if (IsPositionOnMap(x, y - 1))
+                    {
+                        var neighborNode = _nodes[x, y - 1];
+                        if (!_tiles[x, y - 1].HasRightWall)
+                        {
+                            node.AddNeighbor(neighborNode);
+                        }
+                    }
+
+                    if (IsPositionOnMap(x + 1, y))
+                    {
+                        var neighborNode = _nodes[x + 1, y];
+                        if (!_tiles[x + 1, y].HasLeftWall)
+                        {
+                            node.AddNeighbor(neighborNode);
+                        }
+                    }
+
+                    if (IsPositionOnMap(x, y + 1))
+                    {
+                        if (!_tiles[x, y].HasRightWall)
+                        {
+                            node.AddNeighbor(_nodes[x, y + 1]);
+                        }
+                    }
+
+                    //Console.WriteLine(node);
+                }
+            }
+        }
+
+        private bool IsPositionOnMap(int x, int y)
+        {
+            if (x < 0) return false;
+            if (x >= _width) return false;
+            if (y < 0) return false;
+            if (y >= _height) return false;
+
+            return true;
         }
     }
 }

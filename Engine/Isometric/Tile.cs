@@ -11,23 +11,44 @@ namespace Engine.Isometric
     {
         private List<Entity> _entities;
 
-        public Vector2 Position { get; private set; }
+        private readonly Sprite _leftWallSprite;
+        private readonly Sprite _rightWallSprite;
+        private readonly Sprite _wallJoinSprite;
+        private readonly Sprite _floorSprite;
 
-        public Sprite FloorSprite { get; private set; }
-        public Sprite LeftWallSprite { get; private set; }
-        public Sprite RightWallSprite { get; private set; }
-        public Sprite WallJoinSprite { get; private set; }
         public Color Light { get; set; }
-
+        public Vector2 Position { get; private set; }
         public MoveableEntity MoveableEntity { get; private set; }
+
+        public bool HasLeftWall
+        {
+            get
+            {
+                return _leftWallSprite != null;
+            }
+        }
+        public bool HasRightWall
+        {
+            get
+            {
+                return _rightWallSprite != null;
+            }
+        }
+        public bool HasFloor
+        {
+            get
+            {
+                return _floorSprite != null;
+            }
+        }
 
         public Tile(Vector2 position, Sprite floorSprite, Sprite leftWall, Sprite rightWall, Sprite wallJoinSprite)
         {
             Position = position;
-            FloorSprite = floorSprite;
-            LeftWallSprite = leftWall;
-            RightWallSprite = rightWall;
-            WallJoinSprite = wallJoinSprite;
+            _floorSprite = floorSprite;
+            _leftWallSprite = leftWall;
+            _rightWallSprite = rightWall;
+            _wallJoinSprite = wallJoinSprite;
 
             _entities = new List<Entity>();
             Light = Color.White;
@@ -35,24 +56,24 @@ namespace Engine.Isometric
 
         public void Update(GameTime gameTime)
         {
-            if (LeftWallSprite != null) LeftWallSprite.Update(gameTime);
-            if (RightWallSprite != null) RightWallSprite.Update(gameTime);
-            if (WallJoinSprite != null) WallJoinSprite.Update(gameTime);
-            if (FloorSprite != null) FloorSprite.Update(gameTime);
+            if (_leftWallSprite != null) _leftWallSprite.Update(gameTime);
+            if (_rightWallSprite != null) _rightWallSprite.Update(gameTime);
+            if (_wallJoinSprite != null) _wallJoinSprite.Update(gameTime);
+            if (_floorSprite != null) _floorSprite.Update(gameTime);
 
             _entities.ForEach(x => x.Update(gameTime));
         }
 
         public void DrawWalls(SpriteBatch spriteBatch, Vector2 position)
         {
-            if (LeftWallSprite != null) LeftWallSprite.Draw(spriteBatch, position, Light);
-            if (RightWallSprite != null) RightWallSprite.Draw(spriteBatch, position, Light);
-            if (WallJoinSprite != null) WallJoinSprite.Draw(spriteBatch, position, Light);
+            if (_leftWallSprite != null) _leftWallSprite.Draw(spriteBatch, position, Light);
+            if (_rightWallSprite != null) _rightWallSprite.Draw(spriteBatch, position, Light);
+            if (_wallJoinSprite != null) _wallJoinSprite.Draw(spriteBatch, position, Light);
         }
 
         public void DrawFloor(SpriteBatch spriteBatch, Vector2 position)
         {
-            if (FloorSprite != null) FloorSprite.Draw(spriteBatch, position, Light);
+            if (_floorSprite != null) _floorSprite.Draw(spriteBatch, position, Light);
         }
 
         public void DrawEntities(SpriteBatch spriteBatch, Vector2 position)

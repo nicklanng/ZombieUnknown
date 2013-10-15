@@ -21,7 +21,7 @@ namespace ZombieUnknown
         private Manual2dCamera _camera;
         private Cursor _cursor;
 
-        private Vector2 _mapSize = new Vector2(100, 100);
+        private Vector2 _mapSize = new Vector2(200, 200);
 
         public Game1()
         {
@@ -234,8 +234,6 @@ namespace ZombieUnknown
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            var now = DateTime.Now;
-
             GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);

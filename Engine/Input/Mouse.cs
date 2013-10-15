@@ -7,10 +7,13 @@ namespace Engine.Input
     public static class Mouse
     {
         private static bool _lmbDown;
+        private static bool _rmbDown;
 
         public static event EventHandler MouseMoved;
         public static event EventHandler LmbDown;
         public static event EventHandler LmbUp;
+        public static event EventHandler RmbDown;
+        public static event EventHandler RmbUp;
 
         public static Vector2 ScreenCoordinates { get; private set; }
 
@@ -40,6 +43,22 @@ namespace Engine.Input
                 if (handler != null) handler(null, new EventArgs());
 
                 _lmbDown = false;
+            }
+
+            if (!_rmbDown && mouseState.RightButton == ButtonState.Pressed)
+            {
+                var handler = RmbDown;
+                if (handler != null) handler(null, new EventArgs());
+
+                _rmbDown = true;
+            }
+
+            if (_rmbDown && mouseState.RightButton == ButtonState.Released)
+            {
+                var handler = RmbUp;
+                if (handler != null) handler(null, new EventArgs());
+
+                _rmbDown = false;
             }
         }
     }
