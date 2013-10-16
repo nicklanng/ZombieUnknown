@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
-using Engine.Isometric;
-using Engine.Isometric.Entities;
+using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ZombieUnknown.Entities;
 
 namespace ZombieUnknown
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Game
+    public class ZombieGameMain : Game
     {
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -21,9 +21,12 @@ namespace ZombieUnknown
         private Manual2dCamera _camera;
         private Cursor _cursor;
 
+        private ITileFactory _tileFactory;
+        private IEntityFactory _entityFactory;
+
         private Vector2 _mapSize = new Vector2(200, 200);
 
-        public Game1()
+        public ZombieGameMain()
         {
             _graphics = new GraphicsDeviceManager(this)
                 {
@@ -164,13 +167,13 @@ namespace ZombieUnknown
                     }
 
                     Sprite leftWall = null;
-                    if (random.NextDouble() > 0.99)
+                    if (random.NextDouble() > 0.90)
                     {
                         leftWall = leftWallSprite;
                     }
 
                     Sprite rightWall = null;
-                    if (random.NextDouble() > 0.99)
+                    if (random.NextDouble() > 0.90)
                     {
                         rightWall = rightWallSprite;
                     }
@@ -181,20 +184,23 @@ namespace ZombieUnknown
                         joinWall = joinWallSprite;
                     }
 
-                    tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
+                    tiles[x, y] = _tileFactory.CreateTile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
                 }
             }
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
 
-            _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
-            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
-            _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
-            _map.AddEntity(new Vector2(5, 5), new Light("BrightLight", lightSprite, Color.White, 20));
+            _map.AddEntity(new Vector2(4, 7), _entityFactory.CreateLight("DullLight", lightSprite, Color.Gray, 7));
+            _map.AddEntity(new Vector2(8, 11), _entityFactory.CreateLight("RedLight", lightSprite, Color.Red, 4));
+            _map.AddEntity(new Vector2(15, 4), _entityFactory.CreateLight("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
+            _map.AddEntity(new Vector2(5, 5), _entityFactory.CreateLight("BrightLight", lightSprite, Color.White, 20));
 
-            _map.AddEntity(new Vector2(3, 6), new MoveableEntity("Ethereal 1", etherealSprite));
-            _map.AddEntity(new Vector2(9, 10), new MoveableEntity("Ethereal 2", etherealSprite));
+            _map.AddEntity(new Vector2(3, 6), _entityFactory.CreateHuman("Ethereal 1", etherealSprite));
+            _map.AddEntity(new Vector2(9, 10), _entityFactory.CreateHuman("Ethereal 2", etherealSprite));
 
-            _cursor = new Cursor(_map, frontCursorSprite, backCursorSprite);
+            var frontCursorEntity = _entityFactory.CreateFrontCursor("CursorFrontEntity", frontCursorSprite);
+            var backCursorEntity = _entityFactory.CreateBackCursor("CursorBackEntity", backCursorSprite);
+
+            _cursor = new Cursor(_map, frontCursorEntity, backCursorEntity);
         }
 
         /// <summary>

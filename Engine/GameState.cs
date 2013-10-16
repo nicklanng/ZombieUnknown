@@ -1,6 +1,6 @@
-﻿using Engine.Isometric.Entities;
+﻿using Engine.Entities;
 
-namespace Engine.Isometric
+namespace Engine
 {
     public static class GameState
     {

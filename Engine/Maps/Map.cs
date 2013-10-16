@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Engine.Isometric.Entities;
+using Engine.Entities;
+using Engine.Maths;
 using Engine.Pathfinding;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Isometric
+namespace Engine.Maps
 {
     public class Map
     {
@@ -66,28 +67,26 @@ namespace Engine.Isometric
             {
                 for (var y = _height - 1; y >= 0; y--)
                 {
-                    Vector2 screenCoordinates;
-                    var isTileOnScreen = GetScreenCoordinates(new Vector2(x, y), out screenCoordinates);
-                    if (!isTileOnScreen)
-                    {
-                        continue;
-                    }
+                    _tiles[x, y].DrawWalls();
+                    _tiles[x, y].DrawFloor();
 
-                    _tiles[x, y].DrawWalls(spriteBatch, screenCoordinates);
-                    _tiles[x, y].DrawFloor(spriteBatch, screenCoordinates);
-
-                    _tiles[x, y].DrawEntities(spriteBatch, screenCoordinates);
+                    _tiles[x, y].DrawEntities();
                     
                     if (GameState.Selected != null)
                     {
-                        if ((int) GameState.Selected.Parent.Position.X == x &&
-                            (int) GameState.Selected.Parent.Position.Y == y)
+                        if ((int) GameState.Selected.MapPosition.X == x &&
+                            (int)GameState.Selected.MapPosition.Y == y)
                         {
-                            ResourceManager.SelectMarkerSprite.Draw(spriteBatch, screenCoordinates);
+                            //ResourceManager.SelectMarkerSprite.Draw(spriteBatch);
                         }
                     }
                 }
             }
+        }
+
+        public Node GetNodeAt(Vector2 position)
+        {
+            return _nodes[(int)position.X, (int)position.Y];
         }
 
         public void AddEntity(Vector2 position, Entity entity)
@@ -146,45 +145,7 @@ namespace Engine.Isometric
             return tile.MoveableEntity;
         }
 
-        private bool GetScreenCoordinates(Vector2 mapCoordinates, out Vector2 screenCoordinates)
-        {
-            screenCoordinates = Vector2.Zero;
-
-            var xCoord = ((mapCoordinates.X + mapCoordinates.Y)*FloorWidth/2) -(int)_manual2DCamera.Position.X + (int)(_manual2DCamera.Size.X / 2);
-            if (xCoord <= 0)
-            {
-                if (xCoord + FloorWidth < 0)
-                {
-                    return false;
-                }
-            }
-            if (xCoord >= _manual2DCamera.Size.X)
-            {
-                if (xCoord - FloorWidth > _manual2DCamera.Size.X)
-                {
-                    return false;
-                }
-            }
-
-            var yCoord = ((mapCoordinates.X - mapCoordinates.Y)*FloorHeight/2) - (int)_manual2DCamera.Position.Y + (int)(_manual2DCamera.Size.Y / 2);
-            if (yCoord <= 0)
-            {
-                if (yCoord + TileHeight < 0)
-                {
-                    return false;
-                }
-            }
-            if (yCoord >= _manual2DCamera.Size.Y)
-            {
-                if (yCoord - TileHeight > _manual2DCamera.Size.Y)
-                {
-                    return false;
-                }
-            }
-            
-            screenCoordinates = new Vector2(xCoord, yCoord);
-            return true;
-        }
+        
 
         private void RegenerateLightMap()
         {
@@ -203,7 +164,7 @@ namespace Engine.Isometric
             {
                 var walls = new List<Line>();
 
-                var lightPosition = light.Parent.Position;
+                var lightPosition = light.MapPosition;
 
                 var lightMapSize = light.Range*2 + 1;
 
@@ -238,7 +199,7 @@ namespace Engine.Isometric
             foreach (var light in _lights)
             {
                 var lightColor = light.Color;
-                var lightPosition = light.Parent.Position;
+                var lightPosition = light.MapPosition;
                 var intensityMap = light.IntensityMap;
                 var visibilityMap = light.VisiblityMap;
                 var lightMapSize = light.Range*2 + 1;

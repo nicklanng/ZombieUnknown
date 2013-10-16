@@ -41,20 +41,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Isometric\Entities\CursorBackEntity.cs" />
-    <Compile Include="Isometric\Entities\CursorFrontEntity.cs" />
+    <Compile Include="Entities\CursorBackEntity.cs" />
+    <Compile Include="Entities\CursorFrontEntity.cs" />
+    <Compile Include="Entities\IBaseEntityFactory.cs" />
+    <Compile Include="IIsometricConfiguration.cs" />
     <Compile Include="Manual2dCamera.cs" />
-    <Compile Include="Isometric\EngineSettings.cs" />
-    <Compile Include="Isometric\Cursor.cs" />
-    <Compile Include="Isometric\Entities\Entity.cs" />
-    <Compile Include="Isometric\Entities\Light.cs" />
-    <Compile Include="Isometric\Entities\MoveableEntity.cs" />
-    <Compile Include="Isometric\GameState.cs" />
+    <Compile Include="EngineSettings.cs" />
+    <Compile Include="Cursor.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Light.cs" />
+    <Compile Include="Entities\MoveableEntity.cs" />
+    <Compile Include="GameState.cs" />
     <Compile Include="Input\Mouse.cs" />
-    <Compile Include="Isometric\Map.cs" />
-    <Compile Include="Line.cs" />
+    <Compile Include="Maps\ITileFactory.cs" />
+    <Compile Include="Maps\Map.cs" />
+    <Compile Include="SpriteDrawer.cs" />
+    <Compile Include="Maths\Line.cs" />
+    <Compile Include="Pathfinding\AStarSolver.cs" />
     <Compile Include="Pathfinding\Node.cs" />
-    <Compile Include="Polygon.cs" />
+    <Compile Include="Pathfinding\SearchedNode.cs" />
+    <Compile Include="Maths\Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="Sprites\AnimatedSprite.cs" />
@@ -66,7 +72,7 @@
     <Compile Include="Sprites\AnimationList.cs" />
     <Compile Include="Sprites\SpriteSheetFrameDictionary.cs" />
     <Compile Include="Sprites\StaticSprite.cs" />
-    <Compile Include="Isometric\Tile.cs" />
+    <Compile Include="Maps\Tile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

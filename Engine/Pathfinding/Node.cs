@@ -5,26 +5,26 @@ using Microsoft.Xna.Framework;
 
 namespace Engine.Pathfinding
 {
-    class Node
+    public class Node
     {
-        private readonly Vector2 _position;
-        private readonly List<Node> _neighbors;
+        public Vector2 Position { get; private set; }
+        public List<Node> Neighbors { get; set; }
 
         public Node(Vector2 position)
         {
-            _position = position;
-            _neighbors = new List<Node>();
+            Position = position;
+            Neighbors = new List<Node>();
         }
 
         public void AddNeighbor(Node neighbor)
         {
-            _neighbors.Add(neighbor);
+            Neighbors.Add(neighbor);
         }
 
         public override string ToString()
         {
-            var value = _position + Environment.NewLine;
-            return _neighbors.Aggregate(value, (current, neighbor) => current + ("\t" + neighbor._position));
+            var value = Position + Environment.NewLine;
+            return Neighbors.Aggregate(value, (current, neighbor) => current + ("\t" + neighbor.Position));
         }
     }
 }

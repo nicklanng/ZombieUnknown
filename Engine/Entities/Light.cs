@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Maths;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Isometric.Entities
+namespace Engine.Entities
 {
     public class Light : Entity
     {
@@ -19,8 +20,8 @@ namespace Engine.Isometric.Entities
 
         public float[,] VisiblityMap { get; private set; }
 
-        public Light(string name, Sprite lightSprite, Color color, short range)
-            : base(name, lightSprite)
+        public Light(string name, Sprite lightSprite, Color color, short range, ISpriteDrawer spriteDrawer)
+            : base(name, lightSprite, spriteDrawer)
         {
             Color = color;
             Range = range;
@@ -33,9 +34,9 @@ namespace Engine.Isometric.Entities
             GenerateIntensityMap();
         }
 
-        public override void Draw(SpriteBatch spriteBatch, Vector2 position, Color light)
+        public void Draw(SpriteBatch spriteBatch, Color light)
         {
-            Sprite.Draw(spriteBatch, position, Color);
+            Sprite.Draw(spriteBatch, MapPosition, Color);
         }
 
         public void GenerateVisibiltyMap(List<Line> walls)

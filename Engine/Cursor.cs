@@ -1,10 +1,10 @@
 ﻿using System;
+using Engine.Entities;
 using Engine.Input;
-using Engine.Isometric.Entities;
-using Engine.Sprites;
+using Engine.Maps;
 using Microsoft.Xna.Framework;
 
-namespace Engine.Isometric
+namespace Engine
 {
     public class Cursor
     {
@@ -17,12 +17,12 @@ namespace Engine.Isometric
         public bool IsOnMap { get; private set; }
         public Vector2 MapPosition { get; private set; }
 
-        public Cursor(Map map, Sprite frontCursor, Sprite backCursor)
+        public Cursor(Map map, CursorFrontEntity cursorFrontEntity, CursorBackEntity cursorBackEntity)
         {
             _map = map;
+            _cursorFrontEntity = cursorFrontEntity;
+            _cursorBackEntity = cursorBackEntity;
 
-            _cursorBackEntity = new CursorBackEntity("CursorBackEntity", backCursor);
-            _cursorFrontEntity = new CursorFrontEntity("CursorFrontEntity", frontCursor);
 
             Mouse.MouseMoved += MouseOnMouseMoved;
             Mouse.LmbDown += MouseOnLmbDown;

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ninject;
+
 #endregion
 
 namespace ZombieUnknown
@@ -18,8 +20,13 @@ namespace ZombieUnknown
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
+            using(var kernel = new StandardKernel(new ZombieGameModule()))
+            {
+                using (var game = kernel.Get<ZombieGameMain>())
+                {
+                    game.Run();
+                }
+            }
         }
     }
 #endif

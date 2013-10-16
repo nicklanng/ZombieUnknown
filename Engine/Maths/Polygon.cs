@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 
-namespace Engine
+namespace Engine.Maths
 {
     public class Polygon
     {

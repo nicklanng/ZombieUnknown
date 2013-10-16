@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Engine
+namespace Engine.Maths
 {
     public struct Line
     {
