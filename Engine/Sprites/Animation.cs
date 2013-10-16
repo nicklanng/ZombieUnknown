@@ -4,8 +4,9 @@ namespace Engine.Sprites
 {
     public class Animation
     {
-        public AnimationType AnimationType { get; private set; }
         private readonly List<AnimationFrame> _frames;
+        
+        public AnimationType AnimationType { get; private set; }
         
         public int NumberOfFrames
         {
