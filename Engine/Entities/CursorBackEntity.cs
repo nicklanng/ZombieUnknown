@@ -4,8 +4,8 @@ namespace Engine.Entities
 {
     public class CursorBackEntity : Entity
     {
-        internal CursorBackEntity(string name, Sprite sprite, ISpriteDrawer spriteDrawer)
-            : base(name, sprite, spriteDrawer)
+        public CursorBackEntity(string name, Sprite sprite)
+            : base(name, sprite)
         {
             ZIndex = short.MinValue;
         }

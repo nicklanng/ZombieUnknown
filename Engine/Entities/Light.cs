@@ -20,8 +20,8 @@ namespace Engine.Entities
 
         public float[,] VisiblityMap { get; private set; }
 
-        public Light(string name, Sprite lightSprite, Color color, short range, ISpriteDrawer spriteDrawer)
-            : base(name, lightSprite, spriteDrawer)
+        public Light(string name, Sprite lightSprite, Color color, short range)
+            : base(name, lightSprite)
         {
             Color = color;
             Range = range;

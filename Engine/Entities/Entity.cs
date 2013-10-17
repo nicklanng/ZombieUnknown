@@ -5,8 +5,6 @@ namespace Engine.Entities
 {
     public abstract class Entity
     {
-        protected readonly ISpriteDrawer _spriteDrawer;
-
         protected readonly Sprite Sprite;
 
         public Vector2 MapPosition { get; set; }
@@ -15,18 +13,17 @@ namespace Engine.Entities
 
         public short ZIndex { get; protected set; }
 
-        protected Entity(string name, Sprite sprite, ISpriteDrawer spriteDrawer)
+        protected Entity(string name, Sprite sprite)
         {
             Name = name;
             Sprite = sprite;
-            _spriteDrawer = spriteDrawer;
 
             ZIndex = 0;
         }
 
         public virtual void Draw(Color light)
         {
-            _spriteDrawer.Draw(Sprite, MapPosition, light);
+            SpriteDrawer.Draw(Sprite, MapPosition, light);
         }
 
         public void Update(GameTime gameTime)

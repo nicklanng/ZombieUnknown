@@ -4,8 +4,8 @@ namespace Engine.Entities
 {
     public class CursorFrontEntity : Entity
     {
-        internal CursorFrontEntity(string name, Sprite sprite, ISpriteDrawer spriteDrawer)
-            : base(name, sprite, spriteDrawer)
+        public CursorFrontEntity(string name, Sprite sprite)
+            : base(name, sprite)
         {
             ZIndex = short.MaxValue;
         }

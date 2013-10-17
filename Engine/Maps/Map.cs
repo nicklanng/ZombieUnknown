@@ -14,7 +14,6 @@ namespace Engine.Maps
         private readonly short _height;
 
         private readonly Tile[,] _tiles;
-        private readonly Manual2dCamera _manual2DCamera;
 
         private readonly List<Light> _lights;
 
@@ -25,14 +24,15 @@ namespace Engine.Maps
         private const float FloorHeight = 16;
 
         private Color _ambientLight;
+        private readonly ICamera _camera;
 
-        public Map(short width, short height, Tile[,] tiles, Color ambientLight, Manual2dCamera manual2DCamera)
+        public Map(short width, short height, Tile[,] tiles, Color ambientLight, ICamera camera)
         {
             _width = width;
             _height = height;
             _tiles = tiles;
             _ambientLight = ambientLight;
-            _manual2DCamera = manual2DCamera;
+            _camera = camera;
 
             _nodes = new Node[width, height];
             for (var x = 0; x < _width; x++)
@@ -119,33 +119,11 @@ namespace Engine.Maps
             RegenerateLightMap();
         }
 
-        public bool GetMapCoordinates(Vector2 screenCoordinates, out Vector2 mapCoordinates)
-        {
-            const int mouseVerticalOffset = 10;
-
-            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.X / 2) + (int)_manual2DCamera.Position.X + FloorWidth / 2;
-            var yStripped = ((screenCoordinates.Y / EngineSettings.ZoomFactor) - (int)(_manual2DCamera.Size.Y / 2) + (int)_manual2DCamera.Position.Y) + mouseVerticalOffset;
-
-            var isoX = yStripped / (FloorHeight) + xStripped / (FloorWidth);
-            var isoY = -(yStripped / (FloorHeight) - xStripped / (FloorWidth));
-
-            mapCoordinates = new Vector2(isoX, isoY);
-
-            if (isoX < 0 || isoX >= _width || isoY < 0 || isoY >= _height)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public MoveableEntity GetSelected(Vector2 mapPosition)
         {
             var tile = _tiles[(int)mapPosition.X, (int)mapPosition.Y];
             return tile.MoveableEntity;
         }
-
-        
 
         private void RegenerateLightMap()
         {
@@ -293,13 +271,11 @@ namespace Engine.Maps
                             node.AddNeighbor(_nodes[x, y + 1]);
                         }
                     }
-
-                    //Console.WriteLine(node);
                 }
             }
         }
 
-        private bool IsPositionOnMap(int x, int y)
+        public bool IsPositionOnMap(int x, int y)
         {
             if (x < 0) return false;
             if (x >= _width) return false;

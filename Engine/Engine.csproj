@@ -53,7 +53,6 @@
     <Compile Include="Entities\MoveableEntity.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Input\Mouse.cs" />
-    <Compile Include="Maps\ITileFactory.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="SpriteDrawer.cs" />
     <Compile Include="Maths\Line.cs" />

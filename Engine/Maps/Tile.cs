@@ -3,7 +3,6 @@ using System.Linq;
 using Engine.Entities;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Maps
 {
@@ -14,7 +13,6 @@ namespace Engine.Maps
         private readonly Sprite _leftWallSprite;
         private readonly Sprite _rightWallSprite;
         private readonly Sprite _wallJoinSprite;
-        private readonly ISpriteDrawer _spriteDrawer;
         private readonly Sprite _floorSprite;
 
         public Color Light { get; set; }
@@ -36,14 +34,13 @@ namespace Engine.Maps
             get { return _floorSprite != null; }
         }
 
-        public Tile(Vector2 position, Sprite floorSprite, Sprite leftWall, Sprite rightWall, Sprite wallJoinSprite, ISpriteDrawer spriteDrawer)
+        public Tile(Vector2 position, Sprite floorSprite, Sprite leftWall, Sprite rightWall, Sprite wallJoinSprite)
         {
             Position = position;
             _floorSprite = floorSprite;
             _leftWallSprite = leftWall;
             _rightWallSprite = rightWall;
             _wallJoinSprite = wallJoinSprite;
-            _spriteDrawer = spriteDrawer;
 
             _entities = new List<Entity>();
             Light = Color.White;
@@ -61,14 +58,14 @@ namespace Engine.Maps
 
         public void DrawWalls()
         {
-            if (_leftWallSprite != null) _spriteDrawer.Draw(_leftWallSprite, Position, Light);
-            if (_rightWallSprite != null) _spriteDrawer.Draw(_rightWallSprite, Position, Light);
-            if (_wallJoinSprite != null) _spriteDrawer.Draw(_wallJoinSprite, Position, Light);
+            if (_leftWallSprite != null) SpriteDrawer.Draw(_leftWallSprite, Position, Light);
+            if (_rightWallSprite != null) SpriteDrawer.Draw(_rightWallSprite, Position, Light);
+            if (_wallJoinSprite != null) SpriteDrawer.Draw(_wallJoinSprite, Position, Light);
         }
 
         public void DrawFloor()
         {
-            if (_floorSprite != null) _spriteDrawer.Draw(_floorSprite, Position, Light);
+            if (_floorSprite != null) SpriteDrawer.Draw(_floorSprite, Position, Light);
         }
 
         public void DrawEntities()

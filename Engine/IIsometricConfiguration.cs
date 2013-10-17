@@ -1,9 +1,9 @@
 ﻿namespace Engine
 {
-    interface IIsometricConfiguration
+    public interface IIsometricConfiguration
     {
-        short FloorWidth { get; set; }
-        short FloorHeight { get; set; }
-        short TileHeight { get; set; }
+        short FloorWidth { get; }
+        short FloorHeight { get; }
+        short TileHeight { get; }
     }
 }

@@ -9,6 +9,7 @@ namespace Engine
     public class Cursor
     {
         private readonly Map _map;
+        private readonly ICamera _camera;
         private readonly CursorBackEntity _cursorBackEntity;
         private readonly CursorFrontEntity _cursorFrontEntity;
 
@@ -17,9 +18,10 @@ namespace Engine
         public bool IsOnMap { get; private set; }
         public Vector2 MapPosition { get; private set; }
 
-        public Cursor(Map map, CursorFrontEntity cursorFrontEntity, CursorBackEntity cursorBackEntity)
+        public Cursor(Map map, ICamera camera, CursorFrontEntity cursorFrontEntity, CursorBackEntity cursorBackEntity)
         {
             _map = map;
+            _camera = camera;
             _cursorFrontEntity = cursorFrontEntity;
             _cursorBackEntity = cursorBackEntity;
 
@@ -32,8 +34,9 @@ namespace Engine
         {
             var screenCoordinates = Mouse.ScreenCoordinates;
 
-            Vector2 newMapPosition;
-            var newIsOnMap = _map.GetMapCoordinates(screenCoordinates, out newMapPosition);
+            var newMapPosition = _camera.GetMapCoordinates(screenCoordinates);
+
+            var newIsOnMap = _map.IsPositionOnMap((int)newMapPosition.X, (int)newMapPosition.Y);
 
             if (newMapPosition == _mapPosition)
             {

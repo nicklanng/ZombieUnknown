@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
+using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -16,15 +17,12 @@ namespace ZombieUnknown
     public class ZombieGameMain : Game
     {
         private readonly GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private Map _map;
-        private Manual2dCamera _camera;
+        private ICamera _camera;
         private Cursor _cursor;
 
-        private ITileFactory _tileFactory;
-        private IEntityFactory _entityFactory;
-
         private Vector2 _mapSize = new Vector2(200, 200);
+        private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
         {
@@ -45,7 +43,11 @@ namespace ZombieUnknown
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            _camera = new Camera(new Vector2(_graphics.PreferredBackBufferWidth / EngineSettings.ZoomFactor, _graphics.PreferredBackBufferHeight / EngineSettings.ZoomFactor), 200, new IsometricConfiguration());
+
+            SpriteDrawer.Initialize(_camera, _spriteBatch);
 
             base.Initialize();
         }
@@ -56,9 +58,6 @@ namespace ZombieUnknown
         /// </summary>
         protected override void LoadContent()
         {
-            _camera = new Manual2dCamera(new Vector2(_graphics.PreferredBackBufferWidth / EngineSettings.ZoomFactor, _graphics.PreferredBackBufferHeight / EngineSettings.ZoomFactor), 200.0f);
-
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
             
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var terrainTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/xcom-forest.png"));
@@ -184,23 +183,23 @@ namespace ZombieUnknown
                         joinWall = joinWallSprite;
                     }
 
-                    tiles[x, y] = _tileFactory.CreateTile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
+                    tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
                 }
             }
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
 
-            _map.AddEntity(new Vector2(4, 7), _entityFactory.CreateLight("DullLight", lightSprite, Color.Gray, 7));
-            _map.AddEntity(new Vector2(8, 11), _entityFactory.CreateLight("RedLight", lightSprite, Color.Red, 4));
-            _map.AddEntity(new Vector2(15, 4), _entityFactory.CreateLight("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
-            _map.AddEntity(new Vector2(5, 5), _entityFactory.CreateLight("BrightLight", lightSprite, Color.White, 20));
+            _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
+            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
+            _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
+            _map.AddEntity(new Vector2(5, 5), new Light("BrightLight", lightSprite, Color.White, 20));
 
-            _map.AddEntity(new Vector2(3, 6), _entityFactory.CreateHuman("Ethereal 1", etherealSprite));
-            _map.AddEntity(new Vector2(9, 10), _entityFactory.CreateHuman("Ethereal 2", etherealSprite));
+            _map.AddEntity(new Vector2(3, 6), new Human("Ethereal 1", etherealSprite));
+            _map.AddEntity(new Vector2(9, 10), new Human("Ethereal 2", etherealSprite));
 
-            var frontCursorEntity = _entityFactory.CreateFrontCursor("CursorFrontEntity", frontCursorSprite);
-            var backCursorEntity = _entityFactory.CreateBackCursor("CursorBackEntity", backCursorSprite);
+            var frontCursorEntity = new CursorFrontEntity("CursorFrontEntity", frontCursorSprite);
+            var backCursorEntity = new CursorBackEntity("CursorBackEntity", backCursorSprite);
 
-            _cursor = new Cursor(_map, frontCursorEntity, backCursorEntity);
+            _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
         }
 
         /// <summary>
