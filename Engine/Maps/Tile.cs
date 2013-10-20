@@ -84,7 +84,6 @@ namespace Engine.Maps
                 MoveableEntity = moveableEntity;
             }
 
-            entity.MapPosition = Position;
             _entities.Add(entity);
             
             _entities = new List<Entity>(_entities.OrderBy(x => x.ZIndex));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Engine;
 using Engine.Entities;
 using Engine.Maps;
+using Engine.Pathfinding;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -186,20 +187,25 @@ namespace ZombieUnknown
                     tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
                 }
             }
-            _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.1f, 0.1f, 0.1f), _camera);
+            _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.5f, 0.5f, 0.5f), _camera);
 
-            _map.AddEntity(new Vector2(4, 7), new Light("DullLight", lightSprite, Color.Gray, 7));
-            _map.AddEntity(new Vector2(8, 11), new Light("RedLight", lightSprite, Color.Red, 4));
-            _map.AddEntity(new Vector2(15, 4), new Light("BlueLight", lightSprite, new Color(0.2f, 0.2f, 1.0f), 11));
-            _map.AddEntity(new Vector2(5, 5), new Light("BrightLight", lightSprite, Color.White, 20));
+            var light = new Light("BrightLight", lightSprite, new Vector2(5, 5), Color.White, 20);
+            _map.AddEntity(light.MapPosition, light);
 
-            _map.AddEntity(new Vector2(3, 6), new Human("Ethereal 1", etherealSprite));
-            _map.AddEntity(new Vector2(9, 10), new Human("Ethereal 2", etherealSprite));
+            var human1 = new Human("Ethereal 1", etherealSprite, new Vector2(3, 6), _map);
+            _map.AddEntity(human1.MapPosition, human1);
+
+            var human2 = new Human("Ethereal 2", etherealSprite, new Vector2(9, 10), _map);
+            _map.AddEntity(human2.MapPosition, human2);
 
             var frontCursorEntity = new CursorFrontEntity("CursorFrontEntity", frontCursorSprite);
             var backCursorEntity = new CursorBackEntity("CursorBackEntity", backCursorSprite);
 
             _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
+
+            var aStarSolver = new AStarSolver(_map.GetNodeAt(human1.MapPosition), _map.GetNodeAt(new Vector2(14, 19)));
+            aStarSolver.Solve();
+            human1.WalkPath(aStarSolver.Solution);
         }
 
         /// <summary>

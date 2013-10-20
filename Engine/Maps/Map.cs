@@ -19,11 +19,8 @@ namespace Engine.Maps
 
         private readonly Node[,] _nodes;
 
-        private const float TileHeight = 48;
-        private const float FloorWidth = 32;
-        private const float FloorHeight = 16;
-
         private Color _ambientLight;
+
         private readonly ICamera _camera;
 
         public Map(short width, short height, Tile[,] tiles, Color ambientLight, ICamera camera)
@@ -67,19 +64,20 @@ namespace Engine.Maps
             {
                 for (var y = _height - 1; y >= 0; y--)
                 {
-                    _tiles[x, y].DrawWalls();
                     _tiles[x, y].DrawFloor();
+
+                    _tiles[x, y].DrawWalls();
 
                     _tiles[x, y].DrawEntities();
                     
-                    if (GameState.Selected != null)
-                    {
-                        if ((int) GameState.Selected.MapPosition.X == x &&
-                            (int)GameState.Selected.MapPosition.Y == y)
-                        {
-                            //ResourceManager.SelectMarkerSprite.Draw(spriteBatch);
-                        }
-                    }
+                    //if (GameState.Selected != null)
+                    //{
+                    //    if ((int) GameState.Selected.MapPosition.X == x &&
+                    //        (int)GameState.Selected.MapPosition.Y == y)
+                    //    {
+                    //        ResourceManager.SelectMarkerSprite.Draw(spriteBatch);
+                    //    }
+                    //}
                 }
             }
         }

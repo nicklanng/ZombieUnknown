@@ -109,7 +109,7 @@ namespace Engine
             var isoX = yStripped / (_isometricConfiguration.FloorHeight) + xStripped / (_isometricConfiguration.FloorWidth);
             var isoY = -(yStripped / (_isometricConfiguration.FloorHeight) - xStripped / (_isometricConfiguration.FloorWidth));
 
-            return new Vector2(isoX, isoY);
+            return new Vector2((int)isoX, (int)isoY);
         }
     }
 }

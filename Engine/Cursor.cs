@@ -45,17 +45,20 @@ namespace Engine
 
             if (IsOnMap)
             {
-                _map.RemoveEntity(_mapPosition, _cursorBackEntity);
-                _map.RemoveEntity(_mapPosition, _cursorFrontEntity);
+                _map.RemoveEntity(_cursorBackEntity.MapPosition, _cursorBackEntity);
+                _map.RemoveEntity(_cursorFrontEntity.MapPosition, _cursorFrontEntity);
             }
 
             IsOnMap = newIsOnMap;
             _mapPosition = newMapPosition;
 
+            _cursorBackEntity.MapPosition = newMapPosition;
+            _cursorFrontEntity.MapPosition = newMapPosition;
+
             if (IsOnMap)
             {
-                _map.AddEntity(_mapPosition, _cursorBackEntity);
-                _map.AddEntity(_mapPosition, _cursorFrontEntity);
+                _map.AddEntity(_cursorBackEntity.MapPosition, _cursorBackEntity);
+                _map.AddEntity(_cursorFrontEntity.MapPosition, _cursorFrontEntity);
             }
         }
 

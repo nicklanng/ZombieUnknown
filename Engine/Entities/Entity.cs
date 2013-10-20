@@ -13,10 +13,11 @@ namespace Engine.Entities
 
         public short ZIndex { get; protected set; }
 
-        protected Entity(string name, Sprite sprite)
+        protected Entity(string name, Sprite sprite, Vector2 mapPosition)
         {
             Name = name;
             Sprite = sprite;
+            MapPosition = mapPosition;
 
             ZIndex = 0;
         }
@@ -26,7 +27,7 @@ namespace Engine.Entities
             SpriteDrawer.Draw(Sprite, MapPosition, light);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             Sprite.Update(gameTime);
         }

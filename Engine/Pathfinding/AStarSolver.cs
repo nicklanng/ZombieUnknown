@@ -58,6 +58,7 @@ namespace Engine.Pathfinding
         {
             var list = new List<Vector2>();
             currentNode.GetPath(list).Add(_endingNode.Position);
+            list.RemoveAt(0);
             Solution = list;
         }
 
