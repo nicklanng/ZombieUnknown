@@ -29,33 +29,6 @@ namespace ZombieUnknown.Entities
         
         public override void Update(GameTime gameTime)
         {
-            //if (_path != null && !_targetSquare.HasValue && _path.Count > 0)
-            //{
-            //    MoveTo(_path.ElementAt(0));
-            //}
-
-            //if (_targetSquare.HasValue)
-            //{
-            //    var distanceToTarget = (_targetSquare.Value - MapPosition);
-            //    var moveAmount = distanceToTarget;
-            //    moveAmount.Normalize();
-            //    moveAmount = moveAmount * (float)gameTime.ElapsedGameTime.TotalSeconds * 0.5f;
-
-            //    if (moveAmount.Length() < distanceToTarget.Length())
-            //    {
-            //        MapPosition += moveAmount;
-            //    }
-            //    else
-            //    {
-            //        MapPosition = _targetSquare.Value;
-            //        _targetSquare = null;
-            //        _path.RemoveAt(0);
-            //    }
-            //}
-
-
-
-
             if (_path != null)
             {
                 if (!_targetSquare.HasValue)

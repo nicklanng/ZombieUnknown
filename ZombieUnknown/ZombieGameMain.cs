@@ -19,6 +19,7 @@ namespace ZombieUnknown
     {
         private readonly GraphicsDeviceManager _graphics;
         private Map _map;
+        private PathfindingMap _pathfindingMap;
         private ICamera _camera;
         private Cursor _cursor;
 
@@ -188,6 +189,7 @@ namespace ZombieUnknown
                 }
             }
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.5f, 0.5f, 0.5f), _camera);
+            _pathfindingMap = new PathfindingMap(_map);
 
             var light = new Light("BrightLight", lightSprite, new Vector2(5, 5), Color.White, 20);
             _map.AddEntity(light.MapPosition, light);
@@ -203,7 +205,7 @@ namespace ZombieUnknown
 
             _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
 
-            var aStarSolver = new AStarSolver(_map.GetNodeAt(human1.MapPosition), _map.GetNodeAt(new Vector2(14, 19)));
+            var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.MapPosition), _pathfindingMap.GetNodeAt(new Vector2(14, 19)));
             aStarSolver.Solve();
             human1.WalkPath(aStarSolver.Solution);
         }
