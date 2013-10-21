@@ -159,7 +159,7 @@ namespace ZombieUnknown
             {
                 for (var y = 0; y < _mapSize.Y; y++)
                 {
-                    var interestingTile = random.NextDouble();
+                    var interestingTile = 0;// random.NextDouble();
                     var index = 0;
 
                     if (interestingTile > 0.7)

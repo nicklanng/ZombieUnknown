@@ -54,6 +54,13 @@ namespace Engine.Maps
                 for (var y = Height - 1; y >= 0; y--)
                 {
                     _tiles[x, y].DrawFloor();
+                }
+            }
+
+            for (var x = 0; x < Width; x++)
+            {
+                for (var y = Height - 1; y >= 0; y--)
+                {
 
                     _tiles[x, y].DrawWalls();
 
