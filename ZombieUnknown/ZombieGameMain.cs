@@ -20,6 +20,7 @@ namespace ZombieUnknown
         private readonly GraphicsDeviceManager _graphics;
         private Map _map;
         private PathfindingMap _pathfindingMap;
+        private LightMap _lightMap;
         private ICamera _camera;
         private Cursor _cursor;
 
@@ -159,7 +160,7 @@ namespace ZombieUnknown
             {
                 for (var y = 0; y < _mapSize.Y; y++)
                 {
-                    var interestingTile = 0;// random.NextDouble();
+                    var interestingTile = random.NextDouble();
                     var index = 0;
 
                     if (interestingTile > 0.7)
@@ -188,11 +189,8 @@ namespace ZombieUnknown
                     tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
                 }
             }
-            _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles, new Color(0.5f, 0.5f, 0.5f), _camera);
+            _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
-
-            var light = new Light("BrightLight", lightSprite, new Vector2(5, 5), Color.White, 20);
-            _map.AddEntity(light.MapPosition, light);
 
             var human1 = new Human("Ethereal 1", etherealSprite, new Vector2(3, 6), _map);
             _map.AddEntity(human1.MapPosition, human1);
@@ -200,14 +198,22 @@ namespace ZombieUnknown
             var human2 = new Human("Ethereal 2", etherealSprite, new Vector2(9, 10), _map);
             _map.AddEntity(human2.MapPosition, human2);
 
+            var light = new Light("BrightLight", lightSprite, new Vector2(3, 6), Color.White, 20);
+            _map.AddEntity(light.MapPosition, light);
+
+            var light2 = new Light("BrightLight", lightSprite, new Vector2(14, 19), Color.White, 20);
+            _map.AddEntity(light2.MapPosition, light2);
+
             var frontCursorEntity = new CursorFrontEntity("CursorFrontEntity", frontCursorSprite);
             var backCursorEntity = new CursorBackEntity("CursorBackEntity", backCursorSprite);
 
             _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
 
-            var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.MapPosition), _pathfindingMap.GetNodeAt(new Vector2(14, 19)));
+            var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.MapPosition), _pathfindingMap.GetNodeAt(light2.MapPosition));
             aStarSolver.Solve();
             human1.WalkPath(aStarSolver.Solution);
+
+            _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));
         }
 
         /// <summary>
