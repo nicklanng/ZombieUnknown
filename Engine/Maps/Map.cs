@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Engine.Entities;
-using Engine.Maths;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,6 +10,7 @@ namespace Engine.Maps
     public class Map
     {
         private readonly Tile[,] _tiles;
+        private readonly List<Entity>[,] _entities;
 
         public List<Light> Lights { get; private set; }
 
@@ -23,6 +24,14 @@ namespace Engine.Maps
             Height = height;
 
             _tiles = tiles;
+            _entities = new List<Entity>[Width, Height];
+            for (var x = 0; x < Width; x++)
+            {
+                for (var y = 0; y < Height; y++)
+                {
+                    _entities[x, y] = new List<Entity>();
+                }
+            }
 
             Lights = new List<Light>();
         }
@@ -34,6 +43,7 @@ namespace Engine.Maps
                 for (var y = 0; y < Height; y++)
                 {
                     _tiles[x, y].Update(gameTime);
+                    _entities[x, y].ForEach(e => e.Update(gameTime));
                 }
             }
         }
@@ -55,8 +65,14 @@ namespace Engine.Maps
 
                     _tiles[x, y].DrawWalls();
 
-                    _tiles[x, y].DrawEntities();
-                    
+                    var list = _entities[x, y].OrderBy(e => e.ZIndex);
+                    foreach (var entity in list)
+                    {
+                        entity.Draw(_tiles[x, y].Light);
+                    }
+
+                    //_tiles[x, y].DrawEntities();
+
                     //if (GameState.Selected != null)
                     //{
                     //    if ((int) GameState.Selected.MapPosition.X == x &&
@@ -74,10 +90,9 @@ namespace Engine.Maps
             return _tiles[x, y];
         }
 
-        public void AddEntity(Vector2 position, Entity entity)
+        public void AddEntity(Coordinate coordinate, Entity entity)
         {
-            var parentTile = _tiles[(int)position.X, (int)position.Y];
-            parentTile.AddEntity(entity);
+            _entities[coordinate.X, coordinate.Y].Add(entity);
 
             var lightEntity = entity as Light;
             if (lightEntity == null)
@@ -88,10 +103,9 @@ namespace Engine.Maps
             Lights.Add(lightEntity);
         }
 
-        public void RemoveEntity(Vector2 position, Entity entity)
+        public void RemoveEntity(Coordinate coordinate, Entity entity)
         {
-            var parentTile = _tiles[(int)position.X, (int)position.Y];
-            parentTile.RemoveEntity(entity);
+            _entities[coordinate.X, coordinate.Y].Remove(entity);
 
             var lightEntity = entity as Light;
             if (lightEntity == null)
@@ -102,18 +116,18 @@ namespace Engine.Maps
             Lights.Remove(lightEntity);
         }
 
-        public MoveableEntity GetSelected(Vector2 mapPosition)
+        public MoveableEntity GetSelected(Coordinate coordinate)
         {
-            var tile = _tiles[(int)mapPosition.X, (int)mapPosition.Y];
-            return tile.MoveableEntity;
+            var entities = _entities[coordinate.X, coordinate.Y];
+            return (MoveableEntity)entities.FirstOrDefault(e => e is MoveableEntity);
         }
 
-        public bool IsPositionOnMap(int x, int y)
+        public bool IsPositionOnMap(Coordinate coordinate)
         {
-            if (x < 0) return false;
-            if (x >= Width) return false;
-            if (y < 0) return false;
-            if (y >= Height) return false;
+            if (coordinate.X < 0) return false;
+            if (coordinate.X >= Width) return false;
+            if (coordinate.Y < 0) return false;
+            if (coordinate.Y >= Height) return false;
 
             return true;
         }

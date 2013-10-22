@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+using Engine.Maps;
 
 namespace Engine.Pathfinding
 {
@@ -21,19 +21,19 @@ namespace Engine.Pathfinding
             get { return _node.Neighbors; }
         }
 
-        public Vector2 Position
+        public Coordinate Position
         {
-            get { return _node.Position; }
+            get { return _node.Coordinate; }
         }
 
-        public List<Vector2> GetPath(List<Vector2> list)
+        public List<Coordinate> GetPath(List<Coordinate> list)
         {
             if (_parent != null)
             {
                 _parent.GetPath(list);
             }
 
-            list.Add(_node.Position);
+            list.Add(_node.Coordinate);
 
             return list;
         }

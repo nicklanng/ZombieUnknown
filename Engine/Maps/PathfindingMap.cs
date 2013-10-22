@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using Engine.Pathfinding;
+﻿using Engine.Pathfinding;
 
 namespace Engine.Maps
 {
@@ -16,9 +11,9 @@ namespace Engine.Maps
             RegeneratePathfindingMap(map);
         }
 
-        public Node GetNodeAt(Vector2 position)
+        public Node GetNodeAt(Coordinate coordinate)
         {
-            return _nodes[(int)position.X, (int)position.Y];
+            return _nodes[coordinate.X, coordinate.Y];
         }
 
         private void RegeneratePathfindingMap(Map map)
@@ -28,7 +23,7 @@ namespace Engine.Maps
             {
                 for (var y = 0; y < map.Height; y++)
                 {
-                    var node = new Node(new Vector2(x, y));
+                    var node = new Node(new Coordinate(x, y));
                     _nodes[x, y] = node;
                 }
             }
@@ -39,7 +34,7 @@ namespace Engine.Maps
                 {
                     var node = _nodes[x, y];
 
-                    if (map.IsPositionOnMap(x - 1, y))
+                    if (map.IsPositionOnMap(new Coordinate(x - 1, y)))
                     {
                         if (!map.GetTile(x, y).HasLeftWall)
                         {
@@ -47,7 +42,7 @@ namespace Engine.Maps
                         }
                     }
 
-                    if (map.IsPositionOnMap(x, y - 1))
+                    if (map.IsPositionOnMap(new Coordinate(x, y - 1)))
                     {
                         var neighborNode = _nodes[x, y - 1];
                         if (!map.GetTile(x, y - 1).HasRightWall)
@@ -56,7 +51,7 @@ namespace Engine.Maps
                         }
                     }
 
-                    if (map.IsPositionOnMap(x + 1, y))
+                    if (map.IsPositionOnMap(new Coordinate(x + 1, y)))
                     {
                         var neighborNode = _nodes[x + 1, y];
                         if (!map.GetTile(x + 1, y).HasLeftWall)
@@ -65,7 +60,7 @@ namespace Engine.Maps
                         }
                     }
 
-                    if (map.IsPositionOnMap(x, y + 1))
+                    if (map.IsPositionOnMap(new Coordinate(x, y + 1)))
                     {
                         if (!map.GetTile(x, y).HasRightWall)
                         {

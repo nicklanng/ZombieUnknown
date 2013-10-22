@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Maps;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Pathfinding
@@ -11,7 +12,7 @@ namespace Engine.Pathfinding
         private readonly List<SearchedNode> _closedList;
         private readonly List<SearchedNode> _openList;
 
-        public List<Vector2> Solution { get; private set; } 
+        public List<Coordinate> Solution { get; private set; } 
 
         public AStarSolver(Node startingNode, Node endingNode)
         {
@@ -56,15 +57,15 @@ namespace Engine.Pathfinding
 
         private void BuildSolutionPath(SearchedNode currentNode)
         {
-            var list = new List<Vector2>();
-            currentNode.GetPath(list).Add(_endingNode.Position);
+            var list = new List<Coordinate>();
+            currentNode.GetPath(list).Add(_endingNode.Coordinate);
             list.RemoveAt(0);
             Solution = list;
         }
 
         private void AddOrUpdateNeighbor(Node neighbor, SearchedNode currentNode, int travelledCost, int heuristic)
         {
-            var savedNode = _openList.SingleOrDefault(x => x.Position == neighbor.Position);
+            var savedNode = _openList.SingleOrDefault(x => x.Position == neighbor.Coordinate);
 
             if (savedNode == null)
             {
@@ -81,8 +82,8 @@ namespace Engine.Pathfinding
 
         private int CalculateManhattenHeuristic(Node currentNode)
         {
-            var x = Math.Abs(_endingNode.Position.X - currentNode.Position.X);
-            var y = Math.Abs(_endingNode.Position.Y - currentNode.Position.Y);
+            var x = Math.Abs(_endingNode.Coordinate.X - currentNode.Coordinate.X);
+            var y = Math.Abs(_endingNode.Coordinate.Y - currentNode.Coordinate.Y);
 
             return (int)(x + y);
         }

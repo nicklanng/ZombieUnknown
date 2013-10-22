@@ -160,7 +160,7 @@ namespace ZombieUnknown
             {
                 for (var y = 0; y < _mapSize.Y; y++)
                 {
-                    var interestingTile = random.NextDouble();
+                    var interestingTile = 0;
                     var index = 0;
 
                     if (interestingTile > 0.7)
@@ -192,24 +192,24 @@ namespace ZombieUnknown
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
 
-            var human1 = new Human("Ethereal 1", etherealSprite, new Vector2(3, 6), _map);
-            _map.AddEntity(human1.MapPosition, human1);
+            var human1 = new Human("Ethereal 1", etherealSprite, new Coordinate(3, 6), _map);
+            _map.AddEntity(human1.Coordinate, human1);
 
-            var human2 = new Human("Ethereal 2", etherealSprite, new Vector2(9, 10), _map);
-            _map.AddEntity(human2.MapPosition, human2);
+            var human2 = new Human("Ethereal 2", etherealSprite, new Coordinate(9, 10), _map);
+            _map.AddEntity(human2.Coordinate, human2);
 
-            var light = new Light("BrightLight", lightSprite, new Vector2(3, 6), Color.White, 20);
-            _map.AddEntity(light.MapPosition, light);
+            var light = new Light("BrightLight", lightSprite, new Coordinate(3, 6), Color.White, 20);
+            _map.AddEntity(light.Coordinate, light);
 
-            var light2 = new Light("BrightLight", lightSprite, new Vector2(14, 19), Color.White, 20);
-            _map.AddEntity(light2.MapPosition, light2);
+            var light2 = new Light("BrightLight", lightSprite, new Coordinate(14, 19), Color.White, 20);
+            _map.AddEntity(light2.Coordinate, light2);
 
             var frontCursorEntity = new CursorFrontEntity("CursorFrontEntity", frontCursorSprite);
             var backCursorEntity = new CursorBackEntity("CursorBackEntity", backCursorSprite);
 
             _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
 
-            var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.MapPosition), _pathfindingMap.GetNodeAt(light2.MapPosition));
+            var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.Coordinate), _pathfindingMap.GetNodeAt(light2.Coordinate));
             aStarSolver.Solve();
             human1.WalkPath(aStarSolver.Solution);
 

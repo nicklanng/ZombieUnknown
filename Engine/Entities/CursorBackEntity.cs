@@ -1,4 +1,5 @@
-﻿using Engine.Sprites;
+﻿using Engine.Maps;
+using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
@@ -6,7 +7,7 @@ namespace Engine.Entities
     public class CursorBackEntity : Entity
     {
         public CursorBackEntity(string name, Sprite sprite)
-            : base(name, sprite, new Vector2())
+            : base(name, sprite, new Coordinate())
         {
             ZIndex = short.MinValue;
         }

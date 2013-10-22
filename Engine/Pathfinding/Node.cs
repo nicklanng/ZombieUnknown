@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
+using Engine.Maps;
 
 namespace Engine.Pathfinding
 {
     public class Node
     {
-        public Vector2 Position { get; private set; }
+        public Coordinate Coordinate { get; private set; }
         public List<Node> Neighbors { get; set; }
 
-        public Node(Vector2 position)
+        public Node(Coordinate coordinate)
         {
-            Position = position;
+            Coordinate = coordinate;
             Neighbors = new List<Node>();
         }
 
@@ -23,8 +23,8 @@ namespace Engine.Pathfinding
 
         public override string ToString()
         {
-            var value = Position + Environment.NewLine;
-            return Neighbors.Aggregate(value, (current, neighbor) => current + ("\t" + neighbor.Position));
+            var value = Coordinate + Environment.NewLine;
+            return Neighbors.Aggregate(value, (current, neighbor) => current + ("\t" + neighbor.Coordinate));
         }
     }
 }

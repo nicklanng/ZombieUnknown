@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Engine;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
@@ -11,18 +12,21 @@ namespace ZombieUnknown.Entities
     {
         private readonly Map _map;
 
-        private List<Vector2> _path;
-        private Vector2? _targetSquare;
-        private bool updateMapLocationAfterMove;
-        private Vector2 _oldPosition;
+        private List<Coordinate> _path;
+        private Coordinate? _targetSquare;
+        private bool _updateMapLocationAfterMove;
 
-        public Human(string name, Sprite sprite, Vector2 mapPosition, Map map)
-            : base(name, sprite, mapPosition)
+        public Vector2 MapPosition { get; set; }
+
+        public Human(string name, Sprite sprite, Coordinate coordinate, Map map)
+            : base(name, sprite, coordinate)
         {
             _map = map;
+
+            MapPosition = Coordinate.ToVector2();
         }
 
-        public void WalkPath(List<Vector2> path)
+        public void WalkPath(List<Coordinate> path)
         {
             _path = path;
         }
@@ -33,25 +37,26 @@ namespace ZombieUnknown.Entities
             {
                 if (!_targetSquare.HasValue)
                 {
-                    _oldPosition = MapPosition;
+                    _targetSquare = _path.ElementAt(0);
 
-                    var nextTargetSquare = _path.ElementAt(0);
-                    if (nextTargetSquare.X < _oldPosition.X || nextTargetSquare.Y > _oldPosition.Y)
+                    if (_targetSquare.Value.X < Coordinate.X || _targetSquare.Value.Y > Coordinate.Y)
                     {
-                        updateMapLocationAfterMove = true;
+                        _updateMapLocationAfterMove = true;
                     }
                     else
                     {
-                        updateMapLocationAfterMove = false;
-                        _map.RemoveEntity(_oldPosition, this);
-                        _map.AddEntity(_path.ElementAt(0), this);
-                    }
+                        _updateMapLocationAfterMove = false;
 
-                    _targetSquare = _path.ElementAt(0);
+                        _map.RemoveEntity(Coordinate, this);
+
+                        Coordinate = _path.ElementAt(0);
+
+                        _map.AddEntity(Coordinate, this);
+                    }
                 }
                 
                 
-                var distanceToTarget = (_targetSquare.Value - MapPosition);
+                var distanceToTarget = (_targetSquare.Value.ToVector2() - MapPosition);
                 var moveAmount = distanceToTarget;
                 moveAmount.Normalize();
                 moveAmount = moveAmount * (float)gameTime.ElapsedGameTime.TotalSeconds * 0.5f;
@@ -62,28 +67,32 @@ namespace ZombieUnknown.Entities
                 }
                 else
                 {
-                    MapPosition = _targetSquare.Value;
-                    _path.RemoveAt(0);
-                    if (!_path.Any())
+                    if (_updateMapLocationAfterMove)
                     {
-                        _path = null;
-                    }
+                        _map.RemoveEntity(Coordinate, this);
 
-                    if (updateMapLocationAfterMove)
-                    {
-                        _map.RemoveEntity(_oldPosition, this);
+                        Coordinate = _targetSquare.Value;
+                        MapPosition = Coordinate.ToVector2();
 
                         _map.AddEntity(_targetSquare.Value, this);
                     }
 
                     _targetSquare = null;
+
+                    _path.RemoveAt(0);
+                    if (!_path.Any())
+                    {
+                        _path = null;
+                    }
                 }
             }
 
-
-
-
             base.Update(gameTime);
+        }
+
+        public override void Draw(Color light)
+        {
+            SpriteDrawer.Draw(Sprite, MapPosition, light);
         }
     }
 }

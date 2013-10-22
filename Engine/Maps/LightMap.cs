@@ -13,7 +13,7 @@ namespace Engine.Maps
 
         private Color _ambientLight;
 
-        private byte[, ,] _lightValues;
+        private readonly byte[, ,] _lightValues;
 
         public LightMap(Map map, Color ambientLight)
         {
@@ -35,18 +35,18 @@ namespace Engine.Maps
             {
                 var walls = new List<Line>();
 
-                var lightPosition = light.MapPosition;
+                var lightPosition = light.Coordinate;
 
                 var lightMapSize = light.Range * 2 + 1;
 
                 for (var x = 0; x < lightMapSize; x++)
                 {
-                    var mapX = (int)lightPosition.X - light.Range + x;
+                    var mapX = lightPosition.X - light.Range + x;
                     if (mapX < 0 || mapX >= _map.Width) continue;
 
                     for (var y = 0; y < lightMapSize; y++)
                     {
-                        var mapY = (int)lightPosition.Y - light.Range + y;
+                        var mapY = lightPosition.Y - light.Range + y;
                         if (mapY < 0 || mapY >= _map.Height) continue;
 
                         var tile = _map.GetTile(mapX, mapY);
@@ -70,19 +70,19 @@ namespace Engine.Maps
             foreach (var light in _map.Lights)
             {
                 var lightColor = light.Color;
-                var lightPosition = light.MapPosition;
+                var lightPosition = light.Coordinate;
                 var intensityMap = light.IntensityMap;
                 var visibilityMap = light.VisiblityMap;
                 var lightMapSize = light.Range * 2 + 1;
 
                 for (var x = 0; x < lightMapSize; x++)
                 {
-                    var mapX = x - light.Range + (int)lightPosition.X;
+                    var mapX = x - light.Range + lightPosition.X;
                     if (mapX < 0 || mapX >= _map.Width) continue;
 
                     for (var y = 0; y < lightMapSize; y++)
                     {
-                        var mapY = y - light.Range + (int)lightPosition.Y;
+                        var mapY = y - light.Range + lightPosition.Y;
                         if (mapY < 0 || mapY >= _map.Height) continue;
 
                         var intensityMapScalar = intensityMap[x, y] * visibilityMap[x, y];

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Maps;
 using Engine.Maths;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -20,13 +21,11 @@ namespace Engine.Entities
 
         public float[,] VisiblityMap { get; private set; }
 
-        public Light(string name, Sprite lightSprite, Vector2 mapPosition, Color color, short range)
-            : base(name, lightSprite, mapPosition)
+        public Light(string name, Sprite lightSprite, Coordinate coordinate, Color color, short range)
+            : base(name, lightSprite, coordinate)
         {
             Color = color;
             Range = range;
-
-            MapPosition = mapPosition;
 
             _mapSize = 2 * Range + 1;
 
@@ -38,7 +37,7 @@ namespace Engine.Entities
 
         public void Draw(SpriteBatch spriteBatch, Color light)
         {
-            Sprite.Draw(spriteBatch, MapPosition, Color);
+            Sprite.Draw(spriteBatch, Coordinate.ToVector2(), Color);
         }
 
         public void GenerateVisibiltyMap(List<Line> walls)

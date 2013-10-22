@@ -13,7 +13,7 @@ namespace Engine
         private readonly CursorBackEntity _cursorBackEntity;
         private readonly CursorFrontEntity _cursorFrontEntity;
 
-        private Vector2 _mapPosition;
+        private Coordinate _coordinate;
 
         public bool IsOnMap { get; private set; }
         public Vector2 MapPosition { get; private set; }
@@ -34,31 +34,31 @@ namespace Engine
         {
             var screenCoordinates = Mouse.ScreenCoordinates;
 
-            var newMapPosition = _camera.GetMapCoordinates(screenCoordinates);
+            var newMapPosition = Coordinate.FromVector2(_camera.GetMapCoordinates(screenCoordinates));
 
-            var newIsOnMap = _map.IsPositionOnMap((int)newMapPosition.X, (int)newMapPosition.Y);
+            var newIsOnMap = _map.IsPositionOnMap(newMapPosition);
 
-            if (newMapPosition == _mapPosition)
+            if (newMapPosition == _coordinate)
             {
                 return;
             }
 
             if (IsOnMap)
             {
-                _map.RemoveEntity(_cursorBackEntity.MapPosition, _cursorBackEntity);
-                _map.RemoveEntity(_cursorFrontEntity.MapPosition, _cursorFrontEntity);
+                _map.RemoveEntity(_cursorBackEntity.Coordinate, _cursorBackEntity);
+                _map.RemoveEntity(_cursorFrontEntity.Coordinate, _cursorFrontEntity);
             }
 
             IsOnMap = newIsOnMap;
-            _mapPosition = newMapPosition;
+            _coordinate = newMapPosition;
 
-            _cursorBackEntity.MapPosition = newMapPosition;
-            _cursorFrontEntity.MapPosition = newMapPosition;
+            _cursorBackEntity.Coordinate = newMapPosition;
+            _cursorFrontEntity.Coordinate = newMapPosition;
 
             if (IsOnMap)
             {
-                _map.AddEntity(_cursorBackEntity.MapPosition, _cursorBackEntity);
-                _map.AddEntity(_cursorFrontEntity.MapPosition, _cursorFrontEntity);
+                _map.AddEntity(_cursorBackEntity.Coordinate, _cursorBackEntity);
+                _map.AddEntity(_cursorFrontEntity.Coordinate, _cursorFrontEntity);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Engine
         {
             if (IsOnMap)
             {
-                var selected = _map.GetSelected(_mapPosition);
+                var selected = _map.GetSelected(_coordinate);
                 GameState.Selected = selected;
             }
             else

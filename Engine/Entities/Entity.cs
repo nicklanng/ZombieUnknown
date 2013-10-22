@@ -1,4 +1,5 @@
-﻿using Engine.Sprites;
+﻿using Engine.Maps;
+using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
@@ -7,24 +8,24 @@ namespace Engine.Entities
     {
         protected readonly Sprite Sprite;
 
-        public Vector2 MapPosition { get; set; }
+        public Coordinate Coordinate { get; set; }
 
         public string Name { get; private set; }
 
         public short ZIndex { get; protected set; }
 
-        protected Entity(string name, Sprite sprite, Vector2 mapPosition)
+        protected Entity(string name, Sprite sprite, Coordinate coordinate)
         {
             Name = name;
             Sprite = sprite;
-            MapPosition = mapPosition;
+            Coordinate = coordinate;
 
             ZIndex = 0;
         }
 
         public virtual void Draw(Color light)
         {
-            SpriteDrawer.Draw(Sprite, MapPosition, light);
+            SpriteDrawer.Draw(Sprite, Coordinate.ToVector2(), light);
         }
 
         public virtual void Update(GameTime gameTime)
