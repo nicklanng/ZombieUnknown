@@ -34,6 +34,16 @@ namespace Engine.Maps
                 {
                     var node = _nodes[x, y];
 
+                    // up
+                    //if (map.IsPositionOnMap(new Coordinate(x - 1, y + 1)))
+                    //{
+                    //    if (!map.GetTile(x, y).HasLeftWall && !map.GetTile(x, y).HasRightWall && !map.GetTile(x - 1, y).HasLeftWall && !map.GetTile(x, y + 1).HasRightWall)
+                    //    {
+                    //        node.AddNeighbor(_nodes[x - 1, y + 1]);
+                    //    }
+                    //}
+
+                    // up left
                     if (map.IsPositionOnMap(new Coordinate(x - 1, y)))
                     {
                         if (!map.GetTile(x, y).HasLeftWall)
@@ -42,6 +52,17 @@ namespace Engine.Maps
                         }
                     }
 
+                    // left
+                    //if (map.IsPositionOnMap(new Coordinate(x - 1, y - 1)))
+                    //{
+                    //    var neighborNode = _nodes[x - 1, y - 1];
+                    //    if (!map.GetTile(x, y).HasLeftWall && !map.GetTile(x - 1, y - 1).HasRightWall && !map.GetTile(x, y - 1).HasLeftWall && !map.GetTile(x, y - 1).HasRightWall)
+                    //    {
+                    //        node.AddNeighbor(neighborNode);
+                    //    }
+                    //}
+
+                    // down left
                     if (map.IsPositionOnMap(new Coordinate(x, y - 1)))
                     {
                         var neighborNode = _nodes[x, y - 1];
@@ -51,6 +72,16 @@ namespace Engine.Maps
                         }
                     }
 
+                    // down
+                    //if (map.IsPositionOnMap(new Coordinate(x + 1, y - 1)))
+                    //{
+                    //    if (!map.GetTile(x + 1, y - 1).HasLeftWall && !map.GetTile(x + 1, y - 1).HasRightWall && !map.GetTile(x - 1, y).HasRightWall && !map.GetTile(x, y + 1).HasLeftWall)
+                    //    {
+                    //        node.AddNeighbor(_nodes[x + 1, y - 1]);
+                    //    }
+                    //}
+
+                    // down right
                     if (map.IsPositionOnMap(new Coordinate(x + 1, y)))
                     {
                         var neighborNode = _nodes[x + 1, y];
@@ -60,6 +91,17 @@ namespace Engine.Maps
                         }
                     }
 
+                    // right
+                    //if (map.IsPositionOnMap(new Coordinate(x + 1, y + 1)))
+                    //{
+                    //    var neighborNode = _nodes[x + 1, y + 1];
+                    //    if (!map.GetTile(x, y).HasRightWall && !map.GetTile(x + 1, y + 1).HasLeftWall && !map.GetTile(x, y + 1).HasRightWall && !map.GetTile(x + 1, y).HasLeftWall)
+                    //    {
+                    //        node.AddNeighbor(neighborNode);
+                    //    }
+                    //}
+
+                    // up right
                     if (map.IsPositionOnMap(new Coordinate(x, y + 1)))
                     {
                         if (!map.GetTile(x, y).HasRightWall)
