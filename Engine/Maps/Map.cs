@@ -84,9 +84,13 @@ namespace Engine.Maps
             }
         }
 
-        public Tile GetTile(int x, int y) 
+        public Tile GetTile(Coordinate coordinate) 
         {
-            return _tiles[x, y];
+            if (!IsPositionOnMap(coordinate))
+            {
+                return null;
+            }
+            return _tiles[coordinate.X, coordinate.Y];
         }
 
         public void AddEntity(Coordinate coordinate, Entity entity)

@@ -34,79 +34,122 @@ namespace Engine.Maps
                 {
                     var node = _nodes[x, y];
 
+                    var thisCoord = new Coordinate(x, y);
+                    var thisTile = map.GetTile(thisCoord);
+
+                    var upCoord = new Coordinate(x - 1, y + 1);
+
+                    var upLeftCoord = new Coordinate(x - 1, y);
+                    var upLeftTile = map.GetTile(upLeftCoord);
+
+                    var leftCoord = new Coordinate(x - 1, y - 1);
+                    var leftTile = map.GetTile(leftCoord);
+
+                    var downLeftCoord = new Coordinate(x, y - 1);
+                    var downLeftTile = map.GetTile(downLeftCoord);
+
+                    var downCoord = new Coordinate(x + 1, y - 1);
+                    var downTile = map.GetTile(downCoord);
+
+                    var downRightCoord = new Coordinate(x + 1, y);
+                    var downRightTile = map.GetTile(downRightCoord);
+
+                    var rightCoord = new Coordinate(x + 1, y + 1);
+                    var rightTile = map.GetTile(rightCoord);
+
+                    var upRightCoord = new Coordinate(x, y + 1);
+                    var upRightTile = map.GetTile(upRightCoord);
+
                     // up
-                    if (map.IsPositionOnMap(new Coordinate(x - 1, y + 1)))
+                    if (map.IsPositionOnMap(upCoord))
                     {
-                        if (!map.GetTile(x, y).HasLeftWall && !map.GetTile(x, y).HasRightWall && !map.GetTile(x - 1, y).HasRightWall && !map.GetTile(x, y + 1).HasLeftWall)
+
+                        if (upLeftTile == null || upRightTile == null)
                         {
-                            node.AddNeighbor(_nodes[x - 1, y + 1]);
+                            continue;
+                        }
+
+                        if (!thisTile.HasLeftWall && !thisTile.HasRightWall && !upLeftTile.HasRightWall && !upRightTile.HasLeftWall)
+                        {
+                            node.AddNeighbor(_nodes[upCoord.X, upCoord.Y]);
                         }
                     }
 
                     // up left
-                    if (map.IsPositionOnMap(new Coordinate(x - 1, y)))
+                    if (map.IsPositionOnMap(upLeftCoord))
                     {
-                        if (!map.GetTile(x, y).HasLeftWall)
+                        if (!thisTile.HasLeftWall)
                         {
-                            node.AddNeighbor(_nodes[x - 1, y]);
+                            node.AddNeighbor(_nodes[upLeftCoord.X, upLeftCoord.Y]);
                         }
                     }
 
                     // left
-                    if (map.IsPositionOnMap(new Coordinate(x - 1, y - 1)))
+                    if (map.IsPositionOnMap(leftCoord))
                     {
-                        var neighborNode = _nodes[x - 1, y - 1];
-                        if (!map.GetTile(x, y).HasLeftWall && !map.GetTile(x - 1, y - 1).HasRightWall && !map.GetTile(x, y - 1).HasLeftWall && !map.GetTile(x, y - 1).HasRightWall)
+                        if (leftTile == null || downLeftTile == null)
                         {
-                            node.AddNeighbor(neighborNode);
+                            continue;
+                        }
+
+                        if (!thisTile.HasLeftWall && !leftTile.HasRightWall && !downLeftTile.HasLeftWall && !downLeftTile.HasRightWall)
+                        {
+                            node.AddNeighbor(_nodes[leftCoord.X, leftCoord.Y]);
                         }
                     }
 
                     // down left
-                    if (map.IsPositionOnMap(new Coordinate(x, y - 1)))
+                    if (map.IsPositionOnMap(downLeftCoord))
                     {
-                        var neighborNode = _nodes[x, y - 1];
-                        if (!map.GetTile(x, y - 1).HasRightWall)
+                        if (!downLeftTile.HasRightWall)
                         {
-                            node.AddNeighbor(neighborNode);
+                            node.AddNeighbor(_nodes[downLeftCoord.X, downLeftCoord.Y]);
                         }
                     }
 
                     // down
-                    if (map.IsPositionOnMap(new Coordinate(x + 1, y - 1)))
+                    if (map.IsPositionOnMap(downCoord))
                     {
-                        if (!map.GetTile(x + 1, y - 1).HasLeftWall && !map.GetTile(x + 1, y - 1).HasRightWall && !map.GetTile(x, y - 1).HasRightWall && !map.GetTile(x + 1, y).HasLeftWall)
+                        if (downTile == null || downLeftTile == null || downRightTile == null)
                         {
-                            node.AddNeighbor(_nodes[x + 1, y - 1]);
+                            continue;
+                        }
+
+                        if (!downTile.HasLeftWall && !downTile.HasRightWall && !downLeftTile.HasRightWall && !downRightTile.HasLeftWall)
+                        {
+                            node.AddNeighbor(_nodes[downCoord.X, downCoord.Y]);
                         }
                     }
 
                     // down right
-                    if (map.IsPositionOnMap(new Coordinate(x + 1, y)))
+                    if (map.IsPositionOnMap(downRightCoord))
                     {
-                        var neighborNode = _nodes[x + 1, y];
-                        if (!map.GetTile(x + 1, y).HasLeftWall)
+                        if (!downRightTile.HasLeftWall)
                         {
-                            node.AddNeighbor(neighborNode);
+                            node.AddNeighbor(_nodes[downRightCoord.X, downRightCoord.Y]);
                         }
                     }
 
                     // right
-                    if (map.IsPositionOnMap(new Coordinate(x + 1, y + 1)))
+                    if (map.IsPositionOnMap(rightCoord))
                     {
-                        var neighborNode = _nodes[x + 1, y + 1];
-                        if (!map.GetTile(x, y).HasRightWall && !map.GetTile(x + 1, y + 1).HasLeftWall && !map.GetTile(x + 1, y).HasLeftWall && !map.GetTile(x + 1, y).HasRightWall)
+                        if (rightTile == null || downRightTile == null)
                         {
-                            node.AddNeighbor(neighborNode);
+                            continue;
+                        }
+
+                        if (!thisTile.HasRightWall && !rightTile.HasLeftWall && !downRightTile.HasLeftWall && !downRightTile.HasRightWall)
+                        {
+                            node.AddNeighbor(_nodes[rightCoord.X, rightCoord.Y]);
                         }
                     }
 
                     // up right
-                    if (map.IsPositionOnMap(new Coordinate(x, y + 1)))
+                    if (map.IsPositionOnMap(upRightCoord))
                     {
-                        if (!map.GetTile(x, y).HasRightWall)
+                        if (!thisTile.HasRightWall)
                         {
-                            node.AddNeighbor(_nodes[x, y + 1]);
+                            node.AddNeighbor(_nodes[upRightCoord.X, upRightCoord.Y]);
                         }
                     }
                 }

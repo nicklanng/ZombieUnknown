@@ -49,7 +49,7 @@ namespace Engine.Maps
                         var mapY = lightPosition.Y - light.Range + y;
                         if (mapY < 0 || mapY >= _map.Height) continue;
 
-                        var tile = _map.GetTile(mapX, mapY);
+                        var tile = _map.GetTile(new Coordinate(mapX, mapY));
                         if (tile.HasLeftWall)
                         {
                             walls.Add(new Line(new Vector2(x, y), new Vector2(x, y + 1)));
@@ -115,11 +115,11 @@ namespace Engine.Maps
             {
                 for (var y = 0; y < _map.Height; y++)
                 {
-                    var r = (byte)Math.Max(_lightValues[x, y, 0], _ambientLight.R);
-                    var g = (byte)Math.Max(_lightValues[x, y, 1], _ambientLight.G);
-                    var b = (byte)Math.Max(_lightValues[x, y, 2], _ambientLight.B);
+                    var r = Math.Max(_lightValues[x, y, 0], _ambientLight.R);
+                    var g = Math.Max(_lightValues[x, y, 1], _ambientLight.G);
+                    var b = Math.Max(_lightValues[x, y, 2], _ambientLight.B);
 
-                    _map.GetTile(x, y).Light = new Color(r, g, b);
+                    _map.GetTile(new Coordinate(x, y)).Light = new Color(r, g, b);
                 }
             }
         }
