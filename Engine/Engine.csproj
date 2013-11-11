@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\CompositeGoal.cs" />
+    <Compile Include="AI\Goal.cs" />
+    <Compile Include="AI\GoalStatus.cs" />
+    <Compile Include="AI\IGoal.cs" />
     <Compile Include="Entities\CursorBackEntity.cs" />
     <Compile Include="Entities\CursorFrontEntity.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
