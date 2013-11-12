@@ -12,9 +12,7 @@ Done:
 * Isometric Map Cursor
 * Lighting
 * Shadows cast from walls
-
-Doing:
 * A-star Pathfinding
 
-To do:
-* Introduce base entity class for lights and then other things
+Doing:
+* Goal Based AI
