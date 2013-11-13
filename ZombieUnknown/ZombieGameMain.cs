@@ -211,6 +211,7 @@ namespace ZombieUnknown
 
             var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.Coordinate), _pathfindingMap.GetNodeAt(light2.Coordinate));
             aStarSolver.Solve();
+
             human1.WalkPath(aStarSolver.Solution);
 
             _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));

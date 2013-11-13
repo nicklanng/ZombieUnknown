@@ -45,6 +45,8 @@
     <Compile Include="AI\Goal.cs" />
     <Compile Include="AI\GoalStatus.cs" />
     <Compile Include="AI\IGoal.cs" />
+    <Compile Include="AI\Mind.cs" />
+    <Compile Include="AI\TraverseEdgeGoal.cs" />
     <Compile Include="Entities\CursorBackEntity.cs" />
     <Compile Include="Entities\CursorFrontEntity.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />

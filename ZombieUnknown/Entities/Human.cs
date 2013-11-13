@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Engine;
+using Engine.AI;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
@@ -16,13 +17,14 @@ namespace ZombieUnknown.Entities
         private Coordinate? _targetSquare;
         private bool _updateMapLocationAfterMove;
 
-        public Vector2 MapPosition { get; set; }
+        public Mind<Human> Mind { get; private set; } 
 
         public Human(string name, Sprite sprite, Coordinate coordinate, Map map)
             : base(name, sprite, coordinate)
         {
             _map = map;
 
+            Mind = new Mind<Human>(this);
             MapPosition = Coordinate.ToVector2();
         }
 

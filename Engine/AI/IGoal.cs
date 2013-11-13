@@ -1,13 +1,15 @@
-﻿namespace Engine.AI
+﻿using Microsoft.Xna.Framework;
+
+namespace Engine.AI
 {
     public interface IGoal
     {
         GoalStatus GoalStatus { get; }
 
         void Activate();
-        void Process();
+        void Process(GameTime gameTime);
         void Terminate();
-        bool IsComplete();
-        bool HasFailed();
+        bool IsComplete { get; }
+        bool HasFailed { get; }
     }
 }
