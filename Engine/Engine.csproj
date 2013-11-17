@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\CompositeGoal.cs" />
+    <Compile Include="AI\FollowPathGoal.cs" />
     <Compile Include="AI\Goal.cs" />
     <Compile Include="AI\GoalStatus.cs" />
     <Compile Include="AI\IGoal.cs" />

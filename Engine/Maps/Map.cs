@@ -93,7 +93,7 @@ namespace Engine.Maps
             return _tiles[coordinate.X, coordinate.Y];
         }
 
-        public void AddEntity(Coordinate coordinate, Entity entity)
+        public void AddEntity(Entity entity, Coordinate coordinate)
         {
             _entities[coordinate.X, coordinate.Y].Add(entity);
 
@@ -106,9 +106,9 @@ namespace Engine.Maps
             Lights.Add(lightEntity);
         }
 
-        public void RemoveEntity(Coordinate coordinate, Entity entity)
+        public void RemoveEntity(Entity entity)
         {
-            _entities[coordinate.X, coordinate.Y].Remove(entity);
+            _entities[entity.Coordinate.X, entity.Coordinate.Y].Remove(entity);
 
             var lightEntity = entity as Light;
             if (lightEntity == null)

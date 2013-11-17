@@ -7,7 +7,7 @@ namespace Engine.AI
         GoalStatus GoalStatus { get; }
 
         void Activate();
-        void Process(GameTime gameTime);
+        void Process();
         void Terminate();
         bool IsComplete { get; }
         bool HasFailed { get; }

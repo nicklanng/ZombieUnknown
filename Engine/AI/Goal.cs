@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
 
 namespace Engine.AI
 {
@@ -25,20 +25,24 @@ namespace Engine.AI
         {
             get { return GoalStatus == GoalStatus.Failed; }
         }
+        
+        public virtual void Activate()
+        {
+            GoalStatus = GoalStatus.Active;
+        }
 
-
-        public abstract void Activate();
-
-        public virtual void Process(GameTime gameTime)
+        public virtual void Process()
         {
             ActivateIfInactive();
         }
 
-        public abstract void Terminate();
+        public virtual void Terminate()
+        {
+        }
 
         private void ActivateIfInactive()
         {
-            if (!IsInactive)
+            if (IsInactive)
             {
                 Activate();
             }

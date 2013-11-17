@@ -1,16 +1,18 @@
-﻿using Engine.Entities;
+﻿using System;
+using Engine.Entities;
 using Engine.Maps;
-using Microsoft.Xna.Framework;
 
 namespace Engine.AI
 {
-    public class TraverseEdgeGoal<T> : Goal where T : MoveableEntity
+    public class TraverseEdgeGoal : Goal
     {
-        private readonly T _entity;
+        private readonly MoveableEntity _entity;
+
         private Coordinate _origin;
         private Coordinate _target;
+        private bool _tileSwapped;
 
-        public TraverseEdgeGoal(T entity, Coordinate target)
+        public TraverseEdgeGoal(MoveableEntity entity, Coordinate target)
         {
             _entity = entity;
             _target = target;
@@ -18,28 +20,34 @@ namespace Engine.AI
 
         public override void Activate()
         {
+            base.Activate();
+
             _origin = _entity.Coordinate;
 
             // set entity state or animation or something
         }
 
-        public override void Process(GameTime gameTime)
+        public override void Process()
         {
-            base.Process(gameTime);
+            base.Process();
 
             var distanceToTarget = (_target.ToVector2() - _entity.MapPosition);
             var moveAmount = distanceToTarget;
             moveAmount.Normalize();
-            moveAmount = moveAmount * (float)gameTime.ElapsedGameTime.TotalSeconds * 0.5f;
+            moveAmount = moveAmount * 0.005f;
 
-            if ((_entity.MapPosition - _origin.ToVector2()).Length() > (_target.ToVector2() - _origin.ToVector2()).Length() / 2)
+            if (!_tileSwapped && (_entity.MapPosition - _origin.ToVector2()).Length() > (_target.ToVector2() - _origin.ToVector2()).Length() / 2)
             {
-                // move entity to next board position
+                GameState.Map.RemoveEntity(_entity);
+                GameState.Map.AddEntity(_entity, _entity.Coordinate);
+
+                _tileSwapped = true;
             }
 
             if (moveAmount.Length() < distanceToTarget.Length())
             {
                 _entity.MapPosition += moveAmount;
+                Console.WriteLine(_entity.MapPosition);
             }
             else
             {
@@ -50,6 +58,7 @@ namespace Engine.AI
 
         public override void Terminate()
         {
+            base.Terminate();
             // set entity state or animation or something
         }
     }

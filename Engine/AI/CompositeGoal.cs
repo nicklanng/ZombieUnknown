@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
 
 namespace Engine.AI
 {
@@ -13,9 +12,11 @@ namespace Engine.AI
             _subgoals = new Stack<IGoal>();
         }
 
-        public override void Process(GameTime gameTime)
+        public override void Process()
         {
-            ProcessSubgoals(gameTime);
+            base.Process();
+
+            ProcessSubgoals();
         }
 
         public override void Terminate()
@@ -28,7 +29,7 @@ namespace Engine.AI
             _subgoals.Push(goal);
         }
 
-        private void ProcessSubgoals(GameTime gameTime)
+        private void ProcessSubgoals()
         {
             if (!_subgoals.Any())
             {
@@ -36,7 +37,7 @@ namespace Engine.AI
                 return;
             }
 
-            while (_subgoals.Peek().IsComplete || _subgoals.Peek().HasFailed)
+            while (_subgoals.Any() && (_subgoals.Peek().IsComplete || _subgoals.Peek().HasFailed))
             {
                 var finishedSubGoal = _subgoals.Pop();
                 finishedSubGoal.Terminate();
@@ -48,7 +49,7 @@ namespace Engine.AI
                 return;
             }
 
-            _subgoals.Peek().Process(gameTime);
+            _subgoals.Peek().Process();
 
             if (_subgoals.Peek().IsComplete && _subgoals.Count > 1)
             {

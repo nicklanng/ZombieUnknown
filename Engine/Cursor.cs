@@ -45,8 +45,8 @@ namespace Engine
 
             if (IsOnMap)
             {
-                _map.RemoveEntity(_cursorBackEntity.Coordinate, _cursorBackEntity);
-                _map.RemoveEntity(_cursorFrontEntity.Coordinate, _cursorFrontEntity);
+                _map.RemoveEntity(_cursorBackEntity);
+                _map.RemoveEntity(_cursorFrontEntity);
             }
 
             IsOnMap = newIsOnMap;
@@ -57,8 +57,8 @@ namespace Engine
 
             if (IsOnMap)
             {
-                _map.AddEntity(_cursorBackEntity.Coordinate, _cursorBackEntity);
-                _map.AddEntity(_cursorFrontEntity.Coordinate, _cursorFrontEntity);
+                _map.AddEntity(_cursorBackEntity, _cursorBackEntity.Coordinate);
+                _map.AddEntity(_cursorFrontEntity, _cursorFrontEntity.Coordinate);
             }
         }
 

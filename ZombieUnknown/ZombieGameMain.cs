@@ -36,6 +36,8 @@ namespace ZombieUnknown
                     PreferredBackBufferHeight = 720
                 };
             Content.RootDirectory = "Content";
+
+            IsFixedTimeStep = true;
         }
 
         /// <summary>
@@ -192,29 +194,32 @@ namespace ZombieUnknown
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
 
-            var human1 = new Human("Ethereal 1", etherealSprite, new Coordinate(3, 6), _map);
-            _map.AddEntity(human1.Coordinate, human1);
+            var human1 = new Human("Ethereal 1", etherealSprite, new Coordinate(3, 6));
+            _map.AddEntity(human1, human1.Coordinate);
 
-            var human2 = new Human("Ethereal 2", etherealSprite, new Coordinate(9, 10), _map);
-            _map.AddEntity(human2.Coordinate, human2);
+            //var human2 = new Human("Ethereal 2", etherealSprite, new Coordinate(9, 10));
+            //_map.AddEntity(human2, human2.Coordinate);
 
             var light = new Light("BrightLight", lightSprite, new Coordinate(3, 6), Color.White, 20);
-            _map.AddEntity(light.Coordinate, light);
+            _map.AddEntity(light, light.Coordinate);
 
             var light2 = new Light("BrightLight", lightSprite, new Coordinate(14, 19), Color.White, 20);
-            _map.AddEntity(light2.Coordinate, light2);
+            _map.AddEntity(light2, light2.Coordinate);
 
             var frontCursorEntity = new CursorFrontEntity("CursorFrontEntity", frontCursorSprite);
             var backCursorEntity = new CursorBackEntity("CursorBackEntity", backCursorSprite);
 
             _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
 
-            var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.Coordinate), _pathfindingMap.GetNodeAt(light2.Coordinate));
-            aStarSolver.Solve();
+            //var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.Coordinate), _pathfindingMap.GetNodeAt(light2.Coordinate));
+            //aStarSolver.Solve();
 
-            human1.WalkPath(aStarSolver.Solution);
+            //human1.WalkPath(aStarSolver.Solution);
 
             _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));
+
+            GameState.Map = _map;
+            GameState.PathfindingMap = _pathfindingMap;
         }
 
         /// <summary>
