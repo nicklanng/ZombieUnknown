@@ -49,10 +49,10 @@ namespace Engine.Sprites
             spriteBatch.Draw(
                 SpriteSheet.Texture,
                 new Rectangle(
-                    (int)position.X * EngineSettings.ZoomFactor, 
-                    (int)position.Y * EngineSettings.ZoomFactor, 
-                    SpriteSheetRectangle.Width * EngineSettings.ZoomFactor, 
-                    SpriteSheetRectangle.Height * EngineSettings.ZoomFactor),
+                    (int)position.X, 
+                    (int)position.Y, 
+                    SpriteSheetRectangle.Width, 
+                    SpriteSheetRectangle.Height),
                 SpriteSheetRectangle,
                 lightColor,
                 0.0f,

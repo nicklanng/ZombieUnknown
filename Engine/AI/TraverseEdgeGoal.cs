@@ -1,5 +1,4 @@
-﻿using System;
-using Engine.Entities;
+﻿using Engine.Entities;
 using Engine.Maps;
 
 namespace Engine.AI
@@ -31,15 +30,15 @@ namespace Engine.AI
         {
             base.Process();
 
-            var distanceToTarget = (_target.ToVector2() - _entity.MapPosition);
+            var distanceToTarget = (_target.ToVector2() - _entity.MapPosition);  
             var moveAmount = distanceToTarget;
             moveAmount.Normalize();
-            moveAmount = moveAmount * 0.005f;
+            moveAmount = moveAmount * 0.01f;
 
             if (!_tileSwapped && (_entity.MapPosition - _origin.ToVector2()).Length() > (_target.ToVector2() - _origin.ToVector2()).Length() / 2)
             {
                 GameState.Map.RemoveEntity(_entity);
-                GameState.Map.AddEntity(_entity, _entity.Coordinate);
+                GameState.Map.AddEntity(_entity, _target);
 
                 _tileSwapped = true;
             }
@@ -47,7 +46,6 @@ namespace Engine.AI
             if (moveAmount.Length() < distanceToTarget.Length())
             {
                 _entity.MapPosition += moveAmount;
-                Console.WriteLine(_entity.MapPosition);
             }
             else
             {

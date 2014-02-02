@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Engine;
 using Engine.Entities;
 using Engine.Maps;
-using Engine.Pathfinding;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,8 +31,8 @@ namespace ZombieUnknown
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
-                    PreferredBackBufferWidth = 1280,
-                    PreferredBackBufferHeight = 720
+                    PreferredBackBufferWidth = 640,
+                    PreferredBackBufferHeight = 480
                 };
             Content.RootDirectory = "Content";
 
@@ -50,7 +49,7 @@ namespace ZombieUnknown
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _camera = new Camera(new Vector2(_graphics.PreferredBackBufferWidth / EngineSettings.ZoomFactor, _graphics.PreferredBackBufferHeight / EngineSettings.ZoomFactor), 200, new IsometricConfiguration());
+            _camera = new Camera(new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), 200, new IsometricConfiguration());
 
             SpriteDrawer.Initialize(_camera, _spriteBatch);
 

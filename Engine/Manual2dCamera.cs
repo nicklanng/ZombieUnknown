@@ -103,8 +103,8 @@ namespace Engine
         {
             const int mouseVerticalOffset = 10;
 
-            var xStripped = (screenCoordinates.X / EngineSettings.ZoomFactor) - (int)(Size.X / 2) + (int)Position.X + _isometricConfiguration.FloorWidth / 2;
-            var yStripped = ((screenCoordinates.Y / EngineSettings.ZoomFactor) - (int)(Size.Y / 2) + (int)Position.Y) + mouseVerticalOffset;
+            var xStripped = screenCoordinates.X - (int)(Size.X / 2) + (int)Position.X + _isometricConfiguration.FloorWidth / 2;
+            var yStripped = (screenCoordinates.Y - (int)(Size.Y / 2) + (int)Position.Y) + mouseVerticalOffset;
 
             var isoX = yStripped / (_isometricConfiguration.FloorHeight) + xStripped / (_isometricConfiguration.FloorWidth);
             var isoY = -(yStripped / (_isometricConfiguration.FloorHeight) - xStripped / (_isometricConfiguration.FloorWidth));
