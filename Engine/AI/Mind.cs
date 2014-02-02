@@ -16,10 +16,25 @@ namespace Engine.AI
 
             _subgoals = new Stack<IGoal>();
 
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
             _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
-            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(0, 1)));
-            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(0, 2)));
-            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(2, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 0)));
+            _subgoals.Push(new FollowPathGoal(_entity as MoveableEntity, new Coordinate(1, 2)));
         }
 
         public void Think()

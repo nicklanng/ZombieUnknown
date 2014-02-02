@@ -160,22 +160,22 @@ namespace ZombieUnknown
             var random = new Random();
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
 
-            tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, rightWallSprite, null);
-            tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], null, null, null);
-            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], null, null, null);
-            tiles[1, 0] = new Tile(new Vector2(1, 0), terrainSprites[0], null, null, null);
+            tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, null, null);
+            tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], leftWallSprite, null, null);
+            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], leftWallSprite, null, null);
+            tiles[1, 0] = new Tile(new Vector2(1, 0), terrainSprites[0], leftWallSprite, null, null);
             tiles[1, 1] = new Tile(new Vector2(1, 1), terrainSprites[0], leftWallSprite, null, null);
-            tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], null, null, null);
+            tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], leftWallSprite, null, null);
             tiles[2, 0] = new Tile(new Vector2(2, 0), terrainSprites[0], null, null, null);
             tiles[2, 1] = new Tile(new Vector2(2, 1), terrainSprites[0], null, null, null);
-            tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], leftWallSprite, rightWallSprite, null);
+            tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], null, null, null);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
 
             _lightMap = new LightMap(_map, new Color(0.5f, 0.5f, 0.5f));
 
-            var human = new Human("human", etherealSprite, new Coordinate(2, 0));
+            var human = new Human("human", etherealSprite, new Coordinate(1, 0));
             _map.AddEntity(human, human.Coordinate);
 
             GameState.Map = _map;

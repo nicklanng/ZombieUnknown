@@ -83,70 +83,70 @@ namespace Engine.Maps
                     // left
                     if (map.IsPositionOnMap(leftCoord))
                     {
-                        //if (leftTile == null || downLeftTile == null)
-                        //{
-                        //    continue;
-                        //}
+                        if (leftTile == null || upLeftTile == null)
+                        {
+                            continue;
+                        }
 
-                        //if (!thisTile.HasLeftWall && !leftTile.HasRightWall && !downLeftTile.HasLeftWall && !downLeftTile.HasRightWall)
-                        //{
+                        if (!thisTile.HasLeftWall && !leftTile.HasRightWall && !upLeftTile.HasLeftWall && !upLeftTile.HasRightWall)
+                        {
                             node.AddNeighbor(_nodes[leftCoord.X, leftCoord.Y]);
-                        //}
+                        }
                     }
 
                     // down left
                     if (map.IsPositionOnMap(downLeftCoord))
                     {
-                        //if (!downLeftTile.HasRightWall)
-                        //{
+                        if (!thisTile.HasLeftWall)
+                        {
                             node.AddNeighbor(_nodes[downLeftCoord.X, downLeftCoord.Y]);
-                        //}
+                        }
                     }
 
                     // down
                     if (map.IsPositionOnMap(downCoord))
                     {
-                        //if (downTile == null || downLeftTile == null || downRightTile == null)
-                        //{
-                        //    continue;
-                        //}
+                        if (downLeftTile == null || downRightTile == null)
+                        {
+                            continue;
+                        }
 
-                        //if (!downTile.HasLeftWall && !downTile.HasRightWall && !downLeftTile.HasRightWall && !downRightTile.HasLeftWall)
-                        //{
+                        if (!thisTile.HasLeftWall && !thisTile.HasRightWall && !downLeftTile.HasRightWall && !downRightTile.HasLeftWall)
+                        {
                             node.AddNeighbor(_nodes[downCoord.X, downCoord.Y]);
-                        //}
+                        }
                     }
 
                     // down right
                     if (map.IsPositionOnMap(downRightCoord))
                     {
-                        //if (!downRightTile.HasLeftWall)
-                        //{
+                        if (!downRightTile.HasRightWall)
+                        {
                             node.AddNeighbor(_nodes[downRightCoord.X, downRightCoord.Y]);
-                        //}
+                        }
                     }
 
                     // right
                     if (map.IsPositionOnMap(rightCoord))
                     {
-                        //if (rightTile == null || downRightTile == null)
-                        //{
-                        //    continue;
-                        //}
+                        if (rightTile == null || upRightTile == null)
+                        {
+                            continue;
+                        }
 
-                        //if (!thisTile.HasRightWall && !rightTile.HasLeftWall && !downRightTile.HasLeftWall && !downRightTile.HasRightWall)
-                        //{
+                        if (!thisTile.HasRightWall && !rightTile.HasLeftWall && !upRightTile.HasLeftWall && !upRightTile.HasRightWall)
+                        {
                             node.AddNeighbor(_nodes[rightCoord.X, rightCoord.Y]);
-                        //}
+                        }
                     }
 
                     // up right
                     if (map.IsPositionOnMap(upRightCoord))
                     {
-                        //if (!thisTile.HasRightWall)
-                        //{
+                        if (!upRightTile.HasLeftWall)
+                        {
                             node.AddNeighbor(_nodes[upRightCoord.X, upRightCoord.Y]);
-                        //}
+                        }
                     }
                 }
             }
