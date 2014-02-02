@@ -48,13 +48,14 @@
     <Compile Include="AI\IGoal.cs" />
     <Compile Include="AI\Mind.cs" />
     <Compile Include="AI\TraverseEdgeGoal.cs" />
-    <Compile Include="Entities\CursorBackEntity.cs" />
-    <Compile Include="Entities\CursorFrontEntity.cs" />
+    <Compile Include="Drawing\DrawingLevel.cs" />
+    <Compile Include="Drawing\DrawingManager.cs" />
+    <Compile Include="Drawing\DrawingRequest.cs" />
+    <Compile Include="Drawing\IDrawingProvider.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
     <Compile Include="Manual2dCamera.cs" />
     <Compile Include="EngineSettings.cs" />
-    <Compile Include="Cursor.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Light.cs" />
     <Compile Include="Entities\MoveableEntity.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="Maps\LightMap.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\PathfindingMap.cs" />
-    <Compile Include="SpriteDrawer.cs" />
     <Compile Include="Maths\Line.cs" />
     <Compile Include="Pathfinding\AStarSolver.cs" />
     <Compile Include="Pathfinding\Node.cs" />

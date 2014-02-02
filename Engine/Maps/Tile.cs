@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Engine.Drawing;
 using Engine.Entities;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Maps
 {
-    public class Tile
+    public class Tile : IDrawingProvider
     {
         private List<Entity> _entities;
 
@@ -56,26 +57,6 @@ namespace Engine.Maps
             _entities.ForEach(x => x.Update(gameTime));
         }
 
-        public void DrawWalls()
-        {
-            if (_leftWallSprite != null) SpriteDrawer.Draw(_leftWallSprite, Position, Light);
-            if (_rightWallSprite != null) SpriteDrawer.Draw(_rightWallSprite, Position, Light);
-            if (_wallJoinSprite != null) SpriteDrawer.Draw(_wallJoinSprite, Position, Light);
-        }
-
-        public void DrawFloor()
-        {
-            if (_floorSprite != null) SpriteDrawer.Draw(_floorSprite, Position, Light);
-        }
-
-        public void DrawEntities()
-        {
-            foreach (var entity in _entities)
-            {
-                entity.Draw(Light);
-            }
-        }
-
         public void AddEntity(Entity entity)
         {
             var moveableEntity = entity as MoveableEntity;
@@ -92,6 +73,29 @@ namespace Engine.Maps
         public void RemoveEntity(Entity entity)
         {
             _entities.Remove(entity);
+        }
+
+        public IEnumerable<DrawingRequest> GetDrawings()
+        {
+            if (_floorSprite != null)
+            {
+                yield return new DrawingRequest(_floorSprite, Position, Light, DrawingLevel.Floor);
+            }
+
+            if (_leftWallSprite != null)
+            {
+                yield return new DrawingRequest(_leftWallSprite, Position, Light, DrawingLevel.Wall);
+            }
+
+            if (_rightWallSprite != null)
+            {
+                yield return new DrawingRequest(_rightWallSprite, Position, Light, DrawingLevel.Wall);
+            }
+
+            if (_wallJoinSprite != null)
+            {
+                yield return new DrawingRequest(_wallJoinSprite, Position, Light, DrawingLevel.Wall);
+            }
         }
     }
 }

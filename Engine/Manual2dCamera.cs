@@ -1,13 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Engine
 {
     public interface ICamera
     {
-        Vector2 Size { get; set; }
+        Vector2 ScreenSize { get; set; }
         float MoveSpeed { get; set; }
-        Vector2 Position { get; set; }
+        Vector2 ScreenCenterPosition { get; set; }
         void Update(GameTime gameTime);
         void Translate(Vector2 vector2);
         bool GetScreenCoordinates(Vector2 mapCoordinates, out Vector2 screenCoordinates);
@@ -18,18 +19,18 @@ namespace Engine
     {
         private IIsometricConfiguration _isometricConfiguration;
 
-        public Camera(Vector2 size, int moveSpeed, IIsometricConfiguration isometricConfiguration)
+        public Camera(Vector2 screenSize, int moveSpeed, IIsometricConfiguration isometricConfiguration)
         {
-            Size = size;
+            ScreenSize = screenSize;
             MoveSpeed = moveSpeed;
             _isometricConfiguration = isometricConfiguration;
         }
 
-        public Vector2 Size { get; set; }
+        public Vector2 ScreenSize { get; set; }
 
         public float MoveSpeed { get; set; }
 
-        public Vector2 Position { get; set; }
+        public Vector2 ScreenCenterPosition { get; set; }
 
         public void Update(GameTime gameTime)
         {
@@ -56,14 +57,14 @@ namespace Engine
 
         public void Translate(Vector2 vector2)
         {
-            Position += vector2;
+            ScreenCenterPosition += vector2;
         }
 
         public bool GetScreenCoordinates(Vector2 mapCoordinates, out Vector2 screenCoordinates)
         {
             screenCoordinates = Vector2.Zero;
 
-            var xCoord = ((mapCoordinates.X + mapCoordinates.Y) * _isometricConfiguration.FloorWidth / 2) - (int)Position.X + (int)(Size.X / 2);
+            var xCoord = (int)(ScreenSize.X / 2) - (int)ScreenCenterPosition.X - ((mapCoordinates.X - mapCoordinates.Y) * _isometricConfiguration.FloorWidth / 2);
             if (xCoord <= 0)
             {
                 if (xCoord + _isometricConfiguration.FloorWidth < 0)
@@ -71,15 +72,15 @@ namespace Engine
                     return false;
                 }
             }
-            if (xCoord >= Size.X)
+            if (xCoord >= ScreenSize.X)
             {
-                if (xCoord - _isometricConfiguration.FloorWidth > Size.X)
+                if (xCoord - _isometricConfiguration.FloorWidth > ScreenSize.X)
                 {
                     return false;
                 }
             }
 
-            var yCoord = ((mapCoordinates.X - mapCoordinates.Y) * _isometricConfiguration.FloorHeight / 2) - (int)Position.Y + (int)(Size.Y / 2);
+            var yCoord = (int)(ScreenSize.Y / 2) - (int)ScreenCenterPosition.Y + ((mapCoordinates.X + mapCoordinates.Y) * _isometricConfiguration.FloorHeight / 2);
             if (yCoord <= 0)
             {
                 if (yCoord + _isometricConfiguration.TileHeight < 0)
@@ -87,9 +88,9 @@ namespace Engine
                     return false;
                 }
             }
-            if (yCoord >= Size.Y)
+            if (yCoord >= ScreenSize.Y)
             {
-                if (yCoord - _isometricConfiguration.TileHeight > Size.Y)
+                if (yCoord - _isometricConfiguration.TileHeight > ScreenSize.Y)
                 {
                     return false;
                 }
@@ -103,8 +104,8 @@ namespace Engine
         {
             const int mouseVerticalOffset = 10;
 
-            var xStripped = screenCoordinates.X - (int)(Size.X / 2) + (int)Position.X + _isometricConfiguration.FloorWidth / 2;
-            var yStripped = (screenCoordinates.Y - (int)(Size.Y / 2) + (int)Position.Y) + mouseVerticalOffset;
+            var xStripped = screenCoordinates.X - (int)(ScreenSize.X / 2) + (int)ScreenCenterPosition.X + _isometricConfiguration.FloorWidth / 2;
+            var yStripped = (screenCoordinates.Y - (int)(ScreenSize.Y / 2) + (int)ScreenCenterPosition.Y) + mouseVerticalOffset;
 
             var isoX = yStripped / (_isometricConfiguration.FloorHeight) + xStripped / (_isometricConfiguration.FloorWidth);
             var isoY = -(yStripped / (_isometricConfiguration.FloorHeight) - xStripped / (_isometricConfiguration.FloorWidth));

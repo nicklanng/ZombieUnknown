@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Engine.Drawing;
 using Engine.Entities;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Maps
 {
-    public class Map
+    public class Map : IDrawingProvider
     {
         private readonly Tile[,] _tiles;
         private readonly List<Entity>[,] _entities;
 
         public List<Light> Lights { get; private set; }
-
         public short Width { get; private set; }
-
         public short Height { get; private set; }
 
         public Map(short width, short height, Tile[,] tiles)
@@ -47,50 +45,9 @@ namespace Engine.Maps
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Cursor cursor)
+        public Tile GetTile(Coordinate coordinate)
         {
-            for (var x = 0; x < Width; x++)
-            {
-                for (var y = Height - 1; y >= 0; y--)
-                {
-                    _tiles[x, y].DrawFloor();
-                }
-            }
-
-            for (var x = 0; x < Width; x++)
-            {
-                for (var y = Height - 1; y >= 0; y--)
-                {
-
-                    _tiles[x, y].DrawWalls();
-
-                    var list = _entities[x, y].OrderBy(e => e.ZIndex);
-                    foreach (var entity in list)
-                    {
-                        entity.Draw(_tiles[x, y].Light);
-                    }
-
-                    //_tiles[x, y].DrawEntities();
-
-                    //if (GameState.Selected != null)
-                    //{
-                    //    if ((int) GameState.Selected.MapPosition.X == x &&
-                    //        (int)GameState.Selected.MapPosition.Y == y)
-                    //    {
-                    //        ResourceManager.SelectMarkerSprite.Draw(spriteBatch);
-                    //    }
-                    //}
-                }
-            }
-        }
-
-        public Tile GetTile(Coordinate coordinate) 
-        {
-            if (!IsPositionOnMap(coordinate))
-            {
-                return null;
-            }
-            return _tiles[coordinate.X, coordinate.Y];
+            return IsPositionOnMap(coordinate) ? _tiles[coordinate.X, coordinate.Y] : null;
         }
 
         public void AddEntity(Entity entity, Coordinate coordinate)
@@ -133,6 +90,25 @@ namespace Engine.Maps
             if (coordinate.Y >= Height) return false;
 
             return true;
+        }
+
+        public IEnumerable<DrawingRequest> GetDrawings()
+        {
+            var drawingRequests = new List<DrawingRequest>();
+
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    drawingRequests.AddRange(_tiles[x, y].GetDrawings());
+                    foreach (var entity in _entities[x, y])
+                    {
+                        drawingRequests.AddRange(entity.GetDrawings());
+                    }
+                }
+            }
+
+            return drawingRequests;
         }
     }
 }

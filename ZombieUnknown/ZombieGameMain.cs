@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
+using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
@@ -21,9 +22,10 @@ namespace ZombieUnknown
         private PathfindingMap _pathfindingMap;
         private LightMap _lightMap;
         private ICamera _camera;
-        private Cursor _cursor;
 
-        private Vector2 _mapSize = new Vector2(200, 200);
+        private DrawingManager _drawingManager;
+
+        private Vector2 _mapSize = new Vector2(3, 3);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -51,7 +53,7 @@ namespace ZombieUnknown
 
             _camera = new Camera(new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), 200, new IsometricConfiguration());
 
-            SpriteDrawer.Initialize(_camera, _spriteBatch);
+            _drawingManager = new DrawingManager(_camera);
 
             base.Initialize();
         }
@@ -157,68 +159,29 @@ namespace ZombieUnknown
 
             var random = new Random();
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
-            for (var x = 0; x < _mapSize.X; x++)
-            {
-                for (var y = 0; y < _mapSize.Y; y++)
-                {
-                    var interestingTile = 0;
-                    var index = 0;
 
-                    if (interestingTile > 0.7)
-                    {
-                        index = random.Next(terrainSprites.Count - 1) + 1;
-                    }
+            tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, rightWallSprite, null);
+            tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], null, null, null);
+            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], null, null, null);
+            tiles[1, 0] = new Tile(new Vector2(1, 0), terrainSprites[0], null, null, null);
+            tiles[1, 1] = new Tile(new Vector2(1, 1), terrainSprites[0], leftWallSprite, null, null);
+            tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], null, null, null);
+            tiles[2, 0] = new Tile(new Vector2(2, 0), terrainSprites[0], null, null, null);
+            tiles[2, 1] = new Tile(new Vector2(2, 1), terrainSprites[0], null, null, null);
+            tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], leftWallSprite, rightWallSprite, null);
 
-                    Sprite leftWall = null;
-                    if (random.NextDouble() > 0.90)
-                    {
-                        leftWall = leftWallSprite;
-                    }
-
-                    Sprite rightWall = null;
-                    if (random.NextDouble() > 0.90)
-                    {
-                        rightWall = rightWallSprite;
-                    }
-
-                    Sprite joinWall = null;
-                    if (leftWall != null && rightWall != null)
-                    {
-                        joinWall = joinWallSprite;
-                    }
-
-                    tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[index], leftWall, rightWall, joinWall);
-                }
-            }
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
 
-            var human1 = new Human("Ethereal 1", etherealSprite, new Coordinate(3, 6));
-            _map.AddEntity(human1, human1.Coordinate);
+            _lightMap = new LightMap(_map, new Color(0.5f, 0.5f, 0.5f));
 
-            //var human2 = new Human("Ethereal 2", etherealSprite, new Coordinate(9, 10));
-            //_map.AddEntity(human2, human2.Coordinate);
-
-            var light = new Light("BrightLight", lightSprite, new Coordinate(3, 6), Color.White, 20);
-            _map.AddEntity(light, light.Coordinate);
-
-            var light2 = new Light("BrightLight", lightSprite, new Coordinate(14, 19), Color.White, 20);
-            _map.AddEntity(light2, light2.Coordinate);
-
-            var frontCursorEntity = new CursorFrontEntity("CursorFrontEntity", frontCursorSprite);
-            var backCursorEntity = new CursorBackEntity("CursorBackEntity", backCursorSprite);
-
-            _cursor = new Cursor(_map, _camera, frontCursorEntity, backCursorEntity);
-
-            //var aStarSolver = new AStarSolver(_pathfindingMap.GetNodeAt(human1.Coordinate), _pathfindingMap.GetNodeAt(light2.Coordinate));
-            //aStarSolver.Solve();
-
-            //human1.WalkPath(aStarSolver.Solution);
-
-            _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));
+            var human = new Human("human", etherealSprite, new Coordinate(2, 0));
+            _map.AddEntity(human, human.Coordinate);
 
             GameState.Map = _map;
             GameState.PathfindingMap = _pathfindingMap;
+
+            _drawingManager.RegisterProvider(_map);
         }
 
         /// <summary>
@@ -262,7 +225,7 @@ namespace ZombieUnknown
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 
-            _map.Draw(_spriteBatch, _cursor);
+            _drawingManager.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

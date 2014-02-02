@@ -19,57 +19,53 @@ namespace Engine.Maps
         private void RegeneratePathfindingMap(Map map)
         {
             _nodes = new Node[map.Width, map.Height];
-            for (var x = 0; x < map.Width; x++)
+
+            for (var y = 0; y < map.Height; y++)
             {
-                for (var y = 0; y < map.Height; y++)
+                for (var x = 0; x < map.Width; x++)
                 {
                     var node = new Node(new Coordinate(x, y));
                     _nodes[x, y] = node;
                 }
             }
 
-            for (var x = 0; x < map.Width; x++)
+            for (var y = 0; y < map.Height; y++)
             {
-                for (var y = 0; y < map.Height; y++)
+                for (var x = 0; x < map.Width; x++)
                 {
                     var node = _nodes[x, y];
 
                     var thisCoord = new Coordinate(x, y);
                     var thisTile = map.GetTile(thisCoord);
 
-                    var upCoord = new Coordinate(x - 1, y + 1);
+                    var upCoord = new Coordinate(x - 1, y - 1);
+                    var upTile = map.GetTile(upCoord);
 
-                    var upLeftCoord = new Coordinate(x - 1, y);
+                    var upLeftCoord = new Coordinate(x, y - 1);
                     var upLeftTile = map.GetTile(upLeftCoord);
 
-                    var leftCoord = new Coordinate(x - 1, y - 1);
+                    var leftCoord = new Coordinate(x + 1, y - 1);
                     var leftTile = map.GetTile(leftCoord);
 
-                    var downLeftCoord = new Coordinate(x, y - 1);
+                    var downLeftCoord = new Coordinate(x + 1, y);
                     var downLeftTile = map.GetTile(downLeftCoord);
 
-                    var downCoord = new Coordinate(x + 1, y - 1);
+                    var downCoord = new Coordinate(x + 1, y + 1);
                     var downTile = map.GetTile(downCoord);
 
-                    var downRightCoord = new Coordinate(x + 1, y);
+                    var downRightCoord = new Coordinate(x, y + 1);
                     var downRightTile = map.GetTile(downRightCoord);
 
-                    var rightCoord = new Coordinate(x + 1, y + 1);
+                    var rightCoord = new Coordinate(x - 1, y + 1);
                     var rightTile = map.GetTile(rightCoord);
 
-                    var upRightCoord = new Coordinate(x, y + 1);
+                    var upRightCoord = new Coordinate(x - 1, y);
                     var upRightTile = map.GetTile(upRightCoord);
 
                     // up
                     if (map.IsPositionOnMap(upCoord))
                     {
-
-                        if (upLeftTile == null || upRightTile == null)
-                        {
-                            continue;
-                        }
-
-                        if (!thisTile.HasLeftWall && !thisTile.HasRightWall && !upLeftTile.HasRightWall && !upRightTile.HasLeftWall)
+                        if (!upTile.HasLeftWall && !upTile.HasRightWall && !upLeftTile.HasRightWall && !upRightTile.HasLeftWall)
                         {
                             node.AddNeighbor(_nodes[upCoord.X, upCoord.Y]);
                         }
@@ -78,7 +74,7 @@ namespace Engine.Maps
                     // up left
                     if (map.IsPositionOnMap(upLeftCoord))
                     {
-                        if (!thisTile.HasLeftWall)
+                        if (!upLeftTile.HasRightWall)
                         {
                             node.AddNeighbor(_nodes[upLeftCoord.X, upLeftCoord.Y]);
                         }
@@ -87,70 +83,70 @@ namespace Engine.Maps
                     // left
                     if (map.IsPositionOnMap(leftCoord))
                     {
-                        if (leftTile == null || downLeftTile == null)
-                        {
-                            continue;
-                        }
+                        //if (leftTile == null || downLeftTile == null)
+                        //{
+                        //    continue;
+                        //}
 
-                        if (!thisTile.HasLeftWall && !leftTile.HasRightWall && !downLeftTile.HasLeftWall && !downLeftTile.HasRightWall)
-                        {
+                        //if (!thisTile.HasLeftWall && !leftTile.HasRightWall && !downLeftTile.HasLeftWall && !downLeftTile.HasRightWall)
+                        //{
                             node.AddNeighbor(_nodes[leftCoord.X, leftCoord.Y]);
-                        }
+                        //}
                     }
 
                     // down left
                     if (map.IsPositionOnMap(downLeftCoord))
                     {
-                        if (!downLeftTile.HasRightWall)
-                        {
+                        //if (!downLeftTile.HasRightWall)
+                        //{
                             node.AddNeighbor(_nodes[downLeftCoord.X, downLeftCoord.Y]);
-                        }
+                        //}
                     }
 
                     // down
                     if (map.IsPositionOnMap(downCoord))
                     {
-                        if (downTile == null || downLeftTile == null || downRightTile == null)
-                        {
-                            continue;
-                        }
+                        //if (downTile == null || downLeftTile == null || downRightTile == null)
+                        //{
+                        //    continue;
+                        //}
 
-                        if (!downTile.HasLeftWall && !downTile.HasRightWall && !downLeftTile.HasRightWall && !downRightTile.HasLeftWall)
-                        {
+                        //if (!downTile.HasLeftWall && !downTile.HasRightWall && !downLeftTile.HasRightWall && !downRightTile.HasLeftWall)
+                        //{
                             node.AddNeighbor(_nodes[downCoord.X, downCoord.Y]);
-                        }
+                        //}
                     }
 
                     // down right
                     if (map.IsPositionOnMap(downRightCoord))
                     {
-                        if (!downRightTile.HasLeftWall)
-                        {
+                        //if (!downRightTile.HasLeftWall)
+                        //{
                             node.AddNeighbor(_nodes[downRightCoord.X, downRightCoord.Y]);
-                        }
+                        //}
                     }
 
                     // right
                     if (map.IsPositionOnMap(rightCoord))
                     {
-                        if (rightTile == null || downRightTile == null)
-                        {
-                            continue;
-                        }
+                        //if (rightTile == null || downRightTile == null)
+                        //{
+                        //    continue;
+                        //}
 
-                        if (!thisTile.HasRightWall && !rightTile.HasLeftWall && !downRightTile.HasLeftWall && !downRightTile.HasRightWall)
-                        {
+                        //if (!thisTile.HasRightWall && !rightTile.HasLeftWall && !downRightTile.HasLeftWall && !downRightTile.HasRightWall)
+                        //{
                             node.AddNeighbor(_nodes[rightCoord.X, rightCoord.Y]);
-                        }
+                        //}
                     }
 
                     // up right
                     if (map.IsPositionOnMap(upRightCoord))
                     {
-                        if (!thisTile.HasRightWall)
-                        {
+                        //if (!thisTile.HasRightWall)
+                        //{
                             node.AddNeighbor(_nodes[upRightCoord.X, upRightCoord.Y]);
-                        }
+                        //}
                     }
                 }
             }

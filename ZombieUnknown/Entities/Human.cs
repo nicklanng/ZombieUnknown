@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Engine;
 using Engine.AI;
+using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
@@ -27,9 +26,9 @@ namespace ZombieUnknown.Entities
             base.Update(gameTime);
         }
 
-        public override void Draw(Color light)
+        public override IEnumerable<DrawingRequest> GetDrawings()
         {
-            SpriteDrawer.Draw(Sprite, MapPosition, light);
+            yield return new DrawingRequest(Sprite, MapPosition, Color.White, DrawingLevel.Entity);
         }
     }
 }
