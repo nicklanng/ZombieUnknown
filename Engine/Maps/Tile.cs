@@ -18,7 +18,7 @@ namespace Engine.Maps
 
         public Color Light { get; set; }
         public Vector2 Position { get; private set; }
-        public MoveableEntity MoveableEntity { get; private set; }
+        public DrawableEntity DrawableEntity { get; private set; }
 
         public bool HasLeftWall
         {
@@ -59,10 +59,10 @@ namespace Engine.Maps
 
         public void AddEntity(Entity entity)
         {
-            var moveableEntity = entity as MoveableEntity;
+            var moveableEntity = entity as DrawableEntity;
             if (moveableEntity != null)
             {
-                MoveableEntity = moveableEntity;
+                DrawableEntity = moveableEntity;
             }
 
             _entities.Add(entity);

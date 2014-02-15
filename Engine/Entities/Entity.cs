@@ -1,36 +1,26 @@
-﻿using System.Collections.Generic;
-using Engine.Drawing;
-using Engine.Maps;
-using Engine.Sprites;
+﻿using Engine.Maps;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public abstract class Entity : IDrawingProvider
+    public abstract class Entity
     {
-        protected readonly Sprite Sprite;
-
+        public Vector2 MapPosition { get; set; }
         public Coordinate Coordinate { get; set; }
         public string Name { get; private set; }
         public short ZIndex { get; protected set; }
 
-        protected Entity(string name, Sprite sprite, Coordinate coordinate)
+        protected Entity(string name,Coordinate coordinate)
         {
             Name = name;
-            Sprite = sprite;
             Coordinate = coordinate;
+            MapPosition = Coordinate.ToVector2();
 
             ZIndex = 0;
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            Sprite.Update(gameTime);
-        }
-
-        public virtual IEnumerable<DrawingRequest> GetDrawings()
-        {
-            yield return new DrawingRequest(Sprite, Coordinate.ToVector2(), Color.White);
         }
     }
 }

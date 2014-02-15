@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Engine.Maps;
 using Engine.Maths;
-using Engine.Sprites;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Entities
 {
-    public class Light : Entity
+    public class Light
     {
         private readonly int _mapSize;
+
+        public Coordinate Coordinate { get; set; }
 
         public Color Color { get; private set; }
 
@@ -21,9 +21,9 @@ namespace Engine.Entities
 
         public float[,] VisiblityMap { get; private set; }
 
-        public Light(string name, Sprite lightSprite, Coordinate coordinate, Color color, short range)
-            : base(name, lightSprite, coordinate)
+        public Light(Coordinate coordinate, Color color, short range)
         {
+            Coordinate = coordinate;
             Color = color;
             Range = range;
 
@@ -33,11 +33,6 @@ namespace Engine.Entities
             VisiblityMap = new float[_mapSize, _mapSize];
 
             GenerateIntensityMap();
-        }
-
-        public void Draw(SpriteBatch spriteBatch, Color light)
-        {
-            Sprite.Draw(spriteBatch, Coordinate.ToVector2(), Color);
         }
 
         public void GenerateVisibiltyMap(List<Line> walls)

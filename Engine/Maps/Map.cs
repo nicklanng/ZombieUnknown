@@ -11,7 +11,7 @@ namespace Engine.Maps
         private readonly Tile[,] _tiles;
         private readonly List<Entity>[,] _entities;
 
-        public List<Light> Lights { get; private set; }
+        public List<ILightSource> Lights { get; private set; }
         public short Width { get; private set; }
         public short Height { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Engine.Maps
                 }
             }
 
-            Lights = new List<Light>();
+            Lights = new List<ILightSource>();
         }
 
         public void Update(GameTime gameTime)
@@ -54,7 +54,7 @@ namespace Engine.Maps
         {
             _entities[coordinate.X, coordinate.Y].Add(entity);
 
-            var lightEntity = entity as Light;
+            var lightEntity = entity as ILightSource;
             if (lightEntity == null)
             {
                 return;
@@ -67,7 +67,7 @@ namespace Engine.Maps
         {
             _entities[entity.Coordinate.X, entity.Coordinate.Y].Remove(entity);
 
-            var lightEntity = entity as Light;
+            var lightEntity = entity as ILightSource;
             if (lightEntity == null)
             {
                 return;
@@ -76,10 +76,10 @@ namespace Engine.Maps
             Lights.Remove(lightEntity);
         }
 
-        public MoveableEntity GetSelected(Coordinate coordinate)
+        public DrawableEntity GetSelected(Coordinate coordinate)
         {
             var entities = _entities[coordinate.X, coordinate.Y];
-            return (MoveableEntity)entities.FirstOrDefault(e => e is MoveableEntity);
+            return (DrawableEntity)entities.FirstOrDefault(e => e is DrawableEntity);
         }
 
         public bool IsPositionOnMap(Coordinate coordinate)
@@ -101,9 +101,9 @@ namespace Engine.Maps
                 for (var x = 0; x < Width; x++)
                 {
                     drawingRequests.AddRange(_tiles[x, y].GetDrawings());
-                    foreach (var entity in _entities[x, y])
+                    foreach (var drawableEntity in _entities[x, y].OfType<DrawableEntity>())
                     {
-                        drawingRequests.AddRange(entity.GetDrawings());
+                        drawingRequests.AddRange(drawableEntity.GetDrawings());
                     }
                 }
             }

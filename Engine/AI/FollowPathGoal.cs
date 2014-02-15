@@ -6,10 +6,10 @@ namespace Engine.AI
 {
     public class FollowPathGoal : CompositeGoal
     {
-        private readonly MoveableEntity _entity;
+        private readonly DrawableEntity _entity;
         private readonly Coordinate _target;
 
-        public FollowPathGoal(MoveableEntity entity, Coordinate target)
+        public FollowPathGoal(DrawableEntity entity, Coordinate target)
         {
             _entity = entity;
             _target = target;

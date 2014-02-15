@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Engine;
 using Engine.AI;
 using Engine.Drawing;
 using Engine.Entities;
@@ -8,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace ZombieUnknown.Entities
 {
-    public class Human : MoveableEntity
+    public class Human : DrawableEntity
     {
         public Mind<Human> Mind { get; private set; } 
 
@@ -16,7 +17,6 @@ namespace ZombieUnknown.Entities
             : base(name, sprite, coordinate)
         {
             Mind = new Mind<Human>(this);
-            MapPosition = Coordinate.ToVector2();
         }
         
         public override void Update(GameTime gameTime)
@@ -28,7 +28,7 @@ namespace ZombieUnknown.Entities
 
         public override IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, MapPosition, Color.White);
+            yield return new DrawingRequest(Sprite, MapPosition, GameState.Map.GetTile(Coordinate).Light);
         }
     }
 }

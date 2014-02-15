@@ -29,8 +29,10 @@ namespace Engine.Maps
 
         private void AddWallsToLight()
         {
-            foreach (var light in _map.Lights)
+            foreach (var lightsource in _map.Lights)
             {
+                var light = lightsource.Light;
+
                 var walls = new List<Line>();
 
                 var lightPosition = light.Coordinate;
@@ -50,11 +52,11 @@ namespace Engine.Maps
                         var tile = _map.GetTile(new Coordinate(mapX, mapY));
                         if (tile.HasLeftWall)
                         {
-                            walls.Add(new Line(new Vector2(x, y), new Vector2(x, y + 1)));
+                            walls.Add(new Line(new Vector2(x, y), new Vector2(x + 1, y)));
                         }
                         if (tile.HasRightWall)
                         {
-                            walls.Add(new Line(new Vector2(x, y + 1), new Vector2(x + 1, y + 1)));
+                            walls.Add(new Line(new Vector2(x, y), new Vector2(x, y + 1)));
                         }
                     }
                 }
@@ -65,8 +67,10 @@ namespace Engine.Maps
 
         private void AddLightEntities()
         {
-            foreach (var light in _map.Lights)
+            foreach (var lightsource in _map.Lights)
             {
+                var light = lightsource.Light;
+
                 var lightColor = light.Color;
                 var lightPosition = light.Coordinate;
                 var intensityMap = light.IntensityMap;

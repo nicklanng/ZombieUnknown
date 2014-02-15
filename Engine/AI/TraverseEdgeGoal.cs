@@ -5,13 +5,13 @@ namespace Engine.AI
 {
     public class TraverseEdgeGoal : Goal
     {
-        private readonly MoveableEntity _entity;
+        private readonly DrawableEntity _entity;
 
         private Coordinate _origin;
         private Coordinate _target;
         private bool _tileSwapped;
 
-        public TraverseEdgeGoal(MoveableEntity entity, Coordinate target)
+        public TraverseEdgeGoal(DrawableEntity entity, Coordinate target)
         {
             _entity = entity;
             _target = target;
@@ -39,6 +39,7 @@ namespace Engine.AI
             {
                 GameState.Map.RemoveEntity(_entity);
                 GameState.Map.AddEntity(_entity, _target);
+                _entity.Coordinate = _target;
 
                 _tileSwapped = true;
             }
@@ -49,7 +50,6 @@ namespace Engine.AI
             }
             else
             {
-                _entity.Coordinate = _target;
                 GoalStatus = GoalStatus.Completed;
             }
         }

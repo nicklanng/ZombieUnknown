@@ -52,12 +52,14 @@
     <Compile Include="Drawing\DrawingRequest.cs" />
     <Compile Include="Drawing\IDrawingProvider.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
+    <Compile Include="Entities\ILightSource.cs" />
+    <Compile Include="Entities\PhantomLight.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
     <Compile Include="Manual2dCamera.cs" />
     <Compile Include="EngineSettings.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Light.cs" />
-    <Compile Include="Entities\MoveableEntity.cs" />
+    <Compile Include="Entities\DrawableEntity.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Input\Mouse.cs" />
     <Compile Include="Maps\Coordinate.cs" />

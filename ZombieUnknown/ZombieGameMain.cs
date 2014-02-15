@@ -64,7 +64,6 @@ namespace ZombieUnknown
         /// </summary>
         protected override void LoadContent()
         {
-            
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var terrainTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/xcom-forest.png"));
             var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
@@ -153,12 +152,15 @@ namespace ZombieUnknown
             tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
-            _pathfindingMap = new PathfindingMap(_map);
-
-            _lightMap = new LightMap(_map, new Color(0.5f, 0.5f, 0.5f));
 
             var human = new Human("human", etherealSprite, new Coordinate(0, 0));
             _map.AddEntity(human, human.Coordinate);
+
+            var light = new PhantomLight("light", new Coordinate(0, 0), new Light(new Coordinate(1, 1), Color.White, 5));
+            _map.AddEntity(light, light.Coordinate);
+
+            _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));
+            _pathfindingMap = new PathfindingMap(_map);
 
             GameState.Map = _map;
             GameState.PathfindingMap = _pathfindingMap;
