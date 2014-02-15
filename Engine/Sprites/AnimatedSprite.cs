@@ -40,6 +40,7 @@ namespace Engine.Sprites
         public void SetAnimation(string animationName, GameTime gameTime)
         {
             _currentAnimation = _animationList.GetAnimation(animationName);
+            SpriteSheetRectangle = _currentAnimation[_frameIndex].Frame;
             _frameIndex = 0;
             _timeEnteredAnimationFrame = gameTime.TotalGameTime;
         }

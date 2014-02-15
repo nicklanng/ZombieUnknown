@@ -37,27 +37,27 @@ namespace Engine.Maps
                     var thisCoord = new Coordinate(x, y);
                     var thisTile = map.GetTile(thisCoord);
 
-                    var upCoord = new Coordinate(x - 1, y - 1);
+                    var upCoord = thisCoord + Coordinate.Up;
 
-                    var upLeftCoord = new Coordinate(x, y - 1);
+                    var upLeftCoord = thisCoord + Coordinate.UpLeft;
                     var upLeftTile = map.GetTile(upLeftCoord);
 
-                    var leftCoord = new Coordinate(x + 1, y - 1);
+                    var leftCoord = thisCoord + Coordinate.Left;
                     var leftTile = map.GetTile(leftCoord);
 
-                    var downLeftCoord = new Coordinate(x + 1, y);
+                    var downLeftCoord = thisCoord + Coordinate.DownLeft;
                     var downLeftTile = map.GetTile(downLeftCoord);
 
-                    var downCoord = new Coordinate(x + 1, y + 1);
+                    var downCoord = thisCoord + Coordinate.Down;
                     var downTile = map.GetTile(downCoord);
 
-                    var downRightCoord = new Coordinate(x, y + 1);
+                    var downRightCoord = thisCoord + Coordinate.DownRight;
                     var downRightTile = map.GetTile(downRightCoord);
 
-                    var rightCoord = new Coordinate(x - 1, y + 1);
+                    var rightCoord = thisCoord + Coordinate.Right;
                     var rightTile = map.GetTile(rightCoord);
 
-                    var upRightCoord = new Coordinate(x - 1, y);
+                    var upRightCoord = thisCoord + Coordinate.UpRight;
                     var upRightTile = map.GetTile(upRightCoord);
 
                     // up

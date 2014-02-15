@@ -30,7 +30,6 @@ namespace Engine.Sprites
 
         public virtual void Update(GameTime gameTime)
         {
-            
         }
 
         public void Draw(SpriteBatch spriteBatch, Vector2 position)

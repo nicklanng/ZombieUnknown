@@ -51,6 +51,7 @@
     <Compile Include="Drawing\DrawingManager.cs" />
     <Compile Include="Drawing\DrawingRequest.cs" />
     <Compile Include="Drawing\IDrawingProvider.cs" />
+    <Compile Include="Drawing\VirtualScreen.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
     <Compile Include="Entities\PhantomLight.cs" />

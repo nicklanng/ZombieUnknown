@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Engine.AI
+﻿namespace Engine.AI
 {
     public abstract class Goal : IGoal
     {

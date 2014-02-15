@@ -23,6 +23,7 @@ namespace ZombieUnknown
         private LightMap _lightMap;
         private ICamera _camera;
 
+        private VirtualScreen _virtualScreen;
         private DrawingManager _drawingManager;
 
         private Vector2 _mapSize = new Vector2(3, 3);
@@ -33,8 +34,8 @@ namespace ZombieUnknown
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
-                    PreferredBackBufferWidth = 640,
-                    PreferredBackBufferHeight = 480
+                    PreferredBackBufferWidth = 1280,
+                    PreferredBackBufferHeight = 960
                 };
             Content.RootDirectory = "Content";
 
@@ -51,11 +52,19 @@ namespace ZombieUnknown
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _camera = new Camera(new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight), 200, new IsometricConfiguration());
+            _virtualScreen = new VirtualScreen(640, 480, GraphicsDevice);
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
+            Window.AllowUserResizing = true;
 
+            _camera = new Camera(new Vector2(_virtualScreen.VirtualWidth, _virtualScreen.VirtualHeight), 100, new IsometricConfiguration());
             _drawingManager = new DrawingManager(_camera);
 
             base.Initialize();
+        }
+
+        void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            _virtualScreen.PhysicalResolutionChanged();
         }
 
         /// <summary>
@@ -93,15 +102,15 @@ namespace ZombieUnknown
             var debugIconsSpriteSheet = new SpriteSheet("debugIcons", debugIconTexture);
             debugIconsSpriteSheet.AddFrame("light", new Rectangle(0, 0, 32, 48));
 
-            var etherealSpriteSheet = new SpriteSheet("ethereal", etherealTexture);
-            etherealSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
-            etherealSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+            var humanSpriteSheet = new SpriteSheet("ethereal", etherealTexture);
+            humanSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
 
             var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
             var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
@@ -112,38 +121,52 @@ namespace ZombieUnknown
             cursorSpriteSheet.AddFrame("back", new Rectangle(32, 0, 32, 48));
             cursorSpriteSheet.AddFrame("selectedMarker1", new Rectangle(64, 0, 32, 48));
             cursorSpriteSheet.AddFrame("selectedMarker2", new Rectangle(96, 0, 32, 48));
+
+            var humanAnimationList = new AnimationList();
+            var standingUp = new Animation(AnimationType.RunOnce);
+            standingUp.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
+
+            var standingDown = new Animation(AnimationType.RunOnce);
+            standingDown.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
+
+            var standingDownLeft = new Animation(AnimationType.RunOnce);
+            standingDownLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
+
+            var standingLeft = new Animation(AnimationType.RunOnce);
+            standingLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
+
+            var standingUpLeft = new Animation(AnimationType.RunOnce);
+            standingUpLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
+
+            var standingUpRight = new Animation(AnimationType.RunOnce);
+            standingUpRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
             
-            //var selectedMarkerAnimationList = new AnimationList();
-            //var selectedMarkerAnimation = new Animation(AnimationType.Looped);
-            //selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker1"), 0.2));
-            //selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker 2"), 0.2));
-            //selectedMarkerAnimationList.Add("select", selectedMarkerAnimation);
+            var standingRight = new Animation(AnimationType.RunOnce);
+            standingRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
 
-            var etherealAnimationList = new AnimationList();
-            var standingAnimation = new Animation(AnimationType.Looped);
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
-            standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
-            etherealAnimationList.Add("standing", standingAnimation);
+            var standingDownRight = new Animation(AnimationType.RunOnce);
+            standingDownRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
 
-            var etherealSprite = new AnimatedSprite("standingDown", etherealSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), etherealAnimationList);
+            humanAnimationList.Add("standingDown", standingDown);
+            humanAnimationList.Add("standingUp", standingUp);
+            humanAnimationList.Add("standingDownLeft", standingDownLeft);
+            humanAnimationList.Add("standingLeft", standingLeft);
+            humanAnimationList.Add("standingUpLeft", standingUpLeft);
+            humanAnimationList.Add("standingUpRight", standingUpRight);
+            humanAnimationList.Add("standingRight", standingRight);
+            humanAnimationList.Add("standingDownRight", standingDownRight);
+            var etherealSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
 
             var terrainSprites = new List<Sprite>
                 {
                     new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass")
                 };
 
-            var random = new Random();
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
 
             tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
             tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
-            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
+            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], null, rightWallSprite, null);
             tiles[1, 0] = new Tile(new Vector2(1, 0), terrainSprites[0], leftWallSprite, null, null);
             tiles[1, 1] = new Tile(new Vector2(1, 1), terrainSprites[0], leftWallSprite, null, null);
             tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], null, null, null);
@@ -189,10 +212,13 @@ namespace ZombieUnknown
                 Exit();
             }
 
+            GameState.GameTime = gameTime;
             Engine.Input.Mouse.Update(gameTime);
 
             _camera.Update(gameTime);
             _map.Update(gameTime);
+
+            _virtualScreen.Update();
 
             base.Update(gameTime);
         }
@@ -203,12 +229,16 @@ namespace ZombieUnknown
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            _virtualScreen.BeginCapture();
             GraphicsDevice.Clear(Color.Black);
-
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
-
             _drawingManager.Draw(_spriteBatch);
+            _spriteBatch.End();
+            _virtualScreen.EndCapture();
 
+            GraphicsDevice.Clear(Color.Black);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+            _virtualScreen.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);
