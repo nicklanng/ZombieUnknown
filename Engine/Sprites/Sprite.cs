@@ -7,31 +7,25 @@ namespace Engine.Sprites
     {
         protected SpriteSheet SpriteSheet;
         protected Rectangle SpriteSheetRectangle;
-
         protected Vector2 Center;
 
         public string Name { get; private set; }
+        public BoundingBox LocalBoundingBox { get; private set; }
 
-        public short Width
-        {
-            get { return (short)SpriteSheetRectangle.Width; }
-        }
+        public short Width { get { return (short)SpriteSheetRectangle.Width; } }
+        public short Height { get { return (short)SpriteSheetRectangle.Height; } }
 
-        public short Height
-        {
-            get { return (short)SpriteSheetRectangle.Height; }
-        }
-
-        protected Sprite(string name, SpriteSheet spriteSheet)
-            : this(name, spriteSheet, Vector2.Zero)
+        protected Sprite(string name, SpriteSheet spriteSheet, BoundingBox localBoundingBox)
+            : this(name, spriteSheet, Vector2.Zero, localBoundingBox)
         {
         }
 
-        protected Sprite(string name, SpriteSheet spriteSheet, Vector2 center)
+        protected Sprite(string name, SpriteSheet spriteSheet, Vector2 center, BoundingBox localBoundingBox)
         {
             Name = name;
             SpriteSheet = spriteSheet;
             Center = center;
+            LocalBoundingBox = localBoundingBox;
         }
 
         public virtual void Update(GameTime gameTime)

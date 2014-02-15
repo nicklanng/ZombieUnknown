@@ -79,22 +79,22 @@ namespace Engine.Maps
         {
             if (_floorSprite != null)
             {
-                yield return new DrawingRequest(_floorSprite, Position, Light, DrawingLevel.Floor);
+                yield return new DrawingRequest(_floorSprite, Position, Light);
             }
 
             if (_leftWallSprite != null)
             {
-                yield return new DrawingRequest(_leftWallSprite, Position, Light, DrawingLevel.Wall);
+                yield return new DrawingRequest(_leftWallSprite, Position, Light);
             }
 
             if (_rightWallSprite != null)
             {
-                yield return new DrawingRequest(_rightWallSprite, Position, Light, DrawingLevel.Wall);
+                yield return new DrawingRequest(_rightWallSprite, Position, Light);
             }
 
             if (_wallJoinSprite != null)
             {
-                yield return new DrawingRequest(_wallJoinSprite, Position, Light, DrawingLevel.Wall);
+                yield return new DrawingRequest(_wallJoinSprite, Position, Light);
             }
         }
     }

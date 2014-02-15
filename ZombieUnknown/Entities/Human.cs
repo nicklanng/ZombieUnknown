@@ -28,7 +28,7 @@ namespace ZombieUnknown.Entities
 
         public override IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, MapPosition, Color.White, DrawingLevel.Entity);
+            yield return new DrawingRequest(Sprite, MapPosition, Color.White);
         }
     }
 }

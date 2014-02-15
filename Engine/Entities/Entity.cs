@@ -30,7 +30,7 @@ namespace Engine.Entities
 
         public virtual IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, Coordinate.ToVector2(), Color.White, DrawingLevel.Entity);
+            yield return new DrawingRequest(Sprite, Coordinate.ToVector2(), Color.White);
         }
     }
 }

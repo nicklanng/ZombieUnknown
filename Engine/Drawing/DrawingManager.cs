@@ -37,32 +37,7 @@ namespace Engine.Drawing
             foreach (var drawingRequest in drawingRequests)
             {
                 drawingRequest.Draw(spriteBatch);
-
-                DrawBorder(spriteBatch, drawingRequest.WorldBoundingBox, 1, Color.Red);
             }
-        }
-
-        private void DrawBorder(SpriteBatch spriteBatch, BoundingBox rectangleToDraw, int thicknessOfBorder, Color borderColor)
-        {
-            var pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            pixel.SetData(new[] { Color.White });
-
-            // Draw top line
-            spriteBatch.Draw(pixel, new Rectangle((int)rectangleToDraw.Min.X, (int)rectangleToDraw.Min.Y, (int)(rectangleToDraw.Max.X - rectangleToDraw.Min.X), thicknessOfBorder), borderColor);
-
-            // Draw left line
-            spriteBatch.Draw(pixel, new Rectangle((int)rectangleToDraw.Min.X, (int)rectangleToDraw.Min.Y, thicknessOfBorder, (int)(rectangleToDraw.Max.Y - rectangleToDraw.Min.Y)), borderColor);
-
-            // Draw right line
-            spriteBatch.Draw(pixel, new Rectangle(((int)rectangleToDraw.Max.X - thicknessOfBorder),
-                                            (int)rectangleToDraw.Min.Y,
-                                            thicknessOfBorder,
-                                            (int)(rectangleToDraw.Max.Y - rectangleToDraw.Min.Y)), borderColor);
-            // Draw bottom line
-            spriteBatch.Draw(pixel, new Rectangle((int)rectangleToDraw.Min.X,
-                                            (int)rectangleToDraw.Max.Y - thicknessOfBorder,
-                                            (int)(rectangleToDraw.Max.X - rectangleToDraw.Min.X),
-                                            thicknessOfBorder), borderColor);
         }
 
         private static void BuildTopologicalGraphSort(IEnumerable<DrawingRequest> drawingRequestsEnumerable)
@@ -71,26 +46,21 @@ namespace Engine.Drawing
 
             foreach (var currentDrawingRequest in array)
             {
-                foreach (var comparitorDrawingRequest in array)
+                foreach (var otherDrawingRequest in array)
                 {
-                    if (currentDrawingRequest == comparitorDrawingRequest)
+                    if (currentDrawingRequest == otherDrawingRequest)
                     {
                         continue;
                     }
                     
                     var currentAABB = currentDrawingRequest.WorldBoundingBox;
-                    var otherAABB = comparitorDrawingRequest.WorldBoundingBox;
+                    var otherAABB = otherDrawingRequest.WorldBoundingBox;
 
-                    if (otherAABB.Max.X < currentAABB.Min.X ||
-                        otherAABB.Max.Y < currentAABB.Min.Y ||
-                        otherAABB.Max.Z < currentAABB.Min.Z)
+                    if (otherAABB.Min.X < currentAABB.Max.X &&
+                        otherAABB.Min.Y < currentAABB.Max.Y &&
+                        otherAABB.Min.Z < currentAABB.Max.Z)
                     {
-                        currentDrawingRequest.SpritesBehind.Add(comparitorDrawingRequest);
-                    }
-
-                    if (otherAABB == currentAABB && comparitorDrawingRequest.DrawingLevel < currentDrawingRequest.DrawingLevel)
-                    {
-                        currentDrawingRequest.SpritesBehind.Add(comparitorDrawingRequest);
+                        currentDrawingRequest.SpritesBehind.Add(otherDrawingRequest);
                     }
                 }
             }
@@ -133,7 +103,7 @@ namespace Engine.Drawing
                     Vector2 screenCoordinates;
                     if (_camera.GetScreenCoordinates(providerDrawing.MapPosition, out screenCoordinates))
                     {
-                        providerDrawing.SetScreenCoordinates(screenCoordinates);
+                        providerDrawing.ScreenCoordinates = screenCoordinates;
                         drawingRequests.Add(providerDrawing);
                     }
                 }

@@ -104,28 +104,21 @@ namespace ZombieUnknown
             etherealSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
             etherealSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
 
-            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), "left");
-            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), "right");
-            var joinWallSprite = new StaticSprite("join", wallSpriteSheet, new Vector2(16, 40), "join");
+            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
+            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
+            var joinWallSprite = new StaticSprite("join", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
 
             var cursorSpriteSheet = new SpriteSheet("cursor", cursorTexture);
             cursorSpriteSheet.AddFrame("front", new Rectangle(0, 0, 32, 48));
             cursorSpriteSheet.AddFrame("back", new Rectangle(32, 0, 32, 48));
             cursorSpriteSheet.AddFrame("selectedMarker1", new Rectangle(64, 0, 32, 48));
             cursorSpriteSheet.AddFrame("selectedMarker2", new Rectangle(96, 0, 32, 48));
-
-            var frontCursorSprite = new StaticSprite("front", cursorSpriteSheet, new Vector2(16, 40), "front");
-            var backCursorSprite = new StaticSprite("back", cursorSpriteSheet, new Vector2(16, 40), "back");
-
-            var selectedMarkerAnimationList = new AnimationList();
-            var selectedMarkerAnimation = new Animation(AnimationType.Looped);
-            selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker1"), 0.2));
-            selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker2"), 0.2));
-            selectedMarkerAnimationList.Add("select", selectedMarkerAnimation);
-
-            ResourceManager.SelectMarkerSprite = new AnimatedSprite("selected", cursorSpriteSheet, new Vector2(16, 40), selectedMarkerAnimationList);
-
-            var lightSprite = new StaticSprite("light", debugIconsSpriteSheet, new Vector2(16, 40), "light");
+            
+            //var selectedMarkerAnimationList = new AnimationList();
+            //var selectedMarkerAnimation = new Animation(AnimationType.Looped);
+            //selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker1"), 0.2));
+            //selectedMarkerAnimation.AddFrame(new AnimationFrame(cursorSpriteSheet.GetFrameRectangle("selectedMarker 2"), 0.2));
+            //selectedMarkerAnimationList.Add("select", selectedMarkerAnimation);
 
             var etherealAnimationList = new AnimationList();
             var standingAnimation = new Animation(AnimationType.Looped);
@@ -139,43 +132,32 @@ namespace ZombieUnknown
             standingAnimation.AddFrame(new AnimationFrame(etherealSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
             etherealAnimationList.Add("standing", standingAnimation);
 
-            var etherealSprite = new AnimatedSprite("standingDown", etherealSpriteSheet, new Vector2(16, 40), etherealAnimationList);
+            var etherealSprite = new AnimatedSprite("standingDown", etherealSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), etherealAnimationList);
 
             var terrainSprites = new List<Sprite>
                 {
-                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "grass"),
-                    new StaticSprite("leaves1", terrainSpriteSheet, new Vector2(16, 32), "leaves1"),
-                    new StaticSprite("leaves2", terrainSpriteSheet, new Vector2(16, 32), "leaves2"),
-                    new StaticSprite("water", terrainSpriteSheet, new Vector2(16, 32), "water"),
-                    new StaticSprite("tallGrass1", terrainSpriteSheet, new Vector2(16, 32), "tallGrass1"),
-                    new StaticSprite("tallGrass2", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2"),
-                    new StaticSprite("swamp1", terrainSpriteSheet, new Vector2(16, 32), "swamp1"),
-                    new StaticSprite("swamp2", terrainSpriteSheet, new Vector2(16, 32), "swamp2"),
-                    new StaticSprite("deadTree1", terrainSpriteSheet, new Vector2(16, 32), "deadTree1"),
-                    new StaticSprite("deadTree2", terrainSpriteSheet, new Vector2(16, 32), "deadTree2"),
-                    new StaticSprite("deadTree3", terrainSpriteSheet, new Vector2(16, 32), "deadTree3"),
-                    new StaticSprite("deadTree4", terrainSpriteSheet, new Vector2(16, 32), "deadTree4")
+                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass")
                 };
 
             var random = new Random();
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
 
-            tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, null, null);
-            tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], leftWallSprite, null, null);
-            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], leftWallSprite, null, null);
+            tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
+            tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
+            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
             tiles[1, 0] = new Tile(new Vector2(1, 0), terrainSprites[0], leftWallSprite, null, null);
             tiles[1, 1] = new Tile(new Vector2(1, 1), terrainSprites[0], leftWallSprite, null, null);
-            tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], leftWallSprite, null, null);
-            tiles[2, 0] = new Tile(new Vector2(2, 0), terrainSprites[0], null, null, null);
+            tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], null, null, null);
+            tiles[2, 0] = new Tile(new Vector2(2, 0), terrainSprites[0], leftWallSprite, null, null);
             tiles[2, 1] = new Tile(new Vector2(2, 1), terrainSprites[0], null, null, null);
-            tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], null, null, null);
+            tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
 
             _lightMap = new LightMap(_map, new Color(0.5f, 0.5f, 0.5f));
 
-            var human = new Human("human", etherealSprite, new Coordinate(1, 0));
+            var human = new Human("human", etherealSprite, new Coordinate(0, 0));
             _map.AddEntity(human, human.Coordinate);
 
             GameState.Map = _map;
@@ -209,8 +191,6 @@ namespace ZombieUnknown
 
             _camera.Update(gameTime);
             _map.Update(gameTime);
-
-            ResourceManager.SelectMarkerSprite.Update(gameTime);
 
             base.Update(gameTime);
         }
