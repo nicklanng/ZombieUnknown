@@ -1,6 +1,5 @@
 ﻿using Engine.Entities;
 using Engine.Maps;
-using Microsoft.Xna.Framework;
 
 namespace Engine.AI
 {
@@ -48,7 +47,7 @@ namespace Engine.AI
             var distanceToTarget = (_target.ToVector2() - _entity.MapPosition);  
             var moveAmount = distanceToTarget;
             moveAmount.Normalize();
-            moveAmount = moveAmount * 0.01f;
+            moveAmount = moveAmount * _entity.Speed * 0.001f;
 
             if (!_tileSwapped && (_entity.MapPosition - _origin.ToVector2()).Length() > (_target.ToVector2() - _origin.ToVector2()).Length() / 2)
             {

@@ -16,6 +16,8 @@ namespace Engine.Entities
             Sprite = sprite;
         }
 
+        public abstract float Speed { get; }
+
         public override void Update(GameTime gameTime)
         {
             Sprite.Update(gameTime);

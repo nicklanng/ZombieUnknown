@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Engine.AI;
+﻿using Engine.AI;
 using Engine.Maps;
 using ZombieUnknown.Entities;
 
@@ -13,11 +12,13 @@ namespace ZombieUnknown.AI
 
         public override void Think()
         {
-            if (!Goals.Any())
-            {
-                Goals.Push(new FollowPathGoal(Entity, new Coordinate(0, 0)));
-                Goals.Push(new FollowPathGoal(Entity, new Coordinate(0, 2)));
-            }
+            // find alive food
+                // go to alive food
+                    // kill alive food
+            // find fresh food
+                // go to fresh food
+                    // eat fresh food
+            // wander
 
             base.Think();
         }

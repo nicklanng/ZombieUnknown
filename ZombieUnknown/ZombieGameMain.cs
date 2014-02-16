@@ -26,7 +26,7 @@ namespace ZombieUnknown
         private VirtualScreen _virtualScreen;
         private DrawingManager _drawingManager;
 
-        private Vector2 _mapSize = new Vector2(3, 3);
+        private Vector2 _mapSize = new Vector2(20, 20);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -125,31 +125,44 @@ namespace ZombieUnknown
                 };
 
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
+            for (var y = 0; y < (int) _mapSize.Y; y++)
+            {
+                for (var x = 0; x < (int)_mapSize.X; x++)
+                {
+                    tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[0], null, null, null);
+                }
+            }
 
-            tiles[0, 0] = new Tile(new Vector2(0, 0), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
-            tiles[0, 1] = new Tile(new Vector2(0, 1), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
-            tiles[0, 2] = new Tile(new Vector2(0, 2), terrainSprites[0], null, rightWallSprite, null);
-            tiles[1, 0] = new Tile(new Vector2(1, 0), terrainSprites[0], leftWallSprite, null, null);
-            tiles[1, 1] = new Tile(new Vector2(1, 1), terrainSprites[0], leftWallSprite, null, null);
-            tiles[1, 2] = new Tile(new Vector2(1, 2), terrainSprites[0], null, null, null);
-            tiles[2, 0] = new Tile(new Vector2(2, 0), terrainSprites[0], leftWallSprite, null, null);
-            tiles[2, 1] = new Tile(new Vector2(2, 1), terrainSprites[0], null, null, null);
-            tiles[2, 2] = new Tile(new Vector2(2, 2), terrainSprites[0], leftWallSprite, rightWallSprite, joinWallSprite);
+            tiles[3, 4].SetLeftWall(leftWallSprite);
+            tiles[3, 4].SetRightWall(rightWallSprite);
+            tiles[3, 4].SetJoinWall(joinWallSprite);
+            tiles[3, 5].SetRightWall(rightWallSprite);
+            tiles[3, 6].SetRightWall(rightWallSprite);
+            tiles[3, 7].SetLeftWall(leftWallSprite);
+            tiles[4, 4].SetLeftWall(leftWallSprite);
+            tiles[5, 4].SetLeftWall(leftWallSprite);
+            tiles[5, 7].SetLeftWall(leftWallSprite);
+            tiles[6, 4].SetRightWall(rightWallSprite);
+            tiles[6, 5].SetRightWall(rightWallSprite);
+            tiles[6, 6].SetRightWall(rightWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
 
-            var human = new Human("human", humanSprite, new Coordinate(0, 0));
+            var human = new Human("human", humanSprite, new Coordinate(10, 10));
             _map.AddEntity(human);
             _map.GetTile(human.Coordinate).IsBlocked = true;
 
-            var zombie = new Zombie("zombie", zombieSprite, new Coordinate(2, 0));
+            var zombie = new Zombie("zombie", zombieSprite, new Coordinate(16, 16));
             _map.AddEntity(zombie);
             _map.GetTile(zombie.Coordinate).IsBlocked = true;
 
-            var light = new PhantomLight("light", new Coordinate(1, 1), new Light(new Coordinate(1, 1), Color.White, 5));
+            var light = new PhantomLight("light", new Coordinate(7, 9), new Light(new Coordinate(7, 9), Color.White, 10));
             _map.AddEntity(light);
 
-            _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));
+            var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.Red, 10));
+            _map.AddEntity(light2);
+
+            _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.4f));
             _pathfindingMap = new PathfindingMap(_map);
 
             GameState.Map = _map;

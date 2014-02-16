@@ -11,6 +11,11 @@ namespace ZombieUnknown.Entities
 {
     public class Human : DrawableEntity
     {
+        public override float Speed
+        {
+            get { return 10; }
+        }
+
         public HumanMind Mind { get; private set; } 
 
         public Human(string name, Sprite sprite, Coordinate coordinate)
@@ -18,7 +23,7 @@ namespace ZombieUnknown.Entities
         {
             Mind = new HumanMind(this);
         }
-        
+
         public override void Update(GameTime gameTime)
         {
             Mind.Think();

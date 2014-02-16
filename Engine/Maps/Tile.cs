@@ -11,9 +11,9 @@ namespace Engine.Maps
     {
         private List<Entity> _entities;
 
-        private readonly Sprite _leftWallSprite;
-        private readonly Sprite _rightWallSprite;
-        private readonly Sprite _wallJoinSprite;
+        private Sprite _leftWallSprite;
+        private Sprite _rightWallSprite;
+        private Sprite _wallJoinSprite;
         private readonly Sprite _floorSprite;
 
         public bool IsBlocked { get; set; }
@@ -97,6 +97,21 @@ namespace Engine.Maps
             {
                 yield return new DrawingRequest(_wallJoinSprite, Position, Light);
             }
+        }
+
+        public void SetLeftWall(StaticSprite leftWallSprite)
+        {
+            _leftWallSprite = leftWallSprite;
+        }
+
+        public void SetRightWall(StaticSprite rightWallSprite)
+        {
+            _rightWallSprite = rightWallSprite;
+        }
+
+        public void SetJoinWall(StaticSprite joinWallSprite)
+        {
+            _wallJoinSprite = joinWallSprite;
         }
     }
 }
