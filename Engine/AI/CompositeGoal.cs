@@ -60,7 +60,7 @@ namespace Engine.AI
             GoalStatus = _subgoals.Peek().GoalStatus;
         }
 
-        private void RemoveAllSubgoals()
+        protected void RemoveAllSubgoals()
         {
             while (_subgoals.Any())
             {

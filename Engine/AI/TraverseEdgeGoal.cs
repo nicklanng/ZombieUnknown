@@ -1,5 +1,6 @@
 ﻿using Engine.Entities;
 using Engine.Maps;
+using Microsoft.Xna.Framework;
 
 namespace Engine.AI
 {
@@ -8,7 +9,7 @@ namespace Engine.AI
         private readonly DrawableEntity _entity;
 
         private Coordinate _origin;
-        private Coordinate _target;
+        private readonly Coordinate _target;
         private bool _tileSwapped;
 
         public TraverseEdgeGoal(DrawableEntity entity, Coordinate target)
@@ -22,13 +23,27 @@ namespace Engine.AI
             base.Activate();
 
             _origin = _entity.Coordinate;
-            
-            SetAnimation();
+
+            var isTargetTileBlocked = GameState.Map.GetTile(_target).IsBlocked;
+            if (isTargetTileBlocked)
+            {
+                GoalStatus = GoalStatus.Failed;
+            }
+            else
+            {
+                GameState.Map.GetTile(_target).IsBlocked = true;
+                SetAnimation();
+            }
         }
 
         public override void Process()
         {
             base.Process();
+
+            if (!IsActive)
+            {
+                return;
+            }
 
             var distanceToTarget = (_target.ToVector2() - _entity.MapPosition);  
             var moveAmount = distanceToTarget;
@@ -37,9 +52,10 @@ namespace Engine.AI
 
             if (!_tileSwapped && (_entity.MapPosition - _origin.ToVector2()).Length() > (_target.ToVector2() - _origin.ToVector2()).Length() / 2)
             {
+                GameState.Map.GetTile(_origin).IsBlocked = false;
                 GameState.Map.RemoveEntity(_entity);
-                GameState.Map.AddEntity(_entity, _target);
                 _entity.Coordinate = _target;
+                GameState.Map.AddEntity(_entity);
 
                 _tileSwapped = true;
             }

@@ -63,7 +63,6 @@ namespace Engine.Maps
                     // up
                     if (map.IsPositionOnMap(upCoord))
                     {
-
                         if (upLeftTile == null || upRightTile == null)
                         {
                             continue;

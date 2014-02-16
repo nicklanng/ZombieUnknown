@@ -9,14 +9,14 @@ using ZombieUnknown.AI;
 
 namespace ZombieUnknown.Entities
 {
-    public class Human : DrawableEntity
+    class Zombie : DrawableEntity
     {
-        public HumanMind Mind { get; private set; } 
+        public ZombieMind Mind { get; private set; } 
 
-        public Human(string name, Sprite sprite, Coordinate coordinate)
+        public Zombie(string name, Sprite sprite, Coordinate coordinate)
             : base(name, sprite, coordinate)
         {
-            Mind = new HumanMind(this);
+            Mind = new ZombieMind(this);
         }
         
         public override void Update(GameTime gameTime)

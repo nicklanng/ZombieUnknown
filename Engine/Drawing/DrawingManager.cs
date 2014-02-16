@@ -56,9 +56,7 @@ namespace Engine.Drawing
                     var currentAABB = currentDrawingRequest.WorldBoundingBox;
                     var otherAABB = otherDrawingRequest.WorldBoundingBox;
 
-                    if (otherAABB.Min.X < currentAABB.Max.X &&
-                        otherAABB.Min.Y < currentAABB.Max.Y &&
-                        otherAABB.Min.Z < currentAABB.Max.Z)
+                    if ((otherAABB.Min.X < currentAABB.Max.X && otherAABB.Min.Y < currentAABB.Max.Y && otherAABB.Min.Z < currentAABB.Max.Z))
                     {
                         currentDrawingRequest.SpritesBehind.Add(otherDrawingRequest);
                     }

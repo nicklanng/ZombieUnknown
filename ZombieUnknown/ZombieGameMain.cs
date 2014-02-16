@@ -78,7 +78,7 @@ namespace ZombieUnknown
             var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
             var wallsTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/walls.png"));
             var debugIconTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/debugIcons.png"));
-            var etherealTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/ethereal.png"));
+            var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));
 
             var terrainSpriteSheet = new SpriteSheet("terrain", terrainTexture);
             terrainSpriteSheet.AddFrame("grass", new Rectangle(0, 0, 32, 40));
@@ -102,60 +102,22 @@ namespace ZombieUnknown
             var debugIconsSpriteSheet = new SpriteSheet("debugIcons", debugIconTexture);
             debugIconsSpriteSheet.AddFrame("light", new Rectangle(0, 0, 32, 48));
 
-            var humanSpriteSheet = new SpriteSheet("ethereal", etherealTexture);
-            humanSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+            var zombieSpriteSheet = new SpriteSheet("zombie", zombieTexture);
+            zombieSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
 
             var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
             var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
             var joinWallSprite = new StaticSprite("join", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
 
-            var cursorSpriteSheet = new SpriteSheet("cursor", cursorTexture);
-            cursorSpriteSheet.AddFrame("front", new Rectangle(0, 0, 32, 48));
-            cursorSpriteSheet.AddFrame("back", new Rectangle(32, 0, 32, 48));
-            cursorSpriteSheet.AddFrame("selectedMarker1", new Rectangle(64, 0, 32, 48));
-            cursorSpriteSheet.AddFrame("selectedMarker2", new Rectangle(96, 0, 32, 48));
-
-            var humanAnimationList = new AnimationList();
-            var standingUp = new Animation(AnimationType.RunOnce);
-            standingUp.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
-
-            var standingDown = new Animation(AnimationType.RunOnce);
-            standingDown.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
-
-            var standingDownLeft = new Animation(AnimationType.RunOnce);
-            standingDownLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
-
-            var standingLeft = new Animation(AnimationType.RunOnce);
-            standingLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
-
-            var standingUpLeft = new Animation(AnimationType.RunOnce);
-            standingUpLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
-
-            var standingUpRight = new Animation(AnimationType.RunOnce);
-            standingUpRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
-            
-            var standingRight = new Animation(AnimationType.RunOnce);
-            standingRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
-
-            var standingDownRight = new Animation(AnimationType.RunOnce);
-            standingDownRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
-
-            humanAnimationList.Add("standingDown", standingDown);
-            humanAnimationList.Add("standingUp", standingUp);
-            humanAnimationList.Add("standingDownLeft", standingDownLeft);
-            humanAnimationList.Add("standingLeft", standingLeft);
-            humanAnimationList.Add("standingUpLeft", standingUpLeft);
-            humanAnimationList.Add("standingUpRight", standingUpRight);
-            humanAnimationList.Add("standingRight", standingRight);
-            humanAnimationList.Add("standingDownRight", standingDownRight);
-            var etherealSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
+            var humanSprite = BuildHumanSprite();
+            var zombieSprite = BuildZombieSprite();
 
             var terrainSprites = new List<Sprite>
                 {
@@ -176,11 +138,16 @@ namespace ZombieUnknown
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
 
-            var human = new Human("human", etherealSprite, new Coordinate(0, 0));
-            _map.AddEntity(human, human.Coordinate);
+            var human = new Human("human", humanSprite, new Coordinate(0, 0));
+            _map.AddEntity(human);
+            _map.GetTile(human.Coordinate).IsBlocked = true;
 
-            var light = new PhantomLight("light", new Coordinate(0, 0), new Light(new Coordinate(1, 1), Color.White, 5));
-            _map.AddEntity(light, light.Coordinate);
+            var zombie = new Zombie("zombie", zombieSprite, new Coordinate(2, 0));
+            _map.AddEntity(zombie);
+            _map.GetTile(zombie.Coordinate).IsBlocked = true;
+
+            var light = new PhantomLight("light", new Coordinate(1, 1), new Light(new Coordinate(1, 1), Color.White, 5));
+            _map.AddEntity(light);
 
             _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.1f));
             _pathfindingMap = new PathfindingMap(_map);
@@ -189,6 +156,98 @@ namespace ZombieUnknown
             GameState.PathfindingMap = _pathfindingMap;
 
             _drawingManager.RegisterProvider(_map);
+        }
+
+        private AnimatedSprite BuildHumanSprite()
+        {
+            var humanTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/ethereal.png"));
+
+            var humanSpriteSheet = new SpriteSheet("ethereal", humanTexture);
+            humanSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
+            humanSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+
+            var humanAnimationList = new AnimationList();
+            var standingUp = new Animation(AnimationType.RunOnce);
+            standingUp.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
+            var standingDown = new Animation(AnimationType.RunOnce);
+            standingDown.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
+            var standingDownLeft = new Animation(AnimationType.RunOnce);
+            standingDownLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
+            var standingLeft = new Animation(AnimationType.RunOnce);
+            standingLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
+            var standingUpLeft = new Animation(AnimationType.RunOnce);
+            standingUpLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
+            var standingUpRight = new Animation(AnimationType.RunOnce);
+            standingUpRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
+            var standingRight = new Animation(AnimationType.RunOnce);
+            standingRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
+            var standingDownRight = new Animation(AnimationType.RunOnce);
+            standingDownRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
+
+            humanAnimationList.Add("standingDown", standingDown);
+            humanAnimationList.Add("standingUp", standingUp);
+            humanAnimationList.Add("standingDownLeft", standingDownLeft);
+            humanAnimationList.Add("standingLeft", standingLeft);
+            humanAnimationList.Add("standingUpLeft", standingUpLeft);
+            humanAnimationList.Add("standingUpRight", standingUpRight);
+            humanAnimationList.Add("standingRight", standingRight);
+            humanAnimationList.Add("standingDownRight", standingDownRight);
+
+            var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
+
+            return humanSprite;
+        }
+
+        private AnimatedSprite BuildZombieSprite()
+        {
+            var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));
+
+            var zombieSpriteSheet = new SpriteSheet("zombie", zombieTexture);
+            zombieSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+
+            var humanAnimationList = new AnimationList();
+            var standingUp = new Animation(AnimationType.RunOnce);
+            standingUp.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
+            var standingDown = new Animation(AnimationType.RunOnce);
+            standingDown.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
+            var standingDownLeft = new Animation(AnimationType.RunOnce);
+            standingDownLeft.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
+            var standingLeft = new Animation(AnimationType.RunOnce);
+            standingLeft.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
+            var standingUpLeft = new Animation(AnimationType.RunOnce);
+            standingUpLeft.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
+            var standingUpRight = new Animation(AnimationType.RunOnce);
+            standingUpRight.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
+            var standingRight = new Animation(AnimationType.RunOnce);
+            standingRight.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
+            var standingDownRight = new Animation(AnimationType.RunOnce);
+            standingDownRight.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
+
+            humanAnimationList.Add("standingDown", standingDown);
+            humanAnimationList.Add("standingUp", standingUp);
+            humanAnimationList.Add("standingDownLeft", standingDownLeft);
+            humanAnimationList.Add("standingLeft", standingLeft);
+            humanAnimationList.Add("standingUpLeft", standingUpLeft);
+            humanAnimationList.Add("standingUpRight", standingUpRight);
+            humanAnimationList.Add("standingRight", standingRight);
+            humanAnimationList.Add("standingDownRight", standingDownRight);
+
+            var zombieSprite = new AnimatedSprite("human", zombieSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
+
+            return zombieSprite;
         }
 
         /// <summary>

@@ -1,38 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Engine.Entities;
-using Engine.Maps;
 
 namespace Engine.AI
 {
-    public class Mind<T> where T : Entity
+    public abstract class Mind<T> where T : Entity
     {
-        private T _entity;
-        private readonly Stack<IGoal> _subgoals;
+        protected T Entity;
+        protected readonly Stack<IGoal> Goals;
 
         public Mind(T entity)
         {
-            _entity = entity;
+            Entity = entity;
 
-            _subgoals = new Stack<IGoal>();
-
-            _subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 2)));
-            _subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 0)));
-            _subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 2)));
-
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 0)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(2, 2)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 0)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(2, 2)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 0)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(2, 2)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(0, 0)));
-            //_subgoals.Push(new FollowPathGoal(_entity as DrawableEntity, new Coordinate(2, 2)));
+            Goals = new Stack<IGoal>();
         }
 
-        public void Think()
+        public virtual void Think()
         {
-            if (!_subgoals.Any())
+            if (!Goals.Any())
             {
                 return;
             }
@@ -42,23 +28,23 @@ namespace Engine.AI
 
         private void ProcessSubgoals()
         {
-            if (!_subgoals.Any())
+            if (!Goals.Any())
             {
                 return;
             }
 
-            while (_subgoals.Any() && (_subgoals.Peek().IsComplete || _subgoals.Peek().HasFailed))
+            while (Goals.Any() && (Goals.Peek().IsComplete || Goals.Peek().HasFailed))
             {
-                var finishedSubGoal = _subgoals.Pop();
+                var finishedSubGoal = Goals.Pop();
                 finishedSubGoal.Terminate();
             }
 
-            if (!_subgoals.Any())
+            if (!Goals.Any())
             {
                 return;
             }
 
-            _subgoals.Peek().Process();
+            Goals.Peek().Process();
 
         }
     }

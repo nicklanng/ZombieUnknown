@@ -50,9 +50,9 @@ namespace Engine.Maps
             return IsPositionOnMap(coordinate) ? _tiles[coordinate.X, coordinate.Y] : null;
         }
 
-        public void AddEntity(Entity entity, Coordinate coordinate)
+        public void AddEntity(Entity entity)
         {
-            _entities[coordinate.X, coordinate.Y].Add(entity);
+            _entities[entity.Coordinate.X, entity.Coordinate.Y].Add(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)

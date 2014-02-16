@@ -16,6 +16,7 @@ namespace Engine.Maps
         private readonly Sprite _wallJoinSprite;
         private readonly Sprite _floorSprite;
 
+        public bool IsBlocked { get; set; }
         public Color Light { get; set; }
         public Vector2 Position { get; private set; }
         public DrawableEntity DrawableEntity { get; private set; }

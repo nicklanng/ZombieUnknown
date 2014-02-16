@@ -51,7 +51,10 @@
     </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AI\HumanMind.cs" />
+    <Compile Include="AI\ZombieMind.cs" />
     <Compile Include="Entities\Human.cs" />
+    <Compile Include="Entities\Zombie.cs" />
     <Compile Include="IsometricConfiguration.cs" />
     <Compile Include="ZombieGameMain.cs" />
     <Compile Include="Program.cs" />
@@ -91,6 +94,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SpriteSheets\xcom-forest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SpriteSheets\zombie.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
