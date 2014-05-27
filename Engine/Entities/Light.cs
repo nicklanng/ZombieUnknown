@@ -40,21 +40,7 @@ namespace Engine.Entities
             var shadowInc = 1.0f / EngineSettings.ShadowQuality;
             var shadowPolygons = new List<Polygon>();
 
-            foreach (var wall in walls)
-            {
-                var startExtrapolation = GetPointExtrapolation(wall.Start);
-                var endExtrapolation = GetPointExtrapolation(wall.End);
-
-                var shadowPolygon = new Polygon(new List<Line>
-                    {
-                        new Line(wall.Start, wall.End),
-                        new Line(wall.Start, startExtrapolation),
-                        new Line(wall.End, endExtrapolation),
-                        new Line(startExtrapolation, endExtrapolation)
-                    });
-
-                shadowPolygons.Add(shadowPolygon);
-            }
+            CreateLineOfSightMasks(walls, shadowPolygons);
 
             for (var x = 0; x < _mapSize; x++)
             {
@@ -77,6 +63,25 @@ namespace Engine.Entities
                     }
                     VisiblityMap[x, y] = 1 - (float)(litTiles / Math.Pow(EngineSettings.ShadowQuality, 2));
                 }
+            }
+        }
+
+        private void CreateLineOfSightMasks(IEnumerable<Line> walls, ICollection<Polygon> shadowPolygons)
+        {
+            foreach (var wall in walls)
+            {
+                var startExtrapolation = GetPointExtrapolation(wall.Start);
+                var endExtrapolation = GetPointExtrapolation(wall.End);
+
+                var shadowPolygon = new Polygon(new List<Line>
+                {
+                    new Line(wall.Start, wall.End),
+                    new Line(wall.Start, startExtrapolation),
+                    new Line(wall.End, endExtrapolation),
+                    new Line(startExtrapolation, endExtrapolation)
+                });
+
+                shadowPolygons.Add(shadowPolygon);
             }
         }
 
