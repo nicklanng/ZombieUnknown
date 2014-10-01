@@ -31,11 +31,6 @@ namespace Engine.Drawing
             _lines.Enqueue(input);
         }
 
-        public static IUIProvider DrawingProvider
-        {
-            get { return Instance; }
-        }
-
         public IEnumerable<UIRequest> GetDrawings()
         {
             var maxWidth = _spriteBatch.GraphicsDevice.Viewport.Width;
@@ -58,6 +53,11 @@ namespace Engine.Drawing
                 x = 5;
                 y = y + _font.Height + 2;
             }
+        }
+
+        public static IUIProvider DrawingProvider
+        {
+            get { return Instance; }
         }
     }
 }

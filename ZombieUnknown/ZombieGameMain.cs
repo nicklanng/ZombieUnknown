@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Engine;
 using Engine.Drawing;
 using Engine.Entities;
@@ -245,8 +246,11 @@ namespace ZombieUnknown
             _drawingManager.RegisterProvider(_map);
 
             Console.Initialize(_spriteBatch, font, 10);
-            Console.WriteLine("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            Console.WriteLine("THE CONSOLE");
             _uiManager.RegisterProvider(Console.DrawingProvider);
+
+            FrameRater.Initialize(_spriteBatch, font);
+            _uiManager.RegisterProvider(FrameRater.DrawingProvider);
         }
 
         private AnimatedSprite BuildHumanSprite()
@@ -357,6 +361,8 @@ namespace ZombieUnknown
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            FrameRater.NewUpdate(gameTime.TotalGameTime);
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Exit();
@@ -379,6 +385,8 @@ namespace ZombieUnknown
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            FrameRater.NewFrame(gameTime.TotalGameTime);
+
             _virtualScreen.BeginCapture();
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
