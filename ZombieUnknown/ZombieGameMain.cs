@@ -36,13 +36,14 @@ namespace ZombieUnknown
                     
                     PreferredBackBufferWidth = 1366,
                     PreferredBackBufferHeight = 768,
-		    IsFullScreen = true
+                    IsFullScreen = true
                 };
             Content.RootDirectory = "Content";
 
 #if WINDOWS
             Window.IsBorderless = true;
 #endif
+
             IsFixedTimeStep = true;
         }
 
