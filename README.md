@@ -2,9 +2,7 @@ ZombieUnknown
 =============
 
 Requirements
-Visual Studio 2012
-Monogame v3.0.1, which can be downloaded from:
-http://monogame.codeplex.com/releases/view/102870
+Visual Studio 2013
 
 Done:
 * Spritesheets & Non-animating Sprites
