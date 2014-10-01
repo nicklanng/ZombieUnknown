@@ -10,11 +10,11 @@ namespace Engine.Entities
         public string Name { get; private set; }
         public short ZIndex { get; protected set; }
 
-        protected Entity(string name,Coordinate coordinate)
+        protected Entity(string name, Coordinate coordinate)
         {
             Name = name;
             Coordinate = coordinate;
-            MapPosition = Coordinate.ToVector2();
+            MapPosition = Coordinate;
 
             ZIndex = 0;
         }

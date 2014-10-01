@@ -5,7 +5,7 @@ namespace Engine.Maps
 {
     public class Coordinate : IEquatable<Coordinate>
     {
-        
+
         public int X { get; set; }
         public int Y { get; set; }
 
@@ -13,16 +13,6 @@ namespace Engine.Maps
         {
             X = x;
             Y = y;
-        }
-
-        public static Coordinate FromVector2(Vector2 mapPosition)
-        {
-            return new Coordinate((int)mapPosition.X, (int)mapPosition.Y);
-        }
-
-        public Vector2 ToVector2()
-        {
-            return new Vector2(X, Y);
         }
 
         public bool Equals(Coordinate other)
@@ -62,6 +52,16 @@ namespace Engine.Maps
         public static Coordinate operator -(Coordinate a, Coordinate b)
         {
             return new Coordinate(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static implicit operator Vector2(Coordinate c)
+        {
+            return new Vector2(c.X, c.Y);
+        }
+
+        public static implicit operator Coordinate(Vector2 v)
+        {
+            return new Coordinate((int)v.X, (int)v.Y);
         }
 
         public static Coordinate Up = new Coordinate(-1, -1);

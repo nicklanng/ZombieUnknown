@@ -1,5 +1,6 @@
 ﻿using Engine.Entities;
 using Engine.Maps;
+using Microsoft.Xna.Framework;
 
 namespace Engine.AI
 {
@@ -44,12 +45,12 @@ namespace Engine.AI
                 return;
             }
 
-            var distanceToTarget = (_target.ToVector2() - _entity.MapPosition);  
+            var distanceToTarget = ((Vector2)_target - _entity.MapPosition);
             var moveAmount = distanceToTarget;
             moveAmount.Normalize();
             moveAmount = moveAmount * _entity.Speed * 0.001f;
 
-            if (!_tileSwapped && (_entity.MapPosition - _origin.ToVector2()).Length() > (_target.ToVector2() - _origin.ToVector2()).Length() / 2)
+            if (!_tileSwapped && (_entity.MapPosition - (Vector2)_origin).Length() > ((Vector2)_target - (Vector2)_origin).Length() / 2)
             {
                 GameState.Map.GetTile(_origin).IsBlocked = false;
                 GameState.Map.RemoveEntity(_entity);
@@ -74,7 +75,7 @@ namespace Engine.AI
             base.Terminate();
             // set entity state or animation or something
         }
-        
+
         private void SetAnimation()
         {
             var animationName = "default";
