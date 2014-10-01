@@ -103,14 +103,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Content\SpriteSheets\cursor.png">
+      <Link>Content\Spritesheets\cursor.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SpriteSheets\debugIcons.png">
+      <Link>Content\Spritesheets\debugIcons.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SpriteSheets\ethereal.png">
+      <Link>Content\Spritesheets\ethereal.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SpriteSheets\grass.png">
+      <Link>Content\Spritesheets\grass.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SpriteSheets\walls.png">
+      <Link>Content\Spritesheets\walls.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SpriteSheets\xcom-forest.png">
+      <Link>Content\Spritesheets\xcom-forest.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SpriteSheets\zombie.png">
+      <Link>Content\Spritesheets\zombie.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\ZombieUnknown.Content\ZombieUnknown.Content\ZombieUnknown.Content.csproj">
-      <Project>{f935cc79-477f-4e4d-b934-1d8c7cae626d}</Project>
-      <Name>ZombieUnknown.Content</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ZombieUnknown\ZombieUnknown.csproj">
       <Project>{fb42fdda-8530-4f36-83c1-3d741e08adc1}</Project>
       <Name>ZombieUnknown</Name>

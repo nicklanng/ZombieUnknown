@@ -36,13 +36,14 @@ namespace ZombieUnknown
                     
                     PreferredBackBufferWidth = 1366,
                     PreferredBackBufferHeight = 768,
-		    IsFullScreen = true
+                    IsFullScreen = true
                 };
             Content.RootDirectory = "Content";
 
 #if WINDOWS
             Window.IsBorderless = true;
 #endif
+
             IsFixedTimeStep = true;
         }
 
@@ -81,10 +82,11 @@ namespace ZombieUnknown
         protected override void LoadContent()
         {
             // All of the initialization stuff should be somewhere else, and probably load from data files
-            var terrainTexture = Content.Load<Texture2D>("SpriteSheets/xcom-forest");
-            var wallsTexture = Content.Load<Texture2D>("SpriteSheets/walls");
-            var debugIconTexture = Content.Load<Texture2D>("SpriteSheets/debugIcons");
-            var zombieTexture = Content.Load<Texture2D>("SpriteSheets/zombie");
+            var terrainTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/xcom-forest.png"));
+            //var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
+            var wallsTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/walls.png"));
+            var debugIconTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/debugIcons.png"));
+            var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));
 
             var terrainSpriteSheet = new SpriteSheet("terrain", terrainTexture);
             terrainSpriteSheet.AddFrame("grass", new Rectangle(0, 0, 32, 40));
