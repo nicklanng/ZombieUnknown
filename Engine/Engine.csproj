@@ -40,6 +40,9 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Windows</OutputPath>
     <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,9 +64,13 @@
     <Compile Include="AI\IGoal.cs" />
     <Compile Include="AI\Mind.cs" />
     <Compile Include="AI\TraverseEdgeGoal.cs" />
+    <Compile Include="Drawing\Console.cs" />
     <Compile Include="Drawing\DrawingManager.cs" />
     <Compile Include="Drawing\DrawingRequest.cs" />
     <Compile Include="Drawing\IDrawingProvider.cs" />
+    <Compile Include="Drawing\IUIProvider.cs" />
+    <Compile Include="Drawing\UIManager.cs" />
+    <Compile Include="Drawing\UIRequest.cs" />
     <Compile Include="Drawing\VirtualScreen.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
@@ -91,6 +98,7 @@
     <Compile Include="Sprites\Animation.cs" />
     <Compile Include="Sprites\AnimationFrame.cs" />
     <Compile Include="Sprites\AnimationType.cs" />
+    <Compile Include="Sprites\Font.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\SpriteSheet.cs" />
     <Compile Include="Sprites\AnimationList.cs" />
