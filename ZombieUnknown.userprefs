@@ -1,0 +1,17 @@
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="01/10/2014 09:25:15">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Mac" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ZombieUnknown/ZombieGameMain.cs">
+    <Files>
+      <File FileName="ZombieUnknown/ZombieGameMain.cs" Line="36" Column="36" />
+      <File FileName="ZombieUnknown/Entities/Human.cs" Line="1" Column="1" />
+      <File FileName="ZombieUnknown.Mac/Main.cs" Line="5" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <DisabledProjects>
+    <String>ZombieUnknown.Windows/ZombieUnknown.Windows.csproj</String>
+  </DisabledProjects>
+</Properties>

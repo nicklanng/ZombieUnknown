@@ -34,11 +34,15 @@ namespace ZombieUnknown
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
-                    PreferredBackBufferWidth = 1280,
-                    PreferredBackBufferHeight = 960
+                    PreferredBackBufferWidth = 1366,
+                    PreferredBackBufferHeight = 768,
+					IsFullScreen = true
                 };
             Content.RootDirectory = "Content";
 
+#if WINDOWS
+            Window.IsBorderless = true;
+#endif
             IsFixedTimeStep = true;
         }
 
@@ -52,9 +56,12 @@ namespace ZombieUnknown
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(640, 480, GraphicsDevice);
+            _virtualScreen = new VirtualScreen(640, 360, GraphicsDevice);
+
+#if WINDOWS
             Window.ClientSizeChanged += Window_ClientSizeChanged;
             Window.AllowUserResizing = true;
+#endif
 
             _camera = new Camera(new Vector2(_virtualScreen.VirtualWidth, _virtualScreen.VirtualHeight), 100, new IsometricConfiguration());
             _drawingManager = new DrawingManager(_camera);
@@ -75,7 +82,7 @@ namespace ZombieUnknown
         {
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var terrainTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/xcom-forest.png"));
-            var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
+            //var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
             var wallsTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/walls.png"));
             var debugIconTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/debugIcons.png"));
             var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));

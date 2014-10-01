@@ -1,11 +1,12 @@
-﻿#region Using Statements
+#region Using Statements
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 #endregion
 
-namespace ZombieUnknown
+/*
+namespace MonogameTest
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -15,11 +16,12 @@ namespace ZombieUnknown
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        static void Main()
         {
-            using (var game = new ZombieGameMain())
+            using (var game = new Game1())
                 game.Run();
         }
     }
-#endif
 }
+
+*/
