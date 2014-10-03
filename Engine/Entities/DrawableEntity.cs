@@ -8,15 +8,22 @@ namespace Engine.Entities
 {
     public abstract class DrawableEntity : Entity, IDrawingProvider
     {
+        private string _currentAnimationType;
+
         protected Sprite Sprite;
+        protected bool _isStatic = true;
+
+        public abstract float Speed { get; }
+
+        public IDirection FacingDirection { get; private set; }
 
         protected DrawableEntity(string name, Sprite sprite, Coordinate coordinate)
             : base(name, coordinate)
         {
             Sprite = sprite;
+            FacingDirection = Direction.North;
+            _currentAnimationType = "idle";
         }
-
-        public abstract float Speed { get; }
 
         public override void Update(GameTime gameTime)
         {
@@ -25,6 +32,30 @@ namespace Engine.Entities
 
         public void SetAnimation(string animationName, GameTime gameTime)
         {
+            _currentAnimationType = animationName;
+
+            UpdateAnimation(gameTime);
+        }
+
+        public virtual IEnumerable<DrawingRequest> GetDrawings()
+        {
+            yield return new DrawingRequest(Sprite, Coordinate, Color.White);
+        }
+
+        public void FaceDirection(IDirection direction, GameTime gameTime)
+        {
+            if (_isStatic) 
+            {
+                return;
+            }
+
+            FacingDirection = direction;
+
+            UpdateAnimation(gameTime);
+        }
+
+        private void UpdateAnimation(GameTime gameTime)
+        {
             var animatedSprite = Sprite as AnimatedSprite;
 
             if (animatedSprite == null)
@@ -32,12 +63,9 @@ namespace Engine.Entities
                 return;
             }
 
-            animatedSprite.SetAnimation(animationName, gameTime);
-        }
+            var animationId = _currentAnimationType + FacingDirection.ToString();
 
-        public virtual IEnumerable<DrawingRequest> GetDrawings()
-        {
-            yield return new DrawingRequest(Sprite, Coordinate, Color.White);
+            animatedSprite.SetAnimation(animationId, gameTime);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ZombieUnknown
         private DrawingManager _drawingManager;
         private UIManager _uiManager;
 
-        private Vector2 _mapSize = new Vector2(20, 20);
+        private Vector2 _mapSize = new Vector2(50, 50);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -60,7 +60,7 @@ namespace ZombieUnknown
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(640, 360, GraphicsDevice);
+            _virtualScreen = new VirtualScreen(320, 180, GraphicsDevice);
 
 #if WINDOWS
             Window.ClientSizeChanged += Window_ClientSizeChanged;
@@ -178,14 +178,14 @@ namespace ZombieUnknown
             debugIconsSpriteSheet.AddFrame("light", new Rectangle(0, 0, 32, 48));
 
             var zombieSpriteSheet = new SpriteSheet("zombie", zombieTexture);
-            zombieSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleSouthEast", new Rectangle(0, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleSouth", new Rectangle(32, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleSouthWest", new Rectangle(64, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleWest", new Rectangle(96, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleNorthWest", new Rectangle(128, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleNorth", new Rectangle(160, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleNorthEast", new Rectangle(192, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleEast", new Rectangle(224, 0, 32, 48));
 
             var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
             var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
@@ -258,41 +258,41 @@ namespace ZombieUnknown
             var humanTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/ethereal.png"));
 
             var humanSpriteSheet = new SpriteSheet("ethereal", humanTexture);
-            humanSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
-            humanSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleSouthEast", new Rectangle(0, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleSouth", new Rectangle(32, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleSouthWest", new Rectangle(64, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleWest", new Rectangle(96, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleNorthWest", new Rectangle(128, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleNorth", new Rectangle(160, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleNorthEast", new Rectangle(192, 0, 32, 48));
+            humanSpriteSheet.AddFrame("idleEast", new Rectangle(224, 0, 32, 48));
 
             var humanAnimationList = new AnimationList();
-            var standingUp = new Animation(AnimationType.RunOnce);
-            standingUp.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
-            var standingDown = new Animation(AnimationType.RunOnce);
-            standingDown.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
-            var standingDownLeft = new Animation(AnimationType.RunOnce);
-            standingDownLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
-            var standingLeft = new Animation(AnimationType.RunOnce);
-            standingLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
-            var standingUpLeft = new Animation(AnimationType.RunOnce);
-            standingUpLeft.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
-            var standingUpRight = new Animation(AnimationType.RunOnce);
-            standingUpRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
-            var standingRight = new Animation(AnimationType.RunOnce);
-            standingRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
-            var standingDownRight = new Animation(AnimationType.RunOnce);
-            standingDownRight.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
+            var idleSouthEast = new Animation(AnimationType.RunOnce);
+            idleSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleSouthEast"), 1.0));
+            var idleSouth = new Animation(AnimationType.RunOnce);
+            idleSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleSouth"), 1.0));
+            var idleSouthWest = new Animation(AnimationType.RunOnce);
+            idleSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleSouthWest"), 1.0));
+            var idleWest = new Animation(AnimationType.RunOnce);
+            idleWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleWest"), 1.0));
+            var idleNorthWest = new Animation(AnimationType.RunOnce);
+            idleNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleNorthWest"), 1.0));
+            var idleNorth = new Animation(AnimationType.RunOnce);
+            idleNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleNorth"), 1.0));
+            var idleNorthEast = new Animation(AnimationType.RunOnce);
+            idleNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleNorthEast"), 1.0));
+            var idleEast = new Animation(AnimationType.RunOnce);
+            idleEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleEast"), 1.0));
 
-            humanAnimationList.Add("standingDown", standingDown);
-            humanAnimationList.Add("standingUp", standingUp);
-            humanAnimationList.Add("standingDownLeft", standingDownLeft);
-            humanAnimationList.Add("standingLeft", standingLeft);
-            humanAnimationList.Add("standingUpLeft", standingUpLeft);
-            humanAnimationList.Add("standingUpRight", standingUpRight);
-            humanAnimationList.Add("standingRight", standingRight);
-            humanAnimationList.Add("standingDownRight", standingDownRight);
+            humanAnimationList.Add("idleSouthEast", idleSouthEast);
+            humanAnimationList.Add("idleSouth", idleSouth);
+            humanAnimationList.Add("idleSouthWest", idleSouthWest);
+            humanAnimationList.Add("idleWest", idleWest);
+            humanAnimationList.Add("idleNorthWest", idleNorthWest);
+            humanAnimationList.Add("idleNorth", idleNorth);
+            humanAnimationList.Add("idleNorthEast", idleNorthEast);
+            humanAnimationList.Add("idleEast", idleEast);
 
             var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
 
@@ -304,43 +304,43 @@ namespace ZombieUnknown
             var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));
 
             var zombieSpriteSheet = new SpriteSheet("zombie", zombieTexture);
-            zombieSpriteSheet.AddFrame("standingDown", new Rectangle(0, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingDownLeft", new Rectangle(32, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingLeft", new Rectangle(64, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingUpLeft", new Rectangle(96, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingUp", new Rectangle(128, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingUpRight", new Rectangle(160, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingRight", new Rectangle(192, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("standingDownRight", new Rectangle(224, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleSouthEast", new Rectangle(0, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleSouth", new Rectangle(32, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleSouthWest", new Rectangle(64, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleWest", new Rectangle(96, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleNorthWest", new Rectangle(128, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleNorth", new Rectangle(160, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleNorthEast", new Rectangle(192, 0, 32, 48));
+            zombieSpriteSheet.AddFrame("idleEast", new Rectangle(224, 0, 32, 48));
 
-            var humanAnimationList = new AnimationList();
-            var standingUp = new Animation(AnimationType.RunOnce);
-            standingUp.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingUp"), 1.0));
-            var standingDown = new Animation(AnimationType.RunOnce);
-            standingDown.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingDown"), 1.0));
-            var standingDownLeft = new Animation(AnimationType.RunOnce);
-            standingDownLeft.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingDownLeft"), 1.0));
-            var standingLeft = new Animation(AnimationType.RunOnce);
-            standingLeft.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingLeft"), 1.0));
-            var standingUpLeft = new Animation(AnimationType.RunOnce);
-            standingUpLeft.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingUpLeft"), 1.0));
-            var standingUpRight = new Animation(AnimationType.RunOnce);
-            standingUpRight.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingUpRight"), 1.0));
-            var standingRight = new Animation(AnimationType.RunOnce);
-            standingRight.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingRight"), 1.0));
-            var standingDownRight = new Animation(AnimationType.RunOnce);
-            standingDownRight.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("standingDownRight"), 1.0));
+            var zombieAnimationList = new AnimationList();
+            var idleSouthEast = new Animation(AnimationType.RunOnce);
+            idleSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleSouthEast"), 1.0));
+            var idleSouth = new Animation(AnimationType.RunOnce);
+            idleSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleSouth"), 1.0));
+            var idleSouthWest = new Animation(AnimationType.RunOnce);
+            idleSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleSouthWest"), 1.0));
+            var idleWest = new Animation(AnimationType.RunOnce);
+            idleWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleWest"), 1.0));
+            var idleNorthWest = new Animation(AnimationType.RunOnce);
+            idleNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleNorthWest"), 1.0));
+            var idleNorth = new Animation(AnimationType.RunOnce);
+            idleNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleNorth"), 1.0));
+            var idleNorthEast = new Animation(AnimationType.RunOnce);
+            idleNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleNorthEast"), 1.0));
+            var idleEast = new Animation(AnimationType.RunOnce);
+            idleEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleEast"), 1.0));
 
-            humanAnimationList.Add("standingDown", standingDown);
-            humanAnimationList.Add("standingUp", standingUp);
-            humanAnimationList.Add("standingDownLeft", standingDownLeft);
-            humanAnimationList.Add("standingLeft", standingLeft);
-            humanAnimationList.Add("standingUpLeft", standingUpLeft);
-            humanAnimationList.Add("standingUpRight", standingUpRight);
-            humanAnimationList.Add("standingRight", standingRight);
-            humanAnimationList.Add("standingDownRight", standingDownRight);
+            zombieAnimationList.Add("idleSouthEast", idleSouthEast);
+            zombieAnimationList.Add("idleSouth", idleSouth);
+            zombieAnimationList.Add("idleSouthWest", idleSouthWest);
+            zombieAnimationList.Add("idleWest", idleWest);
+            zombieAnimationList.Add("idleNorthWest", idleNorthWest);
+            zombieAnimationList.Add("idleNorth", idleNorth);
+            zombieAnimationList.Add("idleNorthEast", idleNorthEast);
+            zombieAnimationList.Add("idleEast", idleEast);
 
-            var zombieSprite = new AnimatedSprite("human", zombieSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
+            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), zombieAnimationList);
 
             return zombieSprite;
         }

@@ -1,8 +1,22 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="01/10/2014 09:27:01">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="02/10/2014 22:18:01">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Mac" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Engine/Entities/DrawableEntity.cs">
+    <Files>
+      <File FileName="Engine/AI/TurnGoal.cs" Line="10" Column="10" />
+      <File FileName="Engine/AI/TraverseEdgeGoal.cs" Line="67" Column="67" />
+      <File FileName="Engine/Entities/Entity.cs" Line="37" Column="37" />
+      <File FileName="ZombieUnknown/Entities/Human.cs" Line="40" Column="40" />
+      <File FileName="Engine/Entities/DrawableEntity.cs" Line="37" Column="37" />
+      <File FileName="Engine/Maps/Coordinate.cs" Line="1" Column="1" />
+      <File FileName="Engine/Maps/Direction.cs" Line="18" Column="18" />
+      <File FileName="Engine/Drawing/FrameRater.cs" Line="48" Column="48" />
+      <File FileName="ZombieUnknown/Entities/Zombie.cs" Line="31" Column="31" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Engine/Entities/Light.cs" line="94" offsetX="408" offsetY="1395" expression="shadowPolygon" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>

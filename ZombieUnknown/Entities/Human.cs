@@ -22,6 +22,7 @@ namespace ZombieUnknown.Entities
             : base(name, sprite, coordinate)
         {
             Mind = new HumanMind(this);
+            _isStatic = false;
         }
 
         public override void Update(GameTime gameTime)

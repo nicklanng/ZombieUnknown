@@ -44,7 +44,7 @@ namespace Engine.Drawing
             x = maxWidth - 5;
             y = 5 + _font.Height + 2;
 
-            var aiRateString = ("AI:" + _framerate.ToString(CultureInfo.InvariantCulture)).Reverse();
+            var aiRateString = ("AI:" + _airate.ToString(CultureInfo.InvariantCulture)).Reverse();
 
             foreach (var character in aiRateString)
             {
@@ -57,7 +57,7 @@ namespace Engine.Drawing
         {
             var frameTime = (totalGameTime - Instance._lastFrameUpdate);
 
-            Instance._framerate = (int) (1000/frameTime.TotalMilliseconds);
+            Instance._framerate = (int) (1000.0/frameTime.TotalMilliseconds);
 
             Instance._lastFrameUpdate = totalGameTime;
         }
