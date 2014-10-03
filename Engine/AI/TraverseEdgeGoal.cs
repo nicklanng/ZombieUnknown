@@ -1,6 +1,6 @@
-﻿using Engine.Entities;
+﻿using Microsoft.Xna.Framework;
+using Engine.Entities;
 using Engine.Maps;
-using Microsoft.Xna.Framework;
 
 namespace Engine.AI
 {

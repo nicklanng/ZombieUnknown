@@ -227,7 +227,7 @@ namespace ZombieUnknown
             _map.AddEntity(human);
             _map.GetTile(human.Coordinate).IsBlocked = true;
 
-            var zombie = new Zombie("zombie", zombieSprite, new Coordinate(16, 16));
+            var zombie = new Zombie("zombie", zombieSprite, new Coordinate(8, 8));
             _map.AddEntity(zombie);
             _map.GetTile(zombie.Coordinate).IsBlocked = true;
 

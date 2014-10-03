@@ -21,11 +21,6 @@ namespace Engine.AI
             _turnDirection = turnDirection;
         }
 
-        public override void Activate()
-        {
-            base.Activate();
-        }
-
         public override void Process()
         {
             base.Process();
