@@ -1,16 +1,18 @@
 ﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="02/10/2014 22:18:01">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Mac" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Engine/Entities/DrawableEntity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ZombieUnknown/ZombieGameMain.cs">
     <Files>
-      <File FileName="Engine/AI/TurnGoal.cs" Line="10" Column="10" />
-      <File FileName="Engine/AI/TraverseEdgeGoal.cs" Line="67" Column="67" />
-      <File FileName="Engine/Entities/Entity.cs" Line="37" Column="37" />
-      <File FileName="ZombieUnknown/Entities/Human.cs" Line="40" Column="40" />
-      <File FileName="Engine/Entities/DrawableEntity.cs" Line="37" Column="37" />
-      <File FileName="Engine/Maps/Coordinate.cs" Line="1" Column="1" />
-      <File FileName="Engine/Maps/Direction.cs" Line="18" Column="18" />
-      <File FileName="Engine/Drawing/FrameRater.cs" Line="48" Column="48" />
-      <File FileName="ZombieUnknown/Entities/Zombie.cs" Line="31" Column="31" />
+      <File FileName="ZombieUnknown/AI/ZombieMind.cs" Line="9" Column="9" />
+      <File FileName="Engine/AI/TraverseEdgeGoal.cs" Line="75" Column="75" />
+      <File FileName="Engine/AI/WaitGoal.cs" Line="27" Column="27" />
+      <File FileName="Engine/AI/TurnGoal.cs" Line="9" Column="9" />
+      <File FileName="Engine/AI/Goal.cs" Line="1" Column="1" />
+      <File FileName="ZombieUnknown/ZombieGameMain.cs" Line="33" Column="33" />
+      <File FileName="Engine/GameState.cs" Line="25" Column="25" />
+      <File FileName="ZombieUnknown/AI/HumanMind.cs" Line="14" Column="14" />
+      <File FileName="Engine/Maps/Map.cs" Line="27" Column="27" />
+      <File FileName="Engine/Pathfinding/AStarSolver.cs" Line="1" Column="1" />
+      <File FileName="Engine/Sprites/AnimationList.cs" Line="2" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -21,7 +21,8 @@ namespace ZombieUnknown.AI
                 Goals.Push(new WaitGoal(1000));
 
                 var result = _randomNumberGenerator.Next(2);
-                if (result == 0) {
+                if (result == 0) 
+                {
                     Goals.Push (new TurnGoal (Entity, TurnDirection.Right));
                 } 
                 else 

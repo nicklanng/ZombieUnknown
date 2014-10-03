@@ -29,7 +29,7 @@ namespace ZombieUnknown
         private DrawingManager _drawingManager;
         private UIManager _uiManager;
 
-        private Vector2 _mapSize = new Vector2(50, 50);
+        private Vector2 _mapSize = new Vector2(15, 15);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()

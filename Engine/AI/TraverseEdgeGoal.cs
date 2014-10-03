@@ -32,7 +32,8 @@ namespace Engine.AI
             else
             {
                 GameState.Map.GetTile(_target).IsBlocked = true;
-                SetAnimation();
+                _entity.FaceDirection (Direction.North, GameState.GameTime);
+                // TODO THIS IS WRONG!
             }
         }
 
@@ -74,45 +75,6 @@ namespace Engine.AI
         {
             base.Terminate();
             // set entity state or animation or something
-        }
-
-        private void SetAnimation()
-        {
-            var animationName = "default";
-            var directionVector = _target - _entity.Coordinate;
-            if (directionVector == Coordinate.Up)
-            {
-                animationName = "standingUp";
-            }
-            if (directionVector == Coordinate.UpLeft)
-            {
-                animationName = "standingUpLeft";
-            }
-            if (directionVector == Coordinate.Left)
-            {
-                animationName = "standingLeft";
-            }
-            if (directionVector == Coordinate.DownLeft)
-            {
-                animationName = "standingDownLeft";
-            }
-            if (directionVector == Coordinate.Down)
-            {
-                animationName = "standingDown";
-            }
-            if (directionVector == Coordinate.DownRight)
-            {
-                animationName = "standingDownRight";
-            }
-            if (directionVector == Coordinate.Right)
-            {
-                animationName = "standingRight";
-            }
-            if (directionVector == Coordinate.UpRight)
-            {
-                animationName = "standingUpRight";
-            }
-            _entity.SetAnimation(animationName, GameState.GameTime);
         }
     }
 }
