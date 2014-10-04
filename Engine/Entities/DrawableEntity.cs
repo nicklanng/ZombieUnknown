@@ -49,6 +49,11 @@ namespace Engine.Entities
                 return;
             }
 
+            if (direction == FacingDirection) 
+            {
+                return;
+            }
+
             FacingDirection = direction;
 
             UpdateAnimation(gameTime);

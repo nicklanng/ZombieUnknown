@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Engine.Maps
 {
@@ -19,6 +20,18 @@ namespace Engine.Maps
         public static IDirection SouthWest = new SouthWest();
         public static IDirection West = new West();
         public static IDirection NorthWest = new NorthWest();
+
+        public static Dictionary<Coordinate, IDirection> CoordinateDirectionMap = new Dictionary<Coordinate, IDirection> 
+        {
+            {North.Coordinate, North},
+            {NorthEast.Coordinate, NorthEast},
+            {East.Coordinate, East},
+            {SouthEast.Coordinate, SouthEast},
+            {South.Coordinate, South},
+            {SouthWest.Coordinate, SouthWest},
+            {West.Coordinate, West},
+            {NorthWest.Coordinate, NorthWest}
+        };
     }
         
     public class North : IDirection

@@ -32,8 +32,11 @@ namespace Engine.AI
             else
             {
                 GameState.Map.GetTile(_target).IsBlocked = true;
-                _entity.FaceDirection (Direction.North, GameState.GameTime);
-                // TODO THIS IS WRONG!
+
+                var directionVector = _target - _origin;
+                var direction = Direction.CoordinateDirectionMap [directionVector];
+
+                _entity.FaceDirection (direction, GameState.GameTime);
             }
         }
 

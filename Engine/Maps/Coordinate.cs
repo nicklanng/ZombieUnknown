@@ -5,7 +5,6 @@ namespace Engine.Maps
 {
     public class Coordinate : IEquatable<Coordinate>
     {
-
         public int X { get; set; }
         public int Y { get; set; }
 
@@ -62,6 +61,11 @@ namespace Engine.Maps
         public static implicit operator Coordinate(Vector2 v)
         {
             return new Coordinate((int)v.X, (int)v.Y);
+        }
+
+        public override string ToString ()
+        {
+            return string.Format ("[Coordinate: X={0}, Y={1}]", X, Y);
         }
 
         public static Coordinate Up = new Coordinate(-1, -1);
