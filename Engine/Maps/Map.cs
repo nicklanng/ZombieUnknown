@@ -37,11 +37,13 @@ namespace Engine.Maps
         {
             for (var x = 0; x < Width; x++)
             {
+                var entitiesToUpdate = new List<Entity>();
                 for (var y = 0; y < Height; y++)
                 {
                     _tiles[x, y].Update(gameTime);
-                    _entities[x, y].ForEach(e => e.Update(gameTime));
+                    _entities[x, y].ForEach(entitiesToUpdate.Add);
                 }
+                entitiesToUpdate.ForEach(e => e.Update(gameTime));
             }
         }
 
