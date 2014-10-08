@@ -1,0 +1,78 @@
+{ "frames" : 
+	[ 
+		{
+		"height" : "40",
+        "name" : "grass",
+        "width" : "32",
+        "x" : "0",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "leaves1",
+        "width" : "32",
+        "x" : "32",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "leaves2",
+        "width" : "32",
+        "x" : "64",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "water",
+        "width" : "32",
+        "x" : "96",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "tallGrass1",
+        "width" : "32",
+        "x" : "128",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "tallGrass2",
+        "width" : "32",
+        "x" : "160",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "swamp1",
+        "width" : "32",
+        "x" : "192",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "swamp2",
+        "width" : "32",
+        "x" : "224",
+        "y" : "0"
+      },
+	  {
+		"height" : "40",
+        "name" : "deadTree1",
+        "width" : "32",
+        "x" : "0",
+        "y" : "40"
+      },
+      { "height" : "40",
+        "name" : "deadTree2",
+        "width" : "32",
+        "x" : "32",
+        "y" : "40"
+      },
+      { "height" : "40",
+        "name" : "deadTree3",
+        "width" : "32",
+        "x" : "64",
+        "y" : "40"
+      },
+      { "height" : "40",
+        "name" : "deadTree4",
+        "width" : "32",
+        "x" : "96",
+        "y" : "40"
+      }
+    ]
+}

@@ -1,0 +1,53 @@
+{ "frames" : 
+	[ 
+		{
+		"height" : "48",
+        "name" : "idleSouthEast",
+        "width" : "32",
+        "x" : "0",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleSouth",
+        "width" : "32",
+        "x" : "32",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleSouthWest",
+        "width" : "32",
+        "x" : "64",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleWest",
+        "width" : "32",
+        "x" : "96",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleNorthWest",
+        "width" : "32",
+        "x" : "128",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleNorth",
+        "width" : "32",
+        "x" : "160",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleNorthEast",
+        "width" : "32",
+        "x" : "192",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "idleEast",
+        "width" : "32",
+        "x" : "224",
+        "y" : "0"
+      }
+    ]
+}

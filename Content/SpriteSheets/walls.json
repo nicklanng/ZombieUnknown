@@ -1,0 +1,23 @@
+{ "frames" : 
+	[ 
+		{
+		"height" : "48",
+        "name" : "left",
+        "width" : "32",
+        "x" : "0",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "right",
+        "width" : "32",
+        "x" : "32",
+        "y" : "0"
+      },
+      { "height" : "48",
+        "name" : "join",
+        "width" : "32",
+        "x" : "64",
+        "y" : "0"
+      }
+    ]
+}

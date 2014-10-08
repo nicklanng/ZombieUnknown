@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using Engine;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
+using Engine.Serialization;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -60,7 +60,7 @@ namespace ZombieUnknown
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(320, 180, GraphicsDevice);
+            _virtualScreen = new VirtualScreen(640, 360, GraphicsDevice);
 
 #if WINDOWS
             Window.ClientSizeChanged += Window_ClientSizeChanged;
@@ -70,6 +70,8 @@ namespace ZombieUnknown
             _camera = new Camera(new Vector2(_virtualScreen.VirtualWidth, _virtualScreen.VirtualHeight), 100, new IsometricConfiguration());
             _drawingManager = new DrawingManager(_camera);
             _uiManager = new UIManager();
+
+            GameState.GraphicsDevice = GraphicsDevice;
 
             base.Initialize();
         }
@@ -86,107 +88,12 @@ namespace ZombieUnknown
         protected override void LoadContent()
         {
             // All of the initialization stuff should be somewhere else, and probably load from data files
+            var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
+            var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
+            var wallSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/walls");
 
-            var fontTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/Fonts/dbmf_4x5_box.png"));
-            var fontSpriteSheet = new SpriteSheet("font", fontTexture);
-            fontSpriteSheet.AddFrame("a", new Rectangle(0, 0, 4, 5));
-            fontSpriteSheet.AddFrame("b", new Rectangle(4, 0, 4, 5));
-            fontSpriteSheet.AddFrame("c", new Rectangle(8, 0, 4, 5));
-            fontSpriteSheet.AddFrame("d", new Rectangle(12, 0, 4, 5));
-            fontSpriteSheet.AddFrame("e", new Rectangle(16, 0, 4, 5));
-            fontSpriteSheet.AddFrame("f", new Rectangle(20, 0, 4, 5));
-            fontSpriteSheet.AddFrame("g", new Rectangle(24, 0, 4, 5));
-            fontSpriteSheet.AddFrame("h", new Rectangle(28, 0, 4, 5));
-            fontSpriteSheet.AddFrame("i", new Rectangle(32, 0, 4, 5));
-            fontSpriteSheet.AddFrame("j", new Rectangle(36, 0, 4, 5));
-            fontSpriteSheet.AddFrame("k", new Rectangle(40, 0, 4, 5));
-            fontSpriteSheet.AddFrame("l", new Rectangle(44, 0, 4, 5));
-            fontSpriteSheet.AddFrame("m", new Rectangle(48, 0, 4, 5));
-            fontSpriteSheet.AddFrame("n", new Rectangle(52, 0, 4, 5));
-            fontSpriteSheet.AddFrame("o", new Rectangle(56, 0, 4, 5));
-            fontSpriteSheet.AddFrame("p", new Rectangle(60, 0, 4, 5));
-            fontSpriteSheet.AddFrame("q", new Rectangle(64, 0, 4, 5));
-            fontSpriteSheet.AddFrame("r", new Rectangle(68, 0, 4, 5));
-            fontSpriteSheet.AddFrame("s", new Rectangle(72, 0, 4, 5));
-            fontSpriteSheet.AddFrame("t", new Rectangle(76, 0, 4, 5));
-            fontSpriteSheet.AddFrame("u", new Rectangle(80, 0, 4, 5));
-            fontSpriteSheet.AddFrame("v", new Rectangle(84, 0, 4, 5));
-            fontSpriteSheet.AddFrame("w", new Rectangle(88, 0, 4, 5));
-            fontSpriteSheet.AddFrame("x", new Rectangle(92, 0, 4, 5));
-            fontSpriteSheet.AddFrame("y", new Rectangle(96, 0, 4, 5));
-            fontSpriteSheet.AddFrame("z", new Rectangle(100, 0, 4, 5));
-            fontSpriteSheet.AddFrame("0", new Rectangle(104, 0, 4, 5));
-            fontSpriteSheet.AddFrame("1", new Rectangle(108, 0, 4, 5));
-            fontSpriteSheet.AddFrame("2", new Rectangle(112, 0, 4, 5));
-            fontSpriteSheet.AddFrame("3", new Rectangle(116, 0, 4, 5));
-            fontSpriteSheet.AddFrame("4", new Rectangle(120, 0, 4, 5));
-            fontSpriteSheet.AddFrame("5", new Rectangle(124, 0, 4, 5));
-            fontSpriteSheet.AddFrame("6", new Rectangle(128, 0, 4, 5));
-            fontSpriteSheet.AddFrame("7", new Rectangle(132, 0, 4, 5));
-            fontSpriteSheet.AddFrame("8", new Rectangle(136, 0, 4, 5));
-            fontSpriteSheet.AddFrame("9", new Rectangle(140, 0, 4, 5));
-            fontSpriteSheet.AddFrame(" ", new Rectangle(12, 5, 4, 5));
-            fontSpriteSheet.AddFrame(",", new Rectangle(0, 10, 4, 5));
-            fontSpriteSheet.AddFrame(".", new Rectangle(4, 10, 4, 5));
-            fontSpriteSheet.AddFrame(":", new Rectangle(8, 10, 4, 5));
-            fontSpriteSheet.AddFrame(";", new Rectangle(12, 10, 4, 5));
-            fontSpriteSheet.AddFrame("!", new Rectangle(16, 10, 4, 5));
-            fontSpriteSheet.AddFrame("?", new Rectangle(20, 10, 4, 5));
-            fontSpriteSheet.AddFrame("_", new Rectangle(24, 10, 4, 5));
-            fontSpriteSheet.AddFrame("-", new Rectangle(28, 10, 4, 5));
-            fontSpriteSheet.AddFrame("+", new Rectangle(32, 10, 4, 5));
-            fontSpriteSheet.AddFrame("=", new Rectangle(36, 10, 4, 5));
-            fontSpriteSheet.AddFrame("*", new Rectangle(40, 10, 4, 5));
-            fontSpriteSheet.AddFrame("'", new Rectangle(44, 10, 4, 5));
-            fontSpriteSheet.AddFrame("\"", new Rectangle(48, 10, 4, 5));
-            fontSpriteSheet.AddFrame("[", new Rectangle(52, 10, 4, 5));
-            fontSpriteSheet.AddFrame("]", new Rectangle(56, 10, 4, 5));
-            fontSpriteSheet.AddFrame("(", new Rectangle(60, 10, 4, 5));
-            fontSpriteSheet.AddFrame(")", new Rectangle(64, 10, 4, 5));
-            fontSpriteSheet.AddFrame("<", new Rectangle(68, 10, 4, 5));
-            fontSpriteSheet.AddFrame(">", new Rectangle(72, 10, 4, 5));
-            fontSpriteSheet.AddFrame("/", new Rectangle(76, 10, 4, 5));
-            fontSpriteSheet.AddFrame("\\", new Rectangle(80, 10, 4, 5));
             var font = new Font(fontSpriteSheet);
-
-            var terrainTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/xcom-forest.png"));
-            //var cursorTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/cursor.png"));
-            var wallsTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/walls.png"));
-            var debugIconTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/debugIcons.png"));
-            var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));
-
-            var terrainSpriteSheet = new SpriteSheet("terrain", terrainTexture);
-            terrainSpriteSheet.AddFrame("grass", new Rectangle(0, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("leaves1", new Rectangle(32, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("leaves2", new Rectangle(64, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("water", new Rectangle(96, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("tallGrass1", new Rectangle(128, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("tallGrass2", new Rectangle(160, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("swamp1", new Rectangle(192, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("swamp2", new Rectangle(224, 0, 32, 40));
-            terrainSpriteSheet.AddFrame("deadTree1", new Rectangle(0, 40, 32, 40));
-            terrainSpriteSheet.AddFrame("deadTree2", new Rectangle(32, 40, 32, 40));
-            terrainSpriteSheet.AddFrame("deadTree3", new Rectangle(64, 40, 32, 40));
-            terrainSpriteSheet.AddFrame("deadTree4", new Rectangle(96, 40, 32, 40));
-
-            var wallSpriteSheet = new SpriteSheet("walls", wallsTexture);
-            wallSpriteSheet.AddFrame("left", new Rectangle(0, 0, 32, 48));
-            wallSpriteSheet.AddFrame("right", new Rectangle(32, 0, 32, 48));
-            wallSpriteSheet.AddFrame("join", new Rectangle(64, 0, 32, 48));
-
-            var debugIconsSpriteSheet = new SpriteSheet("debugIcons", debugIconTexture);
-            debugIconsSpriteSheet.AddFrame("light", new Rectangle(0, 0, 32, 48));
-
-            var zombieSpriteSheet = new SpriteSheet("zombie", zombieTexture);
-            zombieSpriteSheet.AddFrame("idleSouthEast", new Rectangle(0, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleSouth", new Rectangle(32, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleSouthWest", new Rectangle(64, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleWest", new Rectangle(96, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleNorthWest", new Rectangle(128, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleNorth", new Rectangle(160, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleNorthEast", new Rectangle(192, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleEast", new Rectangle(224, 0, 32, 48));
-
+            
             var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
             var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
             var joinWallSprite = new StaticSprite("join", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
@@ -255,17 +162,7 @@ namespace ZombieUnknown
 
         private AnimatedSprite BuildHumanSprite()
         {
-            var humanTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/ethereal.png"));
-
-            var humanSpriteSheet = new SpriteSheet("ethereal", humanTexture);
-            humanSpriteSheet.AddFrame("idleSouthEast", new Rectangle(0, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleSouth", new Rectangle(32, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleSouthWest", new Rectangle(64, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleWest", new Rectangle(96, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleNorthWest", new Rectangle(128, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleNorth", new Rectangle(160, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleNorthEast", new Rectangle(192, 0, 32, 48));
-            humanSpriteSheet.AddFrame("idleEast", new Rectangle(224, 0, 32, 48));
+            var humanSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/ethereal");
 
             var humanAnimationList = new AnimationList();
             var idleSouthEast = new Animation(AnimationType.RunOnce);
@@ -301,17 +198,7 @@ namespace ZombieUnknown
 
         private AnimatedSprite BuildZombieSprite()
         {
-            var zombieTexture = Texture2D.FromStream(GraphicsDevice, TitleContainer.OpenStream("Content/SpriteSheets/zombie.png"));
-
-            var zombieSpriteSheet = new SpriteSheet("zombie", zombieTexture);
-            zombieSpriteSheet.AddFrame("idleSouthEast", new Rectangle(0, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleSouth", new Rectangle(32, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleSouthWest", new Rectangle(64, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleWest", new Rectangle(96, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleNorthWest", new Rectangle(128, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleNorth", new Rectangle(160, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleNorthEast", new Rectangle(192, 0, 32, 48));
-            zombieSpriteSheet.AddFrame("idleEast", new Rectangle(224, 0, 32, 48));
+            var zombieSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/zombie");
 
             var zombieAnimationList = new AnimationList();
             var idleSouthEast = new Animation(AnimationType.RunOnce);

@@ -147,6 +147,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Content\Fonts\dbmf_4x5_box.json">
+      <Link>Content\Fonts\dbmf_4x5_box.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\ethereal.json">
+      <Link>Content\Spritesheets\ethereal.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\walls.json">
+      <Link>Content\Spritesheets\walls.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\xcom-forest.json">
+      <Link>Content\Spritesheets\xcom-forest.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\zombie.json">
+      <Link>Content\Spritesheets\zombie.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>

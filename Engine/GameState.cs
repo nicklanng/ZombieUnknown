@@ -1,6 +1,7 @@
 ﻿using Engine.Entities;
 using Engine.Maps;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine
 {
@@ -10,5 +11,6 @@ namespace Engine
         public static DrawableEntity Selected { get; set; }
         public static PathfindingMap PathfindingMap { get; set; }
         public static GameTime GameTime { get; set; }
+        public static GraphicsDevice GraphicsDevice { get; set; }
     }
 }
