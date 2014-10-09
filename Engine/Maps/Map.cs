@@ -49,12 +49,24 @@ namespace Engine.Maps
 
         public Tile GetTile(Coordinate coordinate)
         {
-            return IsPositionOnMap(coordinate) ? _tiles[coordinate.X, coordinate.Y] : null;
+            if (!IsPositionOnMap(coordinate))
+            {
+                return null;
+            }
+
+            return _tiles[coordinate.X, coordinate.Y];
         }
         
         public IEnumerable<Entity> GetEntities(Coordinate coordinate)
         {
-            return IsPositionOnMap(coordinate) ? _entities[coordinate.X, coordinate.Y] : new List<Entity>();
+            if (IsPositionOnMap(coordinate))
+            {
+                return _entities[coordinate.X, coordinate.Y];
+            }
+            else
+            {
+                return new List<Entity>();
+            }
         }
 
         public void AddEntity(Entity entity)

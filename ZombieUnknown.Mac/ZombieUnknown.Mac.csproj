@@ -114,5 +114,20 @@
     <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.png">
       <Link>Content\Fonts\dbmf_4x5_box.png</Link>
     </BundleResource>
+    <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.json">
+      <Link>Content\Fonts\dbmf_4x5_box.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\ethereal.json">
+      <Link>Content\SpriteSheets\ethereal.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\walls.json">
+      <Link>Content\SpriteSheets\walls.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\xcom-forest.json">
+      <Link>Content\SpriteSheets\xcom-forest.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\zombie.json">
+      <Link>Content\SpriteSheets\zombie.json</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>
