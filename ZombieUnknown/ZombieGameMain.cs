@@ -96,14 +96,17 @@ namespace ZombieUnknown
             
             var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
             var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
-            var joinWallSprite = new StaticSprite("join", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
+            var internalJoinWallSprite = new StaticSprite("internalJoin", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
+            var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
 
             var humanSprite = BuildHumanSprite();
             var zombieSprite = BuildZombieSprite();
 
             var terrainSprites = new List<Sprite>
                 {
-                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass")
+                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass"),
+                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass1"),
+                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass2")
                 };
 
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
@@ -117,7 +120,7 @@ namespace ZombieUnknown
 
             tiles[3, 4].SetLeftWall(leftWallSprite);
             tiles[3, 4].SetRightWall(rightWallSprite);
-            tiles[3, 4].SetJoinWall(joinWallSprite);
+            tiles[3, 4].SetJoinWall(internalJoinWallSprite);
             tiles[3, 5].SetRightWall(rightWallSprite);
             tiles[3, 6].SetRightWall(rightWallSprite);
             tiles[3, 7].SetLeftWall(leftWallSprite);
@@ -127,6 +130,7 @@ namespace ZombieUnknown
             tiles[6, 4].SetRightWall(rightWallSprite);
             tiles[6, 5].SetRightWall(rightWallSprite);
             tiles[6, 6].SetRightWall(rightWallSprite);
+            tiles[6, 7].SetJoinWall(externalJoinWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             _pathfindingMap = new PathfindingMap(_map);
@@ -141,6 +145,9 @@ namespace ZombieUnknown
             var zombie = new Zombie("zombie", zombieSprite, new Coordinate(8, 8));
             _map.AddEntity(zombie);
             _map.GetTile(zombie.GetCoordinate()).IsBlocked = true;
+
+            var tallGrass1 = new TallGrass1("tallGrass1", terrainSprites[2], new Coordinate(9, 9));
+            _map.AddEntity(tallGrass1);
 
             //var light = new PhantomLight("light", new Coordinate(7, 9), new Light(new Coordinate(7, 9), Color.White, 10));
             //_map.AddEntity(light);

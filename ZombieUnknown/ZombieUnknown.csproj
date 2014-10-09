@@ -60,6 +60,7 @@
     <None Include="ZombieUnknown.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\TallGrass1.cs" />
     <Compile Include="IsometricConfiguration.cs" />
     <Compile Include="AI\HumanMind.cs" />
     <Compile Include="AI\ZombieMind.cs" />
