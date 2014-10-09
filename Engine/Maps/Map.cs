@@ -51,10 +51,15 @@ namespace Engine.Maps
         {
             return IsPositionOnMap(coordinate) ? _tiles[coordinate.X, coordinate.Y] : null;
         }
+        
+        public IEnumerable<Entity> GetEntities(Coordinate coordinate)
+        {
+            return IsPositionOnMap(coordinate) ? _entities[coordinate.X, coordinate.Y] : new List<Entity>();
+        }
 
         public void AddEntity(Entity entity)
         {
-            _entities[entity.Coordinate.X, entity.Coordinate.Y].Add(entity);
+            _entities[entity.GetCoordinate().X, entity.GetCoordinate().Y].Add(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)
@@ -67,7 +72,7 @@ namespace Engine.Maps
 
         public void RemoveEntity(Entity entity)
         {
-            _entities[entity.Coordinate.X, entity.Coordinate.Y].Remove(entity);
+            _entities[entity.GetCoordinate().X, entity.GetCoordinate().Y].Remove(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)

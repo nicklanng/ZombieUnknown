@@ -22,7 +22,7 @@ namespace ZombieUnknown.Entities
             : base(name, sprite, coordinate)
         {
             Mind = new ZombieMind(this);
-            _isStatic = false;
+            IsStatic = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -34,7 +34,7 @@ namespace ZombieUnknown.Entities
 
         public override IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, MapPosition, GameState.Map.GetTile(Coordinate).Light);
+            yield return new DrawingRequest(Sprite, MapPosition, GameState.Map.GetTile(GetCoordinate()).Light);
         }
     }
 }

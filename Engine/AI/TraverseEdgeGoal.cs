@@ -22,7 +22,7 @@ namespace Engine.AI
         {
             base.Activate();
 
-            _origin = _entity.Coordinate;
+            _origin = _entity.GetCoordinate();
 
             var isTargetTileBlocked = GameState.Map.GetTile(_target).IsBlocked;
             if (isTargetTileBlocked)
@@ -58,7 +58,7 @@ namespace Engine.AI
             {
                 GameState.Map.GetTile(_origin).IsBlocked = false;
                 GameState.Map.RemoveEntity(_entity);
-                _entity.Coordinate = _target;
+                _entity.SetCoordinate(_target);
                 GameState.Map.AddEntity(_entity);
 
                 _tileSwapped = true;

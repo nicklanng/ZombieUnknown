@@ -1,17 +1,27 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Maths
 {
+    public enum LineDirection
+    {
+        LeftWall,
+        RightWall
+    }
+
     public struct Line
     {
-        public Vector2 Start { get; private set; }
-        public Vector2 End { get; private set; }
+        public LineDirection Direction { get; private set; }
+        public Vector2 Start { get; set; }
+        public Vector2 End { get; set; }
 
         public Line(Vector2 start, Vector2 end) 
             : this()
         {
             Start = start;
             End = end;
+
+            Direction = Math.Abs(Start.X - end.X) < 0.001 ? LineDirection.RightWall : LineDirection.LeftWall;
         }
 
         public override string ToString()

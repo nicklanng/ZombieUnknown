@@ -17,7 +17,7 @@ namespace Engine
 
     public class Camera : ICamera
     {
-        private IIsometricConfiguration _isometricConfiguration;
+        private readonly IIsometricConfiguration _isometricConfiguration;
 
         public Camera(Vector2 screenSize, int moveSpeed, IIsometricConfiguration isometricConfiguration)
         {

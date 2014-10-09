@@ -12,5 +12,6 @@ namespace Engine
         public static PathfindingMap PathfindingMap { get; set; }
         public static GameTime GameTime { get; set; }
         public static GraphicsDevice GraphicsDevice { get; set; }
+        public static Entity MainCharacter { get; set; } 
     }
 }

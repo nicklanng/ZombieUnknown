@@ -17,7 +17,7 @@ namespace Engine.AI
 
         public override void Activate()
         {
-            var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(_entity.Coordinate), GameState.PathfindingMap.GetNodeAt(_target));
+            var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(_entity.GetCoordinate()), GameState.PathfindingMap.GetNodeAt(_target));
             aStarSolver.Solve();
             aStarSolver.Solution.Reverse();
 

@@ -95,14 +95,14 @@ namespace Engine.Entities
             if (Math.Abs(deltaX) > Math.Abs(deltaY))
             {
                 var gradient = deltaY / deltaX;
-                xCoord = Math.Sign(deltaX) * Range + centerOfLightSquare;
-                yCoord = Math.Sign(deltaX) * Range * gradient + centerOfLightSquare;
+                xCoord = Math.Sign(deltaX) * Range + centerOfLightSquare -1;
+                yCoord = Math.Sign(deltaX) * Range * gradient + centerOfLightSquare -1;
             }
             else
             {
                 var gradient = deltaX / deltaY;
-                yCoord = Math.Sign(deltaY) * Range + centerOfLightSquare;
-                xCoord = Math.Sign(deltaY) * Range * gradient + centerOfLightSquare;
+                yCoord = Math.Sign(deltaY) * Range + centerOfLightSquare - 1;
+                xCoord = Math.Sign(deltaY) * Range * gradient + centerOfLightSquare - 1;
             }
 
             return new Vector2(xCoord, yCoord);

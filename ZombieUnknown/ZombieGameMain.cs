@@ -129,14 +129,18 @@ namespace ZombieUnknown
             tiles[6, 6].SetRightWall(rightWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
+            _pathfindingMap = new PathfindingMap(_map);
 
-            var human = new Human("human", humanSprite, new Coordinate(10, 10));
+            GameState.Map = _map;
+            GameState.PathfindingMap = _pathfindingMap;
+
+            var human = new Human("human", humanSprite, new Coordinate(6, 5));
             _map.AddEntity(human);
-            _map.GetTile(human.Coordinate).IsBlocked = true;
+            _map.GetTile(human.GetCoordinate()).IsBlocked = true;
 
             var zombie = new Zombie("zombie", zombieSprite, new Coordinate(8, 8));
             _map.AddEntity(zombie);
-            _map.GetTile(zombie.Coordinate).IsBlocked = true;
+            _map.GetTile(zombie.GetCoordinate()).IsBlocked = true;
 
             var light = new PhantomLight("light", new Coordinate(7, 9), new Light(new Coordinate(7, 9), Color.White, 10));
             _map.AddEntity(light);
@@ -144,20 +148,19 @@ namespace ZombieUnknown
             var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.Red, 10));
             _map.AddEntity(light2);
 
-            _lightMap = new LightMap(_map, new Color(0.1f, 0.1f, 0.4f));
-            _pathfindingMap = new PathfindingMap(_map);
+            _lightMap = new LightMap(_map, new Color(1.0f, 1.0f, 1.0f));
 
-            GameState.Map = _map;
-            GameState.PathfindingMap = _pathfindingMap;
-
-            _drawingManager.RegisterProvider(_map);
 
             Console.Initialize(_spriteBatch, font, 10);
             Console.WriteLine("THE CONSOLE");
-            _uiManager.RegisterProvider(Console.DrawingProvider);
-
             FrameRater.Initialize(_spriteBatch, font);
+
+
+            _drawingManager.RegisterProvider(_map);
+            _uiManager.RegisterProvider(Console.DrawingProvider);
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
+
+            GameState.MainCharacter = human;
         }
 
         private AnimatedSprite BuildHumanSprite()

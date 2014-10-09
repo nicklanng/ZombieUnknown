@@ -11,7 +11,7 @@ namespace Engine.Entities
         private string _currentAnimationType;
 
         protected Sprite Sprite;
-        protected bool _isStatic = true;
+        protected bool IsStatic = true;
 
         public abstract float Speed { get; }
 
@@ -39,12 +39,12 @@ namespace Engine.Entities
 
         public virtual IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, Coordinate, Color.White);
+            yield return new DrawingRequest(Sprite, GetCoordinate(), Color.White);
         }
 
         public void FaceDirection(IDirection direction, GameTime gameTime)
         {
-            if (_isStatic) 
+            if (IsStatic) 
             {
                 return;
             }
