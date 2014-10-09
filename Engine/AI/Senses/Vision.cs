@@ -149,17 +149,6 @@ namespace Engine.AI.Senses
                 }
             }
 
-            for (var x = 0; x < MapSize; x++)
-            {
-                for (var y = 0; y < MapSize; y++)
-                {
-                    Console.Write(SenseMap[x, y] + "\t");
-                }
-
-                Console.WriteLine();
-            }
-
-            Console.WriteLine("-----------------------");
         }
 
         private Vector2 GetPointExtrapolation(Vector2 point)
@@ -198,8 +187,9 @@ namespace Engine.AI.Senses
             {
                 for (var y = 0; y < MapSize; y++)
                 {
-                    var tileEntities = map.GetEntities(new Coordinate(startX + x, startY + y));
+                    if (SenseMap[x, y] < 0.1f) continue;
 
+                    var tileEntities = map.GetEntities(new Coordinate(startX + x, startY + y));
                     entities.AddRange(tileEntities);
                 }
             }

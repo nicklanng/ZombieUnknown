@@ -36,7 +36,7 @@ namespace Engine.Maps
         
     public class North : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.UpRight; } }
+        public Coordinate Coordinate { get { return Coordinate.North; } }
         public IDirection TurnLeft()
         {
             return Direction.NorthWest;
@@ -54,7 +54,7 @@ namespace Engine.Maps
 
     public class NorthEast : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.Right; } }
+        public Coordinate Coordinate { get { return Coordinate.NorthEast; } }
         public IDirection TurnLeft()
         {
             return Direction.North;
@@ -72,7 +72,7 @@ namespace Engine.Maps
 
     public class East : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.DownRight; } }
+        public Coordinate Coordinate { get { return Coordinate.East; } }
         public IDirection TurnLeft()
         {
             return Direction.NorthEast;
@@ -90,7 +90,7 @@ namespace Engine.Maps
 
     public class SouthEast : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.Down; } }
+        public Coordinate Coordinate { get { return Coordinate.SouthEast; } }
         public IDirection TurnLeft()
         {
             return Direction.East;
@@ -108,7 +108,7 @@ namespace Engine.Maps
 
     public class South : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.DownLeft; } }
+        public Coordinate Coordinate { get { return Coordinate.South; } }
         public IDirection TurnLeft()
         {
             return Direction.SouthEast;
@@ -126,7 +126,7 @@ namespace Engine.Maps
 
     public class SouthWest : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.Left; } }
+        public Coordinate Coordinate { get { return Coordinate.SouthWest; } }
         public IDirection TurnLeft()
         {
             return Direction.South;
@@ -144,7 +144,7 @@ namespace Engine.Maps
 
     public class West : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.UpLeft; } }
+        public Coordinate Coordinate { get { return Coordinate.West; } }
         public IDirection TurnLeft()
         {
             return Direction.SouthWest;
@@ -163,7 +163,7 @@ namespace Engine.Maps
 
     public class NorthWest : IDirection
     {
-        public Coordinate Coordinate { get { return Coordinate.Up; } }
+        public Coordinate Coordinate { get { return Coordinate.NorthWest; } }
         public IDirection TurnLeft()
         {
             return Direction.West;

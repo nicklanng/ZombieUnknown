@@ -142,13 +142,13 @@ namespace ZombieUnknown
             _map.AddEntity(zombie);
             _map.GetTile(zombie.GetCoordinate()).IsBlocked = true;
 
-            var light = new PhantomLight("light", new Coordinate(7, 9), new Light(new Coordinate(7, 9), Color.White, 10));
-            _map.AddEntity(light);
+            //var light = new PhantomLight("light", new Coordinate(7, 9), new Light(new Coordinate(7, 9), Color.White, 10));
+            //_map.AddEntity(light);
 
-            var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.Red, 10));
+            var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
             _map.AddEntity(light2);
 
-            _lightMap = new LightMap(_map, new Color(1.0f, 1.0f, 1.0f));
+            _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
 
             Console.Initialize(_spriteBatch, font, 10);

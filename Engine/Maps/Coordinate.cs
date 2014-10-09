@@ -68,13 +68,13 @@ namespace Engine.Maps
             return string.Format ("[Coordinate: X={0}, Y={1}]", X, Y);
         }
 
-        public static Coordinate Up = new Coordinate(-1, -1);
-        public static Coordinate UpLeft = new Coordinate(0, -1);
-        public static Coordinate Left = new Coordinate(1, -1);
-        public static Coordinate DownLeft = new Coordinate(1, 0);
-        public static Coordinate Down = new Coordinate(1, 1);
-        public static Coordinate DownRight = new Coordinate(0, 1);
-        public static Coordinate Right = new Coordinate(-1, 1);
-        public static Coordinate UpRight = new Coordinate(-1, 0);
+        public static Coordinate NorthWest = new Coordinate(-1, -1);
+        public static Coordinate West = new Coordinate(0, -1);
+        public static Coordinate SouthWest = new Coordinate(1, -1);
+        public static Coordinate South = new Coordinate(1, 0);
+        public static Coordinate SouthEast = new Coordinate(1, 1);
+        public static Coordinate East = new Coordinate(0, 1);
+        public static Coordinate NorthEast = new Coordinate(-1, 1);
+        public static Coordinate North = new Coordinate(-1, 0);
     }
 }

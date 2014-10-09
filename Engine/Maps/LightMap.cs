@@ -19,50 +19,10 @@ namespace Engine.Maps
             _ambientLight = ambientLight;
 
             _lightValues = new byte[map.Width, map.Height, 3];
-
-            AddWallsToLight();
-
+            
             AddLightEntities();
 
             SaveLightMapToTiles();
-        }
-
-        private void AddWallsToLight()
-        {
-            foreach (var lightsource in _map.Lights)
-            {
-                var light = lightsource.Light;
-
-                var walls = new List<Line>();
-
-                var lightPosition = light.Coordinate;
-
-                var lightMapSize = light.Range * 2 + 1;
-
-                for (var x = 0; x < lightMapSize; x++)
-                {
-                    var mapX = lightPosition.X - light.Range + x;
-                    if (mapX < 0 || mapX >= _map.Width) continue;
-
-                    for (var y = 0; y < lightMapSize; y++)
-                    {
-                        var mapY = lightPosition.Y - light.Range + y;
-                        if (mapY < 0 || mapY >= _map.Height) continue;
-
-                        var tile = _map.GetTile(new Coordinate(mapX, mapY));
-                        if (tile.HasLeftWall)
-                        {
-                            walls.Add(new Line(new Vector2(x, y), new Vector2(x + 1, y)));
-                        }
-                        if (tile.HasRightWall)
-                        {
-                            walls.Add(new Line(new Vector2(x, y), new Vector2(x, y + 1)));
-                        }
-                    }
-                }
-
-                light.GenerateVisibiltyMap(walls);
-            }
         }
 
         private void AddLightEntities()

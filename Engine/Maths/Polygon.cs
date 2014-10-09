@@ -43,10 +43,16 @@ namespace Engine.Maths
 
 
             var inside = false;
-            foreach (var side in _lines) 
+            foreach (var side in _lines)
             {
-                if (DoLinesIntersect(new Line(new Vector2(_minX - 1, _minY - 1), point), side))
+                Vector2 intersectionPoint;
+                if (DoLinesIntersect(new Line(new Vector2(_minX - 1, _minY - 1), point), side, out intersectionPoint))
                 {
+                    if (Math.Abs(intersectionPoint.X - side.Start.X) < 0.001 && Math.Abs(intersectionPoint.Y - side.Start.Y) < 0.001) return true;
+                    if (Math.Abs(intersectionPoint.X - side.End.X) < 0.001 && Math.Abs(intersectionPoint.Y - side.End.Y) < 0.001) return true;
+                    if (Math.Abs(intersectionPoint.X - side.Start.X) < 0.001 && Math.Abs(intersectionPoint.Y - side.Start.Y) < 0.001) return true;
+                    if (Math.Abs(intersectionPoint.X - side.End.X) < 0.001 && Math.Abs(intersectionPoint.Y - side.End.Y) < 0.001) return true;
+
                     inside = !inside;
                 }
             }
@@ -65,25 +71,32 @@ namespace Engine.Maths
             return builder.ToString();
         }
 
-        private static bool DoLinesIntersect(Line line1, Line line2)
+        private static bool DoLinesIntersect(Line line1, Line line2, out Vector2 intersectionPoint)
         {
             // http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 
-            float s1_x, s1_y, s2_x, s2_y;
-            s1_x = line1.End.X - line1.Start.X; s1_y = line1.End.Y - line1.Start.Y;
-            s2_x = line2.End.X - line2.Start.X; s2_y = line2.End.Y - line2.Start.Y;
+            intersectionPoint = new Vector2(-100, -100);
+
+            var s1_x = line1.End.X - line1.Start.X;
+            var s1_y = line1.End.Y - line1.Start.Y;
+            var s2_x = line2.End.X - line2.Start.X;
+            var s2_y = line2.End.Y - line2.Start.Y;
 
             float s, t;
-            s = (-s1_y * (line1.Start.X - line2.Start.X) + s1_x * (line1.Start.Y - line2.Start.Y)) / (-s2_x * s1_y + s1_x * s2_y);
-            t = (s2_x * (line1.Start.Y - line2.Start.Y) - s2_y * (line1.Start.X - line2.Start.X)) / (-s2_x * s1_y + s1_x * s2_y);
+            s = (-s1_y*(line1.Start.X - line2.Start.X) + s1_x*(line1.Start.Y - line2.Start.Y))/(-s2_x*s1_y + s1_x*s2_y);
+            t = (s2_x*(line1.Start.Y - line2.Start.Y) - s2_y*(line1.Start.X - line2.Start.X))/(-s2_x*s1_y + s1_x*s2_y);
 
             if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
             {
+                var i_x = line1.Start.X + (t*s1_x);
+                var i_y = line1.Start.Y + (t*s1_y);
+
+                intersectionPoint = new Vector2(i_x, i_y);
+
                 return true;
             }
 
             return false; // No collision
-
         }
 
         private void CalculateBounds()
