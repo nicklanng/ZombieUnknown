@@ -16,6 +16,9 @@ namespace ZombieUnknown.AI
         public HumanMind(Human entity) : base(entity)
         {
             RandomNumberGenerator = new Random();
+            Goals.Push(new TurnGoal(Entity, TurnDirection.Right));
+            Goals.Push(new TurnGoal(Entity, TurnDirection.Right));
+            Goals.Push(new TurnGoal(Entity, TurnDirection.Right));
         }
 
         public override void Think()

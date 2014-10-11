@@ -10,9 +10,12 @@ namespace Engine.AI.Senses
 {
     public class Vision : Sense
     {
-        public Vision(byte range) 
+        private readonly int _fieldOfView;
+
+        public Vision(byte range, int fieldOfView) 
             : base(range)
         {
+            _fieldOfView = fieldOfView;
         }
 
         public float GetSenseValue(int x, int y)
@@ -22,8 +25,8 @@ namespace Engine.AI.Senses
 
             return SenseMap[x, y];
         }
-
-        public void UpdateVisibility(Coordinate centerCoordinate)
+        
+        public void UpdateVisibility(Coordinate centerCoordinate, IDirection facingDirection)
         {
             // build walls
             var startX = centerCoordinate.X - Range;
@@ -104,6 +107,7 @@ namespace Engine.AI.Senses
                 }
             }
 
+
             // create shadow polygons
             var shadowPolygons = new List<Polygon>();
             foreach (var wall in walls)
@@ -122,8 +126,26 @@ namespace Engine.AI.Senses
                 shadowPolygons.Add(shadowPolygon);
             }
 
-            // render shadows
 
+            // create vision polygon
+            // TODO: this only support vision = 90 degrees
+            var forwardVector = facingDirection.Coordinate;
+            // i have to minus the right, not the left. Something is screwy with my coords. Fuck it?
+            var leftVisionExtantVector = forwardVector.RotateByRadians((_fieldOfView / 2).ToRadians());
+            var rightVisionExtantVector = forwardVector.RotateByRadians(-(_fieldOfView / 2).ToRadians());
+
+            var leftVisionExtentPoint = Range * 2 * leftVisionExtantVector + (Vector2)centerCoordinate;
+            var rightVisionExtentPoint = Range * 2 * rightVisionExtantVector + (Vector2)centerCoordinate;
+
+            var visionPolygon = new Polygon(new List<Line>
+            {
+                new Line(centerCoordinate, leftVisionExtentPoint),
+                new Line(leftVisionExtentPoint, rightVisionExtentPoint),
+                new Line(rightVisionExtentPoint, centerCoordinate)
+            });
+
+
+            // render shadows
             var shadowInc = 1.0f / EngineSettings.ShadowQuality;
             for (var x = 0; x < MapSize; x++)
             {
@@ -131,22 +153,42 @@ namespace Engine.AI.Senses
                 {
                     SenseMap[x, y] = 1;
 
-                    var litTiles = 0;
+                    var unlitSubdivisions = 0;
 
                     for (var xInc = shadowInc / 2; xInc < 1.0; xInc += shadowInc)
                     {
-                        for (var yInc = shadowInc / 2; yInc < 1.0; yInc += shadowInc)
+                        for (var yInc = shadowInc/2; yInc < 1.0; yInc += shadowInc)
                         {
                             var point = new Vector2(x + xInc, y + yInc);
+
+                            if (!visionPolygon.PointInPolygon(point))
+                            {
+                                unlitSubdivisions++;
+                                continue;
+                            }
+
                             if (shadowPolygons.Any(sp => sp.PointInPolygon(point)))
                             {
-                                litTiles++;
+                                unlitSubdivisions++;
                             }
                         }
                     }
-                    SenseMap[x, y] = 1 - (float)(litTiles / Math.Pow(EngineSettings.ShadowQuality, 2));
+                    SenseMap[x, y] = 1 - (float)(unlitSubdivisions / Math.Pow(EngineSettings.ShadowQuality, 2));
                 }
             }
+
+
+            for (var x = 0; x < MapSize; x++)
+            {
+                for (var y = 0; y < MapSize; y++)
+                {
+                    Console.Write(SenseMap[x, y] + "\t");
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("-----------------------");
 
         }
 

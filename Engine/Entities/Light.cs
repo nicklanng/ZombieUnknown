@@ -187,19 +187,6 @@ namespace Engine.Entities
                     VisiblityMap[x, y] = 1 - (float)(shadowTiles / Math.Pow(EngineSettings.ShadowQuality, 2));
                 }
             }
-
-
-            for (var x = 0; x < _mapSize; x++)
-            {
-                for (var y = 0; y < _mapSize; y++)
-                {
-                    Console.Write(VisiblityMap[x, y] + "\t");
-                }
-
-                Console.WriteLine();
-            }
-
-            Console.WriteLine("-----------------------");
         }
 
         private Vector2 GetPointExtrapolation(Vector2 point)

@@ -96,6 +96,7 @@
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Maps\PathfindingMap.cs" />
     <Compile Include="Maths\Line.cs" />
+    <Compile Include="Maths\NumericExtensions.cs" />
     <Compile Include="Pathfinding\AStarSolver.cs" />
     <Compile Include="Pathfinding\Node.cs" />
     <Compile Include="Pathfinding\SearchedNode.cs" />

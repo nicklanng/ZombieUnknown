@@ -13,6 +13,7 @@ namespace ZombieUnknown.Entities
     public class Human : DrawableEntity, IMainCharacter
     {
         private const int VisionRange = 10;
+        private const int FieldOfView = 90;
 
         public override float Speed
         {
@@ -25,16 +26,22 @@ namespace ZombieUnknown.Entities
         public Human(string name, Sprite sprite, Coordinate coordinate)
             : base(name, sprite, coordinate)
         {
-            Vision = new Vision(VisionRange);
+            Vision = new Vision(VisionRange, FieldOfView);
             Mind = new HumanMind(this);
             IsStatic = false;
-            Vision.UpdateVisibility(coordinate);
+            Vision.UpdateVisibility(coordinate, FacingDirection);
         }
 
         public override void SetCoordinate(Coordinate coordinate)
         {
             base.SetCoordinate(coordinate);
-            Vision.UpdateVisibility(coordinate);
+            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
+        }
+
+        public override void FaceDirection(IDirection direction, GameTime gameTime)
+        {
+            base.FaceDirection(direction, gameTime);
+            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
         }
 
         public override void Update(GameTime gameTime)

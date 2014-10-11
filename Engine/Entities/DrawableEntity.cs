@@ -15,7 +15,7 @@ namespace Engine.Entities
 
         public abstract float Speed { get; }
 
-        public IDirection FacingDirection { get; private set; }
+        public IDirection FacingDirection { get; protected set; }
 
         protected DrawableEntity(string name, Sprite sprite, Coordinate coordinate)
             : base(name, coordinate)
@@ -42,7 +42,7 @@ namespace Engine.Entities
             yield return new DrawingRequest(Sprite, GetCoordinate(), Color.White);
         }
 
-        public void FaceDirection(IDirection direction, GameTime gameTime)
+        public virtual void FaceDirection(IDirection direction, GameTime gameTime)
         {
             if (IsStatic) 
             {
