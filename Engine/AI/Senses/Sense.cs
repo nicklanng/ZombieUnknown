@@ -2,8 +2,8 @@
 {
     public abstract class Sense
     {
-        public int Range;
-        protected int MapSize;
+        public int Range { get; private set; }
+        public int MapSize { get; private set; }
         protected float[,] SenseMap { get; private set; }
 
         protected Sense(int range)

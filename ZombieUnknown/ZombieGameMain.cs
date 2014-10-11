@@ -29,7 +29,7 @@ namespace ZombieUnknown
         private DrawingManager _drawingManager;
         private UIManager _uiManager;
 
-        private Vector2 _mapSize = new Vector2(15, 15);
+        private Vector2 _mapSize = new Vector2(10, 10);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -91,6 +91,7 @@ namespace ZombieUnknown
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
             var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
             var wallSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/walls");
+            var debugTileNetworkSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/debug-tile-network");
 
             var font = new Font(fontSpriteSheet);
             
@@ -103,11 +104,23 @@ namespace ZombieUnknown
             var zombieSprite = BuildZombieSprite();
 
             var terrainSprites = new List<Sprite>
-                {
-                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass"),
-                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass1"),
-                    new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass2")
-                };
+            {
+                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass"),
+                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass1"),
+                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass2")
+            };
+
+            var debugTileNetwork = new List<Sprite>
+            {
+                new StaticSprite("north", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "north"),
+                new StaticSprite("west", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "west"),
+                new StaticSprite("east", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "east"),
+                new StaticSprite("south", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "south"),
+                new StaticSprite("northeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "northeast"),
+                new StaticSprite("southeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "southeast"),
+                new StaticSprite("southwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "southwest"),
+                new StaticSprite("northwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "northwest")
+            };
 
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
             for (var y = 0; y < (int) _mapSize.Y; y++)
@@ -133,7 +146,7 @@ namespace ZombieUnknown
             tiles[6, 7].SetJoinWall(externalJoinWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
-            _pathfindingMap = new PathfindingMap(_map);
+            _pathfindingMap = new PathfindingMap(_map, debugTileNetwork);
 
             GameState.Map = _map;
             GameState.PathfindingMap = _pathfindingMap;
@@ -164,6 +177,7 @@ namespace ZombieUnknown
 
 
             _drawingManager.RegisterProvider(_map);
+            //_drawingManager.RegisterProvider(_pathfindingMap);
             _uiManager.RegisterProvider(Console.DrawingProvider);
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 

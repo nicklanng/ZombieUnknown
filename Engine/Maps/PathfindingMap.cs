@@ -1,13 +1,26 @@
-﻿using Engine.Pathfinding;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Engine.Drawing;
+using Engine.Pathfinding;
+using Engine.Sprites;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Maps
 {
-    public class PathfindingMap
+    public class PathfindingMap : IDrawingProvider
     {
+        private readonly IEnumerable<Sprite> _debugSprites;
         private Node[,] _nodes;
+        private List<Sprite>[,] _tileSprites; 
 
-        public PathfindingMap(Map map)
+        public int Height { get; private set; }
+        public int Width { get; private set; }
+
+        public PathfindingMap(Map map, IEnumerable<Sprite> debugSprites)
         {
+            _debugSprites = debugSprites;
+            Height = map.Height;
+            Width = map.Width;
             RegeneratePathfindingMap(map);
         }
 
@@ -15,9 +28,29 @@ namespace Engine.Maps
         {
             return _nodes[coordinate.X, coordinate.Y];
         }
+        
+        public IEnumerable<DrawingRequest> GetDrawings()
+        {
+            var drawingRequests = new List<DrawingRequest>();
+
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    var tileIcons = _tileSprites[x, y];
+                    var mapPosition = new Vector2(x, y);
+
+                    drawingRequests.AddRange(tileIcons.Select(tileIcon => new DrawingRequest(tileIcon, mapPosition, Color.DarkRed)));
+                }
+            }
+
+            return drawingRequests;
+        }
+
 
         private void RegeneratePathfindingMap(Map map)
         {
+            _tileSprites = new List<Sprite>[map.Width, map.Height];
             _nodes = new Node[map.Width, map.Height];
             for (var x = 0; x < map.Width; x++)
             {
@@ -25,6 +58,8 @@ namespace Engine.Maps
                 {
                     var node = new Node(new Coordinate(x, y));
                     _nodes[x, y] = node;
+
+                    _tileSprites[x, y] = new List<Sprite>(8);
                 }
             }
 
@@ -33,6 +68,7 @@ namespace Engine.Maps
                 for (var y = 0; y < map.Height; y++)
                 {
                     var node = _nodes[x, y];
+                    var spriteList = _tileSprites[x, y];
 
                     var thisCoord = new Coordinate(x, y);
                     var thisTile = map.GetTile(thisCoord);
@@ -71,6 +107,7 @@ namespace Engine.Maps
                         if (!thisTile.HasLeftWall && !thisTile.HasRightWall && !upLeftTile.HasRightWall && !upRightTile.HasLeftWall)
                         {
                             node.AddNeighbor(_nodes[upCoord.X, upCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "northwest"));
                         }
                     }
 
@@ -80,6 +117,7 @@ namespace Engine.Maps
                         if (!thisTile.HasLeftWall)
                         {
                             node.AddNeighbor(_nodes[upLeftCoord.X, upLeftCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "west"));
                         }
                     }
 
@@ -94,6 +132,7 @@ namespace Engine.Maps
                         if (!thisTile.HasLeftWall && !leftTile.HasRightWall && !downLeftTile.HasLeftWall && !downLeftTile.HasRightWall)
                         {
                             node.AddNeighbor(_nodes[leftCoord.X, leftCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "southwest"));
                         }
                     }
 
@@ -103,6 +142,7 @@ namespace Engine.Maps
                         if (!downLeftTile.HasRightWall)
                         {
                             node.AddNeighbor(_nodes[downLeftCoord.X, downLeftCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "south"));
                         }
                     }
 
@@ -117,6 +157,7 @@ namespace Engine.Maps
                         if (!downTile.HasLeftWall && !downTile.HasRightWall && !downLeftTile.HasRightWall && !downRightTile.HasLeftWall)
                         {
                             node.AddNeighbor(_nodes[downCoord.X, downCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "southeast"));
                         }
                     }
 
@@ -126,6 +167,7 @@ namespace Engine.Maps
                         if (!downRightTile.HasLeftWall)
                         {
                             node.AddNeighbor(_nodes[downRightCoord.X, downRightCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "east"));
                         }
                     }
 
@@ -140,6 +182,7 @@ namespace Engine.Maps
                         if (!thisTile.HasRightWall && !rightTile.HasLeftWall && !downRightTile.HasLeftWall && !downRightTile.HasRightWall)
                         {
                             node.AddNeighbor(_nodes[rightCoord.X, rightCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "northeast"));
                         }
                     }
 
@@ -149,6 +192,7 @@ namespace Engine.Maps
                         if (!thisTile.HasRightWall)
                         {
                             node.AddNeighbor(_nodes[upRightCoord.X, upRightCoord.Y]);
+                            spriteList.Add(_debugSprites.Single(s => s.Name == "north"));
                         }
                     }
                 }

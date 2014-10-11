@@ -1,0 +1,53 @@
+{ "frames" : 
+	[ 
+		{
+		    "height" : "40",
+        "name" : "north",
+        "width" : "32",
+        "x" : "0",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "west",
+        "width" : "32",
+        "x" : "32",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "east",
+        "width" : "32",
+        "x" : "64",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "south",
+        "width" : "32",
+        "x" : "96",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "northeast",
+        "width" : "32",
+        "x" : "128",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "southeast",
+        "width" : "32",
+        "x" : "160",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "southwest",
+        "width" : "32",
+        "x" : "192",
+        "y" : "0"
+      },
+      { "height" : "40",
+        "name" : "northwest",
+        "width" : "32",
+        "x" : "224",
+        "y" : "0"
+      }
+    ]
+}

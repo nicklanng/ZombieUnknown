@@ -41,7 +41,6 @@ namespace Engine.Maths
                 return false;
             }
 
-
             var inside = false;
             foreach (var side in _lines)
             {

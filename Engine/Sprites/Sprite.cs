@@ -32,12 +32,12 @@ namespace Engine.Sprites
         {
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, float depth)
         {
-            Draw(spriteBatch, position, Color.White);
+            Draw(spriteBatch, position, Color.White, depth);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position, Color lightColor)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, Color lightColor, float depth)
         {
             spriteBatch.Draw(
                 SpriteSheet.Texture,
@@ -51,7 +51,7 @@ namespace Engine.Sprites
                 0.0f,
                 Center,
                 SpriteEffects.None,
-                1.0f);
+                depth);
         }
     }
 }

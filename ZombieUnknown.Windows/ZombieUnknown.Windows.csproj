@@ -113,6 +113,10 @@
       <Link>Content\Spritesheets\cursor.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Content\SpriteSheets\debug-tile-network.png">
+      <Link>Content\Spritesheets\debug-tile-network.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Content\SpriteSheets\debugIcons.png">
       <Link>Content\Spritesheets\debugIcons.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -149,6 +153,10 @@
   <ItemGroup>
     <None Include="..\Content\Fonts\dbmf_4x5_box.json">
       <Link>Content\Fonts\dbmf_4x5_box.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\debug-tile-network.json">
+      <Link>Content\Spritesheets\debug-tile-network.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Content\SpriteSheets\ethereal.json">

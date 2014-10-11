@@ -15,7 +15,7 @@ namespace Engine.AI.Senses
         {
         }
 
-        public float GetTile(int x, int y)
+        public float GetSenseValue(int x, int y)
         {
             if (x < 0 || y < 0) { return 0; }
             if (x >= MapSize || y >= MapSize) { return 0; }
@@ -25,7 +25,6 @@ namespace Engine.AI.Senses
 
         public void UpdateVisibility(Coordinate centerCoordinate)
         {
-            
             // build walls
             var startX = centerCoordinate.X - Range;
             var startY = centerCoordinate.Y - Range;

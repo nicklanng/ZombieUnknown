@@ -42,7 +42,7 @@ namespace Engine.Drawing
             {
                 foreach (var character in line)
                 {
-                    yield return new UIRequest(_font.GetSprite(character), new Coordinate(x, y), 1000);
+                    yield return new UIRequest(_font.GetSprite(character), new Coordinate(x, y), 1.0f);
                     x = x + _font.Width + 2;
 
                     if (x > maxWidth)

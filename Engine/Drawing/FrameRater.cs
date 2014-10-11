@@ -38,7 +38,7 @@ namespace Engine.Drawing
             foreach (var character in frameRateString)
             {
                 x = x - (_font.Width + 2);
-                yield return new UIRequest(_font.GetSprite(character), new Coordinate(x, y), 999);
+                yield return new UIRequest(_font.GetSprite(character), new Coordinate(x, y), 1.0f);
             }
 
             x = maxWidth - 5;
@@ -49,7 +49,7 @@ namespace Engine.Drawing
             foreach (var character in aiRateString)
             {
                 x = x - (_font.Width + 2);
-                yield return new UIRequest(_font.GetSprite(character), new Coordinate(x, y), 999);
+                yield return new UIRequest(_font.GetSprite(character), new Coordinate(x, y), 1.0f);
             }
         }
 

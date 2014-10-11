@@ -24,8 +24,6 @@ namespace Engine.Drawing
 
             GatherUIRequests(uiRequests);
 
-            uiRequests.Sort();
-
             foreach (var uiRequest in uiRequests)
             {
                 uiRequest.Draw(spriteBatch);
