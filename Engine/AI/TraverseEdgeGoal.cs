@@ -73,11 +73,5 @@ namespace Engine.AI
                 GoalStatus = GoalStatus.Completed;
             }
         }
-
-        public override void Terminate()
-        {
-            base.Terminate();
-            // set entity state or animation or something
-        }
     }
 }

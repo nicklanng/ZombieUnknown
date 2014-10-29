@@ -1,26 +1,35 @@
 ﻿using System;
 using Engine.AI;
-using Engine.Maps;
 using ZombieUnknown.Entities;
 
 namespace ZombieUnknown.AI
 {
     class ZombieMind : Mind<Zombie>
     {
-        protected Random _randomNumberGenerator;
+        protected Random RandomNumberGenerator;
 
         public ZombieMind(Zombie entity) : base(entity)
         {
-            _randomNumberGenerator = new Random();
+            RandomNumberGenerator = new Random();
         }
 
         public override void Think()
         {
+            // find alive food
+            foreach (var seenEntity in Entity.Vision.GetSeenEntities(Entity.GetCoordinate()))
+            {
+                if (seenEntity is Human)
+                {
+                    Goals.Push(new FollowPathGoal(Entity, seenEntity.GetCoordinate()));
+                }
+            }
+
+            // wander
             if (Goals.Count == 0)
             {
                 Goals.Push(new WaitGoal(1000));
 
-                var result = _randomNumberGenerator.Next(2);
+                var result = RandomNumberGenerator.Next(2);
                 if (result == 0) 
                 {
                     Goals.Push (new TurnGoal (Entity, TurnDirection.Right));

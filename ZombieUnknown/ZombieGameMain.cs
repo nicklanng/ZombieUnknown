@@ -29,7 +29,7 @@ namespace ZombieUnknown
         private DrawingManager _drawingManager;
         private UIManager _uiManager;
 
-        private Vector2 _mapSize = new Vector2(10, 10);
+        private Vector2 _mapSize = new Vector2(15, 15);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -37,8 +37,8 @@ namespace ZombieUnknown
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
-                    PreferredBackBufferWidth = 1366,
-                    PreferredBackBufferHeight = 768,
+                    PreferredBackBufferWidth = 2560,
+                    PreferredBackBufferHeight = 1440,
                     IsFullScreen = true
                 };
             Content.RootDirectory = "Content";

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Engine;
+using Engine.AI.Senses;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
@@ -11,18 +12,36 @@ namespace ZombieUnknown.Entities
 {
     class Zombie : DrawableEntity
     {
+        private const int VisionRange = 10;
+        private const int FieldOfView = 90;
+
         public override float Speed
         {
             get { return 5; }
         }
 
-        public ZombieMind Mind { get; private set; } 
+        public ZombieMind Mind { get; private set; }
+        public Vision Vision { get; private set; }
 
         public Zombie(string name, Sprite sprite, Coordinate coordinate)
             : base(name, sprite, coordinate)
         {
+            Vision = new Vision(VisionRange, FieldOfView);
             Mind = new ZombieMind(this);
             IsStatic = false;
+            Vision.UpdateVisibility(coordinate, FacingDirection);
+        }
+
+        public override void SetCoordinate(Coordinate coordinate)
+        {
+            base.SetCoordinate(coordinate);
+            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
+        }
+
+        public override void FaceDirection(IDirection direction, GameTime gameTime)
+        {
+            base.FaceDirection(direction, gameTime);
+            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
         }
 
         public override void Update(GameTime gameTime)
