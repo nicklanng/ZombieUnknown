@@ -7,83 +7,46 @@ namespace Engine.Pathfinding
 {
     public class AStarSolver
     {
+        private readonly Node _startingNode;
         private readonly Node _endingNode;
-        private readonly List<SearchedNode> _closedList;
-        private readonly List<SearchedNode> _openList;
+        private readonly HashSet<SearchedNode> _closedList;
+        private readonly PriorityQueue<int, SearchedNode> _openList;
 
         public List<Coordinate> Solution { get; private set; } 
 
         public AStarSolver(Node startingNode, Node endingNode)
         {
+            _startingNode = startingNode;
             _endingNode = endingNode;
-
-            _closedList = new List<SearchedNode>();
-            _openList = new List<SearchedNode>();
-
-            var startingSearchNode = new SearchedNode(startingNode, null, 0, CalculateManhattenHeuristic(startingNode));
-            _openList.Add(startingSearchNode);
         }
 
         public void Solve()
         {
-            var finished = false;
-            while (!finished)
-            {
-                var lowestCostNode = _openList[0];
-                for (var i = 1; i < _openList.Count; i++)
-                {
-                    if (_openList[i].Cost < lowestCostNode.Cost)
-                    {
-                        lowestCostNode = _openList[i];
-                    }
-                }
-
-                finished = InvestigateNode(lowestCostNode);
-            }
+            var path = FindPath(_startingNode, _endingNode);
+            Solution = path.ToCoordinateList();
         }
 
-        private bool InvestigateNode(SearchedNode currentNode)
+        private Path FindPath(Node start, Node destination)
         {
-            _openList.Remove(currentNode);
-            _closedList.Add(currentNode);
-
-            foreach (var neighbor in currentNode.Neighbors)
+            var closed = new HashSet<Node>();
+            var queue = new PriorityQueue<double, Path>();
+            queue.Enqueue(0, new Path(start));
+            while (!queue.IsEmpty)
             {
-                if (neighbor == _endingNode)
+                var path = queue.Dequeue();
+                if (closed.Contains(path.LastStep))
+                    continue;
+                if (path.LastStep.Equals(destination))
+                    return path;
+                closed.Add(path.LastStep);
+                foreach (var neighbor in path.LastStep.Neighbors)
                 {
-                    BuildSolutionPath(currentNode);
-                    return true;
-                }
-
-                AddOrUpdateNeighbor(neighbor, currentNode, currentNode.Cost + 10, CalculateManhattenHeuristic(neighbor));
-            }
-
-            return false;
-        }
-
-        private void BuildSolutionPath(SearchedNode currentNode)
-        {
-            var list = new List<Coordinate>();
-            currentNode.GetPath(list).Add(_endingNode.Coordinate);
-            list.RemoveAt(0);
-            Solution = list;
-        }
-
-        private void AddOrUpdateNeighbor(Node neighbor, SearchedNode currentNode, int travelledCost, int heuristic)
-        {
-            var savedNode = _openList.SingleOrDefault(x => x.Position == neighbor.Coordinate);
-
-            if (savedNode == null)
-            {
-                _openList.Add(new SearchedNode(neighbor, currentNode, travelledCost, heuristic));
-            }
-            else
-            {
-                if (savedNode.Cost > travelledCost + heuristic)
-                {
-                    savedNode.Reparent(currentNode, travelledCost, heuristic);
+                    var d = path.TotalCost + 10; // diagnoals?
+                    var newPath = path.AddStep(neighbor, d);
+                    queue.Enqueue(newPath.TotalCost + CalculateManhattenHeuristic(neighbor), newPath);
                 }
             }
+            return null;
         }
 
         private int CalculateManhattenHeuristic(Node currentNode)

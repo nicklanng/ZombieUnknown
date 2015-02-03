@@ -145,7 +145,7 @@ namespace ZombieUnknown
             _map.GetTile(human.GetCoordinate()).IsBlocked = true;
 
             var rand = new Random();
-            for (var i = 0; i < 199; i++)
+            for (var i = 0; i < 3999; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);

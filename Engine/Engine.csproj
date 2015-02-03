@@ -99,6 +99,7 @@
     <Compile Include="Maths\NumericExtensions.cs" />
     <Compile Include="Pathfinding\AStarSolver.cs" />
     <Compile Include="Pathfinding\Node.cs" />
+    <Compile Include="Pathfinding\Path.cs" />
     <Compile Include="Pathfinding\SearchedNode.cs" />
     <Compile Include="Maths\Polygon.cs" />
     <Compile Include="PriorityQueue.cs" />

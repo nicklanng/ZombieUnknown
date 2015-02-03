@@ -23,7 +23,6 @@ namespace Engine.AI
 
             var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(_entity.GetCoordinate()), GameState.PathfindingMap.GetNodeAt(_target));
             aStarSolver.Solve();
-            aStarSolver.Solution.Reverse();
 
             foreach (var step in aStarSolver.Solution)
             {
