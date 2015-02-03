@@ -15,8 +15,8 @@ namespace Engine.Drawing
 
         private int _framerate = 10;
         private int _airate = 10;
-        private TimeSpan _lastFrameUpdate;
-        private TimeSpan _lastAiUpdate;
+        private double _lastFrameUpdate;
+        private double _lastAiUpdate;
 
         private static readonly FrameRater Instance = new FrameRater();
 
@@ -53,13 +53,21 @@ namespace Engine.Drawing
             }
         }
 
-        public static void NewFrame(TimeSpan totalGameTime)
+        public static void NewFrame(double totalMilliseconds)
         {
-            var frameTime = (totalGameTime - Instance._lastFrameUpdate);
+            Instance._lastFrameUpdate = totalMilliseconds;
+        }
 
-            Instance._framerate = (int) (1000.0/frameTime.TotalMilliseconds);
+        public static void EndFrame(double totalMilliseconds)
+        {
+            var timeTaken = totalMilliseconds - Instance._lastFrameUpdate;
 
-            Instance._lastFrameUpdate = totalGameTime;
+            Instance._framerate = (int)(1000 / timeTaken);
+
+            if (Instance._framerate > 60 || Instance._framerate < 0)
+            {
+                Instance._framerate = 60;
+            }
         }
 
         public static IUIProvider DrawingProvider
@@ -67,13 +75,22 @@ namespace Engine.Drawing
             get { return Instance; }
         }
 
-        public static void NewUpdate(TimeSpan totalGameTime)
+        public static void NewUpdate(double totalMilliseconds)
         {
-            var frameTime = (totalGameTime - Instance._lastAiUpdate);
+            Instance._lastAiUpdate = totalMilliseconds;
+        }
 
-            Instance._airate = (int)(1 / frameTime.TotalSeconds);
+        public static void EndUpdate(double totalMilliseconds)
+        {
+            var timeTaken = totalMilliseconds - Instance._lastAiUpdate;
 
-            Instance._lastAiUpdate = totalGameTime;
+            Instance._airate = (int) (1000 / timeTaken);
+            System.Console.WriteLine(timeTaken);
+
+            if (Instance._airate > 60 || Instance._airate < 0)
+            {
+                Instance._airate = 60;
+            }
         }
     }
 }

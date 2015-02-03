@@ -53,5 +53,10 @@ namespace Engine.Sprites
                 SpriteEffects.None,
                 depth);
         }
+
+        public Sprite ShallowCopy()
+        {
+            return (Sprite)MemberwiseClone();
+        }
     }
 }

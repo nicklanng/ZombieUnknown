@@ -30,7 +30,14 @@ namespace Engine.Pathfinding
             var finished = false;
             while (!finished)
             {
-                var lowestCostNode = _openList.OrderBy(x => x.Cost).First();
+                var lowestCostNode = _openList[0];
+                for (var i = 1; i < _openList.Count; i++)
+                {
+                    if (_openList[i].Cost < lowestCostNode.Cost)
+                    {
+                        lowestCostNode = _openList[i];
+                    }
+                }
 
                 finished = InvestigateNode(lowestCostNode);
             }
@@ -85,7 +92,7 @@ namespace Engine.Pathfinding
             var x = Math.Abs(_endingNode.Coordinate.X - currentNode.Coordinate.X);
             var y = Math.Abs(_endingNode.Coordinate.Y - currentNode.Coordinate.Y);
 
-            return (int)(x + y);
+            return x + y;
         }
     }
 }

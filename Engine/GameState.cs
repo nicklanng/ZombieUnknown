@@ -1,4 +1,5 @@
-﻿using Engine.Entities;
+﻿using System;
+using Engine.Entities;
 using Engine.Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,6 +13,7 @@ namespace Engine
         public static PathfindingMap PathfindingMap { get; set; }
         public static GameTime GameTime { get; set; }
         public static GraphicsDevice GraphicsDevice { get; set; }
-        public static Entity MainCharacter { get; set; } 
+        public static Entity MainCharacter { get; set; }
+        public static Random RandomNumberGenerator { get; set; }
     }
 }

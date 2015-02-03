@@ -20,14 +20,14 @@ namespace ZombieUnknown.AI
             {
                 if (seenEntity is Human)
                 {
-                    Goals.Push(new FollowPathGoal(Entity, seenEntity.GetCoordinate()));
+                    //Goals.Push(new FollowPathGoal(Entity, seenEntity.GetCoordinate()));
                 }
             }
 
             // wander
             if (Goals.Count == 0)
             {
-                Goals.Push(new WaitGoal(1000));
+                Goals.Push(new WaitGoal(Entity, 1000));
 
                 var result = RandomNumberGenerator.Next(2);
                 if (result == 0) 

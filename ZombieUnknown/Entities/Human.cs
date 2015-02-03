@@ -17,7 +17,7 @@ namespace ZombieUnknown.Entities
 
         public override float Speed
         {
-            get { return 15; }
+            get { return IsRunning ? 30 : 15; }
         }
 
         public HumanMind Mind { get; private set; }
@@ -26,23 +26,23 @@ namespace ZombieUnknown.Entities
         public Human(string name, Sprite sprite, Coordinate coordinate)
             : base(name, sprite, coordinate)
         {
-            Vision = new Vision(VisionRange, FieldOfView);
+            //Vision = new Vision(VisionRange, FieldOfView);
             Mind = new HumanMind(this);
             IsStatic = false;
-            Vision.UpdateVisibility(coordinate, FacingDirection);
+            //Vision.UpdateVisibility(coordinate, FacingDirection);
         }
 
         public override void SetCoordinate(Coordinate coordinate)
         {
             base.SetCoordinate(coordinate);
-            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
+            //Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
         }
 
-        public override void FaceDirection(IDirection direction, GameTime gameTime)
-        {
-            base.FaceDirection(direction, gameTime);
-            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
-        }
+        //public override void FaceDirection(IDirection direction, GameTime gameTime)
+        //{
+        //    base.FaceDirection(direction, gameTime);
+        //    Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
+        //}
 
         public override void Update(GameTime gameTime)
         {

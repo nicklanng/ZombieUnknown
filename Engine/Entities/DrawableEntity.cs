@@ -15,12 +15,14 @@ namespace Engine.Entities
 
         public abstract float Speed { get; }
 
+        public bool IsRunning { set; get; }
+
         public IDirection FacingDirection { get; protected set; }
 
         protected DrawableEntity(string name, Sprite sprite, Coordinate coordinate)
             : base(name, coordinate)
         {
-            Sprite = sprite;
+            Sprite = sprite.ShallowCopy();
             FacingDirection = Direction.North;
             _currentAnimationType = "idle";
         }

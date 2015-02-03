@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Engine.Drawing;
 using Engine.Entities;
 using Microsoft.Xna.Framework;
@@ -35,16 +37,16 @@ namespace Engine.Maps
 
         public void Update(GameTime gameTime)
         {
+            var entitiesToUpdate = new List<Entity>();
             for (var x = 0; x < Width; x++)
             {
-                var entitiesToUpdate = new List<Entity>();
                 for (var y = 0; y < Height; y++)
                 {
                     _tiles[x, y].Update(gameTime);
                     _entities[x, y].ForEach(entitiesToUpdate.Add);
                 }
-                entitiesToUpdate.ForEach(e => e.Update(gameTime));
             }
+            entitiesToUpdate.ForEach(e => e.Update(gameTime));
         }
 
         public Tile GetTile(Coordinate coordinate)

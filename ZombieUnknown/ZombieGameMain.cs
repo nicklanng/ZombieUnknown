@@ -29,7 +29,7 @@ namespace ZombieUnknown
         private DrawingManager _drawingManager;
         private UIManager _uiManager;
 
-        private Vector2 _mapSize = new Vector2(15, 15);
+        private Vector2 _mapSize = new Vector2(20, 20);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -37,16 +37,17 @@ namespace ZombieUnknown
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
-                    PreferredBackBufferWidth = 2560,
-                    PreferredBackBufferHeight = 1440,
-                    IsFullScreen = true
+                    PreferredBackBufferWidth = 1920,
+                    PreferredBackBufferHeight = 1080,
+                    IsFullScreen = false
                 };
             Content.RootDirectory = "Content";
 
 #if WINDOWS
-            Window.IsBorderless = true;
+            //Window.IsBorderless = true;
 #endif
 
+            _graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = true;
         }
 
@@ -137,9 +138,21 @@ namespace ZombieUnknown
             GameState.Map = _map;
             GameState.PathfindingMap = _pathfindingMap;
 
+
+            
             var human = new Human("human", humanSprite, new Coordinate(6, 5));
             _map.AddEntity(human);
             _map.GetTile(human.GetCoordinate()).IsBlocked = true;
+
+            var rand = new Random();
+            for (var i = 0; i < 199; i++)
+            {
+                var newLocationX = rand.Next(GameState.Map.Width);
+                var newLocationY = rand.Next(GameState.Map.Height);
+                var h = new Human("human" + i, humanSprite, new Coordinate(newLocationX, newLocationY));
+                _map.AddEntity(h);
+                _map.GetTile(h.GetCoordinate()).IsBlocked = true;
+            }
 
             //var zombie = new Zombie("zombie", zombieSprite, new Coordinate(8, 8));
             //_map.AddEntity(zombie);
@@ -148,8 +161,8 @@ namespace ZombieUnknown
             var tallGrass1 = new TallGrass1("tallGrass1", terrainSprites[2], new Coordinate(9, 9));
             _map.AddEntity(tallGrass1);
 
-            //var light = new PhantomLight("light", new Coordinate(7, 9), new Light(new Coordinate(7, 9), Color.White, 10));
-            //_map.AddEntity(light);
+            var light = new PhantomLight("light", new Coordinate(12, 5), new Light(new Coordinate(2, 1), Color.Blue, 10));
+            _map.AddEntity(light);
 
             var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
             _map.AddEntity(light2);
@@ -167,6 +180,7 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(Console.DrawingProvider);
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 
+            GameState.RandomNumberGenerator = new Random();
             GameState.MainCharacter = human;
         }
 
@@ -272,6 +286,86 @@ namespace ZombieUnknown
             walkNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest6"), 0.15));
             walkNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest7"), 0.15));
 
+            var runNorth = new Animation(AnimationType.Looped);
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth0"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth1"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth2"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth3"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth4"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth5"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth6"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorth7"), 0.06));
+
+            var runNorthEast = new Animation(AnimationType.Looped);
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast0"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast1"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast2"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast3"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast4"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast5"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast6"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthEast7"), 0.06));
+
+            var runEast = new Animation(AnimationType.Looped);
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast0"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast1"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast2"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast3"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast4"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast5"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast6"), 0.06));
+            runEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkEast7"), 0.06));
+
+            var runSouthEast = new Animation(AnimationType.Looped);
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast0"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast1"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast2"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast3"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast4"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast5"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast6"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthEast7"), 0.06));
+
+            var runSouth = new Animation(AnimationType.Looped);
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth0"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth1"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth2"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth3"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth4"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth5"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth6"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouth7"), 0.06));
+
+            var runSouthWest = new Animation(AnimationType.Looped);
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest0"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest1"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest2"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest3"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest4"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest5"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest6"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkSouthWest7"), 0.06));
+
+            var runWest = new Animation(AnimationType.Looped);
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest0"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest1"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest2"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest3"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest4"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest5"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest6"), 0.06));
+            runWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkWest7"), 0.06));
+
+            var runNorthWest = new Animation(AnimationType.Looped);
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest0"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest1"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest2"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest3"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest4"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest5"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest6"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest7"), 0.06));
+
             humanAnimationList.Add("idleSouthEast", idleSouthEast);
             humanAnimationList.Add("idleSouth", idleSouth);
             humanAnimationList.Add("idleSouthWest", idleSouthWest);
@@ -289,6 +383,15 @@ namespace ZombieUnknown
             humanAnimationList.Add("walkSouthWest", walkSouthWest);
             humanAnimationList.Add("walkWest", walkWest);
             humanAnimationList.Add("walkNorthWest", walkNorthWest);
+
+            humanAnimationList.Add("runNorth", runNorth);
+            humanAnimationList.Add("runNorthEast", runNorthEast);
+            humanAnimationList.Add("runEast", runEast);
+            humanAnimationList.Add("runSouthEast", runSouthEast);
+            humanAnimationList.Add("runSouth", runSouth);
+            humanAnimationList.Add("runSouthWest", runSouthWest);
+            humanAnimationList.Add("runWest", runWest);
+            humanAnimationList.Add("runNorthWest", runNorthWest);
 
             var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
 
@@ -347,7 +450,7 @@ namespace ZombieUnknown
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            FrameRater.NewUpdate(gameTime.TotalGameTime);
+            FrameRater.NewUpdate((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -363,6 +466,8 @@ namespace ZombieUnknown
             _virtualScreen.Update();
 
             base.Update(gameTime);
+
+            FrameRater.EndUpdate((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
         }
 
         /// <summary>
@@ -371,7 +476,7 @@ namespace ZombieUnknown
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            FrameRater.NewFrame(gameTime.TotalGameTime);
+            FrameRater.NewFrame((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
 
             _virtualScreen.BeginCapture();
             GraphicsDevice.Clear(Color.Black);
@@ -391,6 +496,8 @@ namespace ZombieUnknown
             _spriteBatch.End();
 
             base.Draw(gameTime);
+
+            FrameRater.EndFrame((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
         }
     }
 }

@@ -10,12 +10,14 @@ namespace Engine.AI
 
         private Coordinate _origin;
         private readonly Coordinate _target;
+        private readonly bool _run;
         private bool _tileSwapped;
 
-        public TraverseEdgeGoal(DrawableEntity entity, Coordinate target)
+        public TraverseEdgeGoal(DrawableEntity entity, Coordinate target, bool run = false)
         {
             _entity = entity;
             _target = target;
+            _run = run;
         }
 
         public override void Activate()
@@ -25,6 +27,7 @@ namespace Engine.AI
             _origin = _entity.GetCoordinate();
 
             var isTargetTileBlocked = GameState.Map.GetTile(_target).IsBlocked;
+            isTargetTileBlocked = false;
             if (isTargetTileBlocked)
             {
                 GoalStatus = GoalStatus.Failed;
@@ -37,7 +40,7 @@ namespace Engine.AI
                 var direction = Direction.CoordinateDirectionMap [directionVector];
 
                 _entity.FaceDirection (direction, GameState.GameTime);
-                _entity.SetAnimation("walk", GameState.GameTime);
+                _entity.SetAnimation(_run ? "run" : "walk", GameState.GameTime);
             }
         }
 
