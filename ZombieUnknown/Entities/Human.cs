@@ -17,7 +17,7 @@ namespace ZombieUnknown.Entities
 
         public override float Speed
         {
-            get { return 10; }
+            get { return 15; }
         }
 
         public HumanMind Mind { get; private set; }

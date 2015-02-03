@@ -32,6 +32,11 @@ namespace Engine.Entities
 
         public void SetAnimation(string animationName, GameTime gameTime)
         {
+            if (animationName == _currentAnimationType)
+            {
+                return;
+            }
+
             _currentAnimationType = animationName;
 
             UpdateAnimation(gameTime);

@@ -80,22 +80,22 @@ namespace Engine.Maps
         {
             if (_floorSprite != null)
             {
-                yield return new DrawingRequest(_floorSprite, Position, Light);
+                yield return new DrawingRequest(_floorSprite, Position, Light, 0);
             }
 
             if (_leftWallSprite != null)
             {
-                yield return new DrawingRequest(_leftWallSprite, Position, Light);
+                yield return new DrawingRequest(_leftWallSprite, Position, Light, new Vector2(0, -0.50001f));
             }
 
             if (_rightWallSprite != null)
             {
-                yield return new DrawingRequest(_rightWallSprite, Position, Light);
+                yield return new DrawingRequest(_rightWallSprite, Position, Light, new Vector2(0, -0.50001f));
             }
 
             if (_wallJoinSprite != null)
             {
-                yield return new DrawingRequest(_wallJoinSprite, Position, Light);
+                yield return new DrawingRequest(_wallJoinSprite, Position, Light, new Vector2(0, -0.500002f));
             }
         }
 

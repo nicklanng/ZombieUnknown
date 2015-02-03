@@ -33,6 +33,7 @@ namespace Engine.AI
             var newDirection = GetDirectionFromTurnDirection (_turnDirection);
 
             _entity.FaceDirection(newDirection, GameState.GameTime);
+            _entity.SetAnimation("idle", GameState.GameTime);
 
             GoalStatus = GoalStatus.Completed;
         }

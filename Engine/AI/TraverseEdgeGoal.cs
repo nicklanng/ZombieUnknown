@@ -37,6 +37,7 @@ namespace Engine.AI
                 var direction = Direction.CoordinateDirectionMap [directionVector];
 
                 _entity.FaceDirection (direction, GameState.GameTime);
+                _entity.SetAnimation("walk", GameState.GameTime);
             }
         }
 
