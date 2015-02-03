@@ -176,20 +176,6 @@ namespace Engine.AI.Senses
                     SenseMap[x, y] = 1 - (float)(unlitSubdivisions / Math.Pow(EngineSettings.ShadowQuality, 2));
                 }
             }
-
-
-            for (var x = 0; x < MapSize; x++)
-            {
-                for (var y = 0; y < MapSize; y++)
-                {
-                    Console.Write(SenseMap[x, y] + "\t");
-                }
-
-                Console.WriteLine();
-            }
-
-            Console.WriteLine("-----------------------");
-
         }
 
         private Vector2 GetPointExtrapolation(Vector2 point)
