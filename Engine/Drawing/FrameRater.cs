@@ -85,7 +85,7 @@ namespace Engine.Drawing
             var timeTaken = totalMilliseconds - Instance._lastAiUpdate;
 
             Instance._airate = (int) (1000 / timeTaken);
-            System.Console.WriteLine(timeTaken);
+            //System.Console.WriteLine(timeTaken);
 
             if (Instance._airate > 60 || Instance._airate < 0)
             {

@@ -1,5 +1,4 @@
-﻿using Engine.Drawing;
-using Engine.Entities;
+﻿using Engine.Entities;
 using Engine.Maps;
 using Engine.Pathfinding;
 
@@ -11,7 +10,7 @@ namespace Engine.AI
         private readonly Coordinate _target;
         private readonly bool _run;
 
-        public FollowPathGoal(DrawableEntity entity, Coordinate target, bool run)
+        public FollowPathGoal(DrawableEntity entity, Coordinate target, bool run = false)
         {
             _entity = entity;
             _target = target;

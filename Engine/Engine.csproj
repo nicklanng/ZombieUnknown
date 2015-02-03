@@ -101,6 +101,7 @@
     <Compile Include="Pathfinding\Node.cs" />
     <Compile Include="Pathfinding\SearchedNode.cs" />
     <Compile Include="Maths\Polygon.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\SpriteSheetLoader.cs" />
     <Compile Include="Sprites\AnimatedSprite.cs" />
