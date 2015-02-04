@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Engine.Drawing;
 using Engine.Entities;
@@ -71,7 +72,7 @@ namespace Engine.Maps
 
         public void AddEntity(Entity entity)
         {
-            _entities[entity.GetCoordinate().X, entity.GetCoordinate().Y].Add(entity);
+            _entities[(int)Math.Floor(entity.MapPosition.X), (int)Math.Floor(entity.MapPosition.Y)].Add(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)
@@ -84,7 +85,7 @@ namespace Engine.Maps
 
         public void RemoveEntity(Entity entity)
         {
-            _entities[entity.GetCoordinate().X, entity.GetCoordinate().Y].Remove(entity);
+            _entities[(int)Math.Floor(entity.MapPosition.X), (int)Math.Floor(entity.MapPosition.Y)].Remove(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)

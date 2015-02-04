@@ -16,7 +16,7 @@ namespace ZombieUnknown.AI
         public override void Think()
         {
             // find alive food
-            foreach (var seenEntity in Entity.Vision.GetSeenEntities(Entity.GetCoordinate()))
+            foreach (var seenEntity in Entity.Vision.GetSeenEntities(Entity.MapPosition))
             {
                 if (seenEntity is Human)
                 {

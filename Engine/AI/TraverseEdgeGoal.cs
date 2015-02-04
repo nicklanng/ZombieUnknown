@@ -8,74 +8,73 @@ namespace Engine.AI
     {
         private readonly PhysicalEntity _entity;
 
-        private Coordinate _origin;
         private readonly Coordinate _target;
-        private readonly bool _run;
-        private bool _tileSwapped;
 
         public TraverseEdgeGoal(PhysicalEntity entity, Coordinate target, bool run = false)
         {
             _entity = entity;
             _target = target;
-            _run = run;
         }
-
-        public override void Activate()
-        {
-            base.Activate();
-
-            _origin = _entity.GetCoordinate();
-
-            var isTargetTileBlocked = GameState.Map.GetTile(_target).IsBlocked;
-            isTargetTileBlocked = false;
-            if (isTargetTileBlocked)
-            {
-                GoalStatus = GoalStatus.Failed;
-            }
-            else
-            {
-                GameState.Map.GetTile(_target).IsBlocked = true;
-
-                var directionVector = _target - _origin;
-                var direction = Direction.CoordinateDirectionMap [directionVector];
-
-                _entity.FaceDirection (direction);
-                _entity.SetAnimation(_run ? "run" : "walk");
-            }
-        }
-
+        
         public override void Process()
         {
             base.Process();
 
-            if (!IsActive)
+            var nextStep = _target;
+            if (_entity.MapPosition == (Vector2)nextStep)
             {
+                GoalStatus = GoalStatus.Completed;
                 return;
             }
 
-            var distanceToTarget = ((Vector2)_target - _entity.MapPosition);
+            var directionVector = GetDirectionVector(_entity.MapPosition, nextStep);
+            var direction = Direction.CoordinateDirectionMap[directionVector];
+            _entity.FaceDirection(direction);
+            _entity.SetAnimation("walk");
+
+            var distanceToTarget = ((Vector2)nextStep - _entity.MapPosition);
             var moveAmount = distanceToTarget;
             moveAmount.Normalize();
             moveAmount = moveAmount * _entity.Speed * 0.001f;
 
-            if (!_tileSwapped && (_entity.MapPosition - (Vector2)_origin).Length() > ((Vector2)_target - (Vector2)_origin).Length() / 2)
+            if (moveAmount.Length() >= distanceToTarget.Length())
             {
-                GameState.Map.GetTile(_origin).IsBlocked = false;
-                GameState.Map.RemoveEntity(_entity);
-                _entity.SetCoordinate(_target);
-                GameState.Map.AddEntity(_entity);
+                _entity.MapPosition = nextStep;
 
-                _tileSwapped = true;
-            }
-
-            if (moveAmount.Length() < distanceToTarget.Length())
-            {
-                _entity.MapPosition += moveAmount;
-            }
-            else
-            {
                 GoalStatus = GoalStatus.Completed;
+                return;
             }
+
+            _entity.MapPosition += moveAmount;
+        }
+
+
+        private static Vector2 GetDirectionVector(Vector2 currentPosition, Vector2 targetPosition)
+        {
+            var x = 0;
+            var y = 0;
+
+            var deltaX = (targetPosition - currentPosition).X;
+            if (deltaX > 0)
+            {
+                x = 1;
+            }
+            else if (deltaX < 0)
+            {
+                x = -1;
+            }
+
+            var deltaY = (targetPosition - currentPosition).Y;
+            if (deltaY > 0)
+            {
+                y = 1;
+            }
+            else if (deltaY < 0)
+            {
+                y = -1;
+            }
+
+            return new Vector2(x, y);
         }
     }
 }

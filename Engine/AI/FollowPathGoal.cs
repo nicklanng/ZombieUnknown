@@ -19,17 +19,17 @@ namespace Engine.AI
 
         public override void Activate()
         {
+            base.Activate();
+
             _entity.IsRunning = _run;
 
-            var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(_entity.GetCoordinate()), GameState.PathfindingMap.GetNodeAt(_target));
+            var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(_entity.MapPosition), GameState.PathfindingMap.GetNodeAt(_target));
             aStarSolver.Solve();
 
             foreach (var step in aStarSolver.Solution)
             {
                 AddSubGoal(new TraverseEdgeGoal(_entity, step, _run));
             }
-
-            base.Activate();
         }
 
         public override void Terminate()

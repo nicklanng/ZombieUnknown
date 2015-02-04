@@ -27,8 +27,6 @@ namespace ZombieUnknown.AI
             //if (!seenSomething) Console.WriteLine(DateTime.Now.ToLongTimeString() + " " + "Nothing Seen");
 
 
-
-
             if (Goals.Count == 0)
             {
                 var stand = GameState.RandomNumberGenerator.Next(5) == 1;

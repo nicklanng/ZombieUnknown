@@ -16,11 +16,10 @@ namespace Engine.Entities
         public abstract float Speed { get; }
 
         public bool IsRunning { set; get; }
-
         public IDirection FacingDirection { get; protected set; }
 
-        protected PhysicalEntity(string name, Sprite sprite, Coordinate coordinate)
-            : base(name, coordinate)
+        protected PhysicalEntity(string name, Sprite sprite, Vector2 mapPosition)
+            : base(name, mapPosition)
         {
             Sprite = sprite.ShallowCopy();
             FacingDirection = Direction.North;
@@ -36,6 +35,7 @@ namespace Engine.Entities
         {
             if (animationName == _currentAnimationType)
             {
+                return;
             }
 
             _currentAnimationType = animationName;
@@ -45,7 +45,7 @@ namespace Engine.Entities
 
         public virtual IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, GetCoordinate(), Color.White);
+            yield return new DrawingRequest(Sprite, MapPosition, Light);
         }
 
         public virtual void FaceDirection(IDirection direction)
@@ -74,7 +74,7 @@ namespace Engine.Entities
                 return;
             }
 
-            var animationId = _currentAnimationType + FacingDirection.ToString();
+            var animationId = _currentAnimationType + FacingDirection;
 
             animatedSprite.SetAnimation(animationId, GameState.GameTime);
         }

@@ -1,37 +1,35 @@
-﻿using Engine.Maps;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
     public abstract class Entity
     {
-        public Vector2 MapPosition { get; set; }
-        private Coordinate _coordinate;
-
-        public virtual void SetCoordinate(Coordinate value)
-        {
-            _coordinate = value;
-        }
-
-        public Coordinate GetCoordinate()
-        {
-            return _coordinate;
-        }
+        private Vector2 _mapPosition;
 
         public string Name { get; private set; }
         public short ZIndex { get; protected set; }
+        protected Color Light { get; set; }
 
-        protected Entity(string name, Coordinate coordinate)
+        public Vector2 MapPosition
+        {
+            get { return _mapPosition; }
+            set
+            {
+                _mapPosition = value;
+                var parentTile = GameState.Map.GetTile(_mapPosition);
+                if (parentTile != null) Light = parentTile.Light;
+            }
+        }
+
+
+        protected Entity(string name, Vector2 mapPosition)
         {
             Name = name;
-            _coordinate = coordinate;
-            MapPosition = GetCoordinate();
+            MapPosition = mapPosition;
 
             ZIndex = 0;
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-        }
+        public virtual void Update(GameTime gameTime) { }
     }
 }

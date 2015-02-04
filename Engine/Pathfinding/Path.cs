@@ -35,7 +35,6 @@ namespace Engine.Pathfinding
         {
             var result = new List<Coordinate> { LastStep.Coordinate };
             if (PreviousSteps != null) result.AddRange(PreviousSteps.Select(step => step.Coordinate).ToList());
-            result.RemoveAt(result.Count - 1);
             return result;
         }
     }

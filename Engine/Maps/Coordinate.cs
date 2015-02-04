@@ -60,7 +60,7 @@ namespace Engine.Maps
 
         public static implicit operator Coordinate(Vector2 v)
         {
-            return new Coordinate((int)v.X, (int)v.Y);
+            return new Coordinate((int)Math.Round(v.X), (int)Math.Round(v.Y));
         }
 
         public override string ToString ()

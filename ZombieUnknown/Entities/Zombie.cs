@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Engine;
-using Engine.AI.Senses;
-using Engine.Drawing;
+﻿using Engine.AI.Senses;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
@@ -23,25 +20,12 @@ namespace ZombieUnknown.Entities
         public ZombieMind Mind { get; private set; }
         public Vision Vision { get; private set; }
 
-        public Zombie(string name, Sprite sprite, Coordinate coordinate)
-            : base(name, sprite, coordinate)
+        public Zombie(string name, Sprite sprite, Coordinate mapPosition)
+            : base(name, sprite, mapPosition)
         {
             Vision = new Vision(VisionRange, FieldOfView);
             Mind = new ZombieMind(this);
             IsStatic = false;
-            Vision.UpdateVisibility(coordinate, FacingDirection);
-        }
-
-        public override void SetCoordinate(Coordinate coordinate)
-        {
-            base.SetCoordinate(coordinate);
-            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
-        }
-
-        public override void FaceDirection(IDirection direction)
-        {
-            base.FaceDirection(direction);
-            Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
         }
 
         public override void Update(GameTime gameTime)
@@ -49,11 +33,6 @@ namespace ZombieUnknown.Entities
             Mind.Think();
 
             base.Update(gameTime);
-        }
-
-        public override IEnumerable<DrawingRequest> GetDrawings()
-        {
-            yield return new DrawingRequest(Sprite, MapPosition, GameState.Map.GetTile(GetCoordinate()).Light);
         }
     }
 }

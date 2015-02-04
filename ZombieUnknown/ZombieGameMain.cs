@@ -138,21 +138,27 @@ namespace ZombieUnknown
 
             GameState.Map = _map;
             GameState.PathfindingMap = _pathfindingMap;
+            
+            var light = new PhantomLight("light", new Coordinate(12, 5), new Light(new Coordinate(2, 1), Color.Blue, 10));
+            _map.AddEntity(light);
+
+            var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
+            _map.AddEntity(light2);
+
+            _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
 
             
             var human = new Human("human", humanSprite, new Coordinate(6, 5));
             _map.AddEntity(human);
-            _map.GetTile(human.GetCoordinate()).IsBlocked = true;
 
             var rand = new Random();
-            for (var i = 0; i < 3999; i++)
+            for (var i = 0; i < 9; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
                 var h = new Human("human" + i, humanSprite, new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
-                _map.GetTile(h.GetCoordinate()).IsBlocked = true;
             }
 
             //var zombie = new Zombie("zombie", zombieSprite, new Coordinate(8, 8));
@@ -161,14 +167,6 @@ namespace ZombieUnknown
 
             var tallGrass1 = new TallGrass1("tallGrass1", terrainSprites[2], new Coordinate(9, 9));
             _map.AddEntity(tallGrass1);
-
-            var light = new PhantomLight("light", new Coordinate(12, 5), new Light(new Coordinate(2, 1), Color.Blue, 10));
-            _map.AddEntity(light);
-
-            var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
-            _map.AddEntity(light2);
-
-            _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
 
             Console.Initialize(_spriteBatch, font, 10);

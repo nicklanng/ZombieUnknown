@@ -6,8 +6,8 @@ namespace Engine.Entities
     {
         public Light Light { get; private set; }
 
-        public PhantomLight(string name, Coordinate coordinate, Light light) 
-            : base(name, coordinate)
+        public PhantomLight(string name, Coordinate mapPosition, Light light) 
+            : base(name, mapPosition)
         {
             Light = light;
         }

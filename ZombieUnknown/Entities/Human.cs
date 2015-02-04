@@ -23,37 +23,20 @@ namespace ZombieUnknown.Entities
         public HumanMind Mind { get; private set; }
         public Vision Vision { get; private set; }
         
-        public Human(string name, Sprite sprite, Coordinate coordinate)
-            : base(name, sprite, coordinate)
+        public Human(string name, Sprite sprite, Coordinate mapPosition)
+            : base(name, sprite, mapPosition)
         {
             //Vision = new Vision(VisionRange, FieldOfView);
             Mind = new HumanMind(this);
             IsStatic = false;
-            //Vision.UpdateVisibility(coordinate, FacingDirection);
+            //Vision.UpdateVisibility(mapPosition, FacingDirection);
         }
-
-        public override void SetCoordinate(Coordinate coordinate)
-        {
-            base.SetCoordinate(coordinate);
-            //Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
-        }
-
-        //public override void FaceDirection(IDirection direction, GameTime gameTime)
-        //{
-        //    base.FaceDirection(direction, gameTime);
-        //    Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
-        //}
 
         public override void Update(GameTime gameTime)
         {
             Mind.Think();
 
             base.Update(gameTime);
-        }
-
-        public override IEnumerable<DrawingRequest> GetDrawings()
-        {
-            yield return new DrawingRequest(Sprite, MapPosition, GameState.Map.GetTile(GetCoordinate()).Light);
         }
     }
 }
