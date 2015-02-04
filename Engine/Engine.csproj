@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\Conditionals\AbortBehaviorConditional.cs" />
-    <Compile Include="AI\BehaviorTrees\Conditionals\HasPathBehaviorConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\HasPathConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\IdleAction.cs" />
     <Compile Include="AI\BehaviorTrees\Composites\BehaviorComposite.cs" />
     <Compile Include="AI\BehaviorTrees\Decorators\BehaviorDecorator.cs" />

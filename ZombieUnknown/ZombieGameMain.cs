@@ -99,6 +99,7 @@ namespace ZombieUnknown
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
             var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
             var wallSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/walls");
+            var itemsSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/items");
 
             var font = new Font(fontSpriteSheet);
             
@@ -109,6 +110,7 @@ namespace ZombieUnknown
 
             var humanSprite = BuildHumanSprite();
             var zombieSprite = BuildZombieSprite();
+            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.5f)), "food");
 
             var terrainSprites = new List<Sprite>
             {
@@ -140,25 +142,23 @@ namespace ZombieUnknown
             tiles[6, 7].SetJoinWall(externalJoinWallSprite);
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
-            _pathfindingMap = new PathfindingMap(_map);
-
             GameState.Map = _map;
+
+            _pathfindingMap = new PathfindingMap();
             GameState.PathfindingMap = _pathfindingMap;
             
             var light = new PhantomLight("light", new Coordinate(12, 5), new Light(new Coordinate(2, 1), Color.Blue, 10));
             _map.AddEntity(light);
-
-            var light2 = new PhantomLight("light", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
+            var light2 = new PhantomLight("light2", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
             _map.AddEntity(light2);
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
-            
             var human = new Human("human", humanSprite, new Coordinate(6, 5));
             _map.AddEntity(human);
 
             var rand = new Random();
-            for (var i = 0; i < 0; i++)
+            for (var i = 0; i < 999; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -166,18 +166,13 @@ namespace ZombieUnknown
                 _map.AddEntity(h);
             }
 
-            //var zombie = new Zombie("zombie", zombieSprite, new Coordinate(8, 8));
-            //_map.AddEntity(zombie);
-            //_map.GetTile(zombie.GetCoordinate()).IsBlocked = true;
-
-            var tallGrass1 = new TallGrass1("tallGrass1", terrainSprites[2], new Coordinate(9, 9));
-            _map.AddEntity(tallGrass1);
-
+            var food = new Food("food", foodSprite, new Coordinate(3, 4));
+            _map.AddEntity(food);
+            _pathfindingMap.AddBlockage(food);
 
             Console.Initialize(_spriteBatch, font, 10);
             Console.WriteLine("THE CONSOLE");
             FrameRater.Initialize(_spriteBatch, font);
-
 
             _drawingManager.RegisterProvider(_map);
             //_drawingManager.RegisterProvider(_pathfindingMap);

@@ -3,7 +3,7 @@ using Engine.Maps;
 
 namespace Engine.AI.BehaviorTrees.Conditionals
 {
-    public class HasPathBehaviorConditional : BehaviorConditional
+    public class HasPathConditional : BehaviorConditional
     {
         protected override bool Test(Blackboard blackboard)
         {

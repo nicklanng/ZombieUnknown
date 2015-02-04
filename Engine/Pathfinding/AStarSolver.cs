@@ -20,11 +20,16 @@ namespace Engine.Pathfinding
             _endingNode = endingNode;
         }
 
-        public void Solve()
+        public bool Solve()
         {
             var path = FindPath(_startingNode, _endingNode);
+
+            if (path == null) return false;
+
             Solution = path.ToCoordinateList();
             Solution.Reverse();
+
+            return true;
         }
 
         private Path FindPath(Node start, Node destination)

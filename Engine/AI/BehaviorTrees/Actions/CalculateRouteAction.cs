@@ -12,7 +12,11 @@ namespace Engine.AI.BehaviorTrees.Actions
                 GameState.PathfindingMap.GetNodeAt(((PhysicalEntity) blackboard["Entity"]).MapPosition), 
                 GameState.PathfindingMap.GetNodeAt((Coordinate) blackboard["TargetCoordinate"])
             );
-            aStarSolver.Solve();
+            var solutionFound = aStarSolver.Solve();
+            if (solutionFound == false)
+            {
+                return GoalStatus.Failed;
+            }
 
             blackboard["MovementPath"] = aStarSolver.Solution;
 

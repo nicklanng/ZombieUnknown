@@ -216,8 +216,8 @@ namespace Engine.AI.Senses
                 {
                     if (SenseMap[x, y] < 0.1f) continue;
 
-                    var tileEntities = map.GetEntities(new Coordinate(startX + x, startY + y));
-                    entities.AddRange(tileEntities);
+                    //var tileEntities = map.GetEntities(new Coordinate(startX + x, startY + y));
+                    //entities.AddRange(tileEntities);
                 }
             }
 

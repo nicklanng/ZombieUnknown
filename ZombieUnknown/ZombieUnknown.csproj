@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
+    <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\TallGrass1.cs" />
     <Compile Include="IsometricConfiguration.cs" />
     <Compile Include="AI\HumanMind.cs" />

@@ -13,9 +13,11 @@ namespace Engine.Drawing
 
         private Console() { }
         private static readonly Console Instance = new Console();
+        private static int _numberOfLines;
 
         public static void Initialize(SpriteBatch spriteBatch, Font font, int numberOfLines)
         {
+            _numberOfLines = numberOfLines;
             Instance._spriteBatch = spriteBatch;
             Instance._font = font;
             _lines = new Queue<string>(numberOfLines);
@@ -23,7 +25,7 @@ namespace Engine.Drawing
 
         public static void WriteLine(string input)
         {
-            if (_lines.Count == 10)
+            if (_lines.Count == _numberOfLines)
             {
                 _lines.Dequeue();
             }

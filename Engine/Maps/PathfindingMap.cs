@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Engine.Drawing;
+using Engine.Entities;
 using Engine.Pathfinding;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -15,11 +16,12 @@ namespace Engine.Maps
         public int Height { get; private set; }
         public int Width { get; private set; }
 
-        public PathfindingMap(Map map)
+        public PathfindingMap()
         {
+            var map = GameState.Map;
             Height = map.Height;
             Width = map.Width;
-            RegeneratePathfindingMap(map);
+            RegeneratePathfindingMap();
         }
 
         public Node GetNodeAt(Coordinate coordinate)
@@ -46,8 +48,9 @@ namespace Engine.Maps
         }
 
 
-        private void RegeneratePathfindingMap(Map map)
+        private void RegeneratePathfindingMap()
         {
+            var map = GameState.Map;
             _tileSprites = new List<Sprite>[map.Width, map.Height];
             _nodes = new Node[map.Width, map.Height];
             for (var x = 0; x < map.Width; x++)
@@ -66,7 +69,6 @@ namespace Engine.Maps
                 for (var y = 0; y < map.Height; y++)
                 {
                     var node = _nodes[x, y];
-                    var spriteList = _tileSprites[x, y];
 
                     var thisCoord = new Coordinate(x, y);
                     var thisTile = map.GetTile(thisCoord);
@@ -187,6 +189,46 @@ namespace Engine.Maps
                     }
                 }
             }
+        }
+
+        public void AddBlockage(PhysicalEntity blockage)
+        {
+            var position = (Coordinate) blockage.MapPosition;
+            var thisNode = GetNodeAt(position);
+
+            var upCoord = position + Coordinate.NorthWest;
+            var upTile = GetNodeAt(upCoord);
+            upTile.Neighbors.Remove(thisNode);
+
+            var upLeftCoord = position + Coordinate.West;
+            var upLeftTile = GetNodeAt(upLeftCoord);
+            upLeftTile.Neighbors.Remove(thisNode);
+
+            var leftCoord = position + Coordinate.SouthWest;
+            var leftTile = GetNodeAt(leftCoord);
+            leftTile.Neighbors.Remove(thisNode);
+
+            var downLeftCoord = position + Coordinate.South;
+            var downLeftTile = GetNodeAt(downLeftCoord);
+            downLeftTile.Neighbors.Remove(thisNode);
+
+            var downCoord = position + Coordinate.SouthEast;
+            var downTile = GetNodeAt(downCoord);
+            downTile.Neighbors.Remove(thisNode);
+
+            var downRightCoord = position + Coordinate.East;
+            var downRightTile = GetNodeAt(downRightCoord);
+            downRightTile.Neighbors.Remove(thisNode);
+
+            var rightCoord = position + Coordinate.NorthEast;
+            var rightTile = GetNodeAt(rightCoord);
+            rightTile.Neighbors.Remove(thisNode);
+
+            var upRightCoord = position + Coordinate.North;
+            var upRightTile = GetNodeAt(upRightCoord);
+            upRightTile.Neighbors.Remove(thisNode);
+
+            //_nodes[position.X, position.Y] = new Node(position);
         }
     }
 }

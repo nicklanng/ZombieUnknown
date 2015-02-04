@@ -10,7 +10,7 @@ namespace Engine.Maps
     public class Map : IDrawingProvider
     {
         private readonly Tile[,] _tiles;
-        private readonly List<Entity>[,] _entities;
+        private readonly List<Entity> _entities;
 
         public List<ILightSource> Lights { get; private set; }
         public short Width { get; private set; }
@@ -22,30 +22,20 @@ namespace Engine.Maps
             Height = height;
 
             _tiles = tiles;
-            _entities = new List<Entity>[Width, Height];
-            for (var x = 0; x < Width; x++)
-            {
-                for (var y = 0; y < Height; y++)
-                {
-                    _entities[x, y] = new List<Entity>();
-                }
-            }
-
+            _entities = new List<Entity>();
             Lights = new List<ILightSource>();
         }
 
         public void Update(GameTime gameTime)
         {
-            var entitiesToUpdate = new List<Entity>();
             for (var x = 0; x < Width; x++)
             {
                 for (var y = 0; y < Height; y++)
                 {
                     _tiles[x, y].Update(gameTime);
-                    _entities[x, y].ForEach(entitiesToUpdate.Add);
                 }
             }
-            entitiesToUpdate.ForEach(e => e.Update(gameTime));
+            _entities.ForEach(e => e.Update(gameTime));
         }
 
         public Tile GetTile(Coordinate coordinate)
@@ -58,21 +48,9 @@ namespace Engine.Maps
             return _tiles[coordinate.X, coordinate.Y];
         }
         
-        public IEnumerable<Entity> GetEntities(Coordinate coordinate)
-        {
-            if (IsPositionOnMap(coordinate))
-            {
-                return _entities[coordinate.X, coordinate.Y];
-            }
-            else
-            {
-                return new List<Entity>();
-            }
-        }
-
         public void AddEntity(Entity entity)
         {
-            _entities[(int)Math.Floor(entity.MapPosition.X), (int)Math.Floor(entity.MapPosition.Y)].Add(entity);
+            _entities.Add(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)
@@ -85,7 +63,7 @@ namespace Engine.Maps
 
         public void RemoveEntity(Entity entity)
         {
-            _entities[(int)Math.Floor(entity.MapPosition.X), (int)Math.Floor(entity.MapPosition.Y)].Remove(entity);
+            _entities.Remove(entity);
 
             var lightEntity = entity as ILightSource;
             if (lightEntity == null)
@@ -95,13 +73,7 @@ namespace Engine.Maps
 
             Lights.Remove(lightEntity);
         }
-
-        public PhysicalEntity GetSelected(Coordinate coordinate)
-        {
-            var entities = _entities[coordinate.X, coordinate.Y];
-            return (PhysicalEntity)entities.FirstOrDefault(e => e is PhysicalEntity);
-        }
-
+        
         public bool IsPositionOnMap(Coordinate coordinate)
         {
             if (coordinate.X < 0) return false;
@@ -121,11 +93,12 @@ namespace Engine.Maps
                 for (var x = 0; x < Width; x++)
                 {
                     drawingRequests.AddRange(_tiles[x, y].GetDrawings());
-                    foreach (var drawableEntity in _entities[x, y].OfType<PhysicalEntity>())
-                    {
-                        drawingRequests.AddRange(drawableEntity.GetDrawings());
-                    }
                 }
+            }
+
+            foreach (var drawableEntity in _entities.OfType<IDrawingProvider>())
+            {
+                drawingRequests.AddRange(drawableEntity.GetDrawings());
             }
 
             return drawingRequests;

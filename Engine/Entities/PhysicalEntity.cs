@@ -12,6 +12,7 @@ namespace Engine.Entities
 
         protected Sprite Sprite;
         protected bool IsStatic = true;
+        public bool BlocksTiles = false;
 
         public abstract float Speed { get; }
 

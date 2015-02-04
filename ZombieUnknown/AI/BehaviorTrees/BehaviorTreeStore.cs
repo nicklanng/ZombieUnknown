@@ -13,7 +13,7 @@ namespace ZombieUnknown.AI.BehaviorTrees
 
         public static void Generate()
         {
-            var hasPathConditional = new HasPathBehaviorConditional();
+            var hasPathConditional = new HasPathConditional();
             var followPathAction = new FollowPathAction();
 
             var createRandomRoute = new CreateRandomMovementTargetAction();
