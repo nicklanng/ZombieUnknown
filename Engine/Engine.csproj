@@ -119,6 +119,12 @@
     <Compile Include="AI\TurnGoal.cs" />
     <Compile Include="Maps\Direction.cs" />
     <Compile Include="AI\WaitGoal.cs" />
+    <Compile Include="AI\BehaviorTrees\Behavior.cs" />
+    <Compile Include="AI\BehaviorTrees\BehaviorComponent.cs" />
+    <Compile Include="AI\BehaviorTrees\BehaviorAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Blackboard.cs" />
+    <Compile Include="AI\BehaviorTrees\Basic\CalculateRouteAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Basic\TraverseEdgeAction.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -131,5 +137,9 @@
   -->
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AI\BehaviorTrees\" />
+    <Folder Include="AI\BehaviorTrees\Basic\" />
   </ItemGroup>
 </Project>
