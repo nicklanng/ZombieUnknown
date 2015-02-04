@@ -111,6 +111,7 @@ namespace ZombieUnknown
             var humanSprite = BuildHumanSprite();
             var zombieSprite = BuildZombieSprite();
             var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.5f)), "food");
+            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.3f, 0.3f, 0.0f), new Vector3(0.7f, 0.7f, 0.9f)), "lamp");
 
             var terrainSprites = new List<Sprite>
             {
@@ -151,14 +152,9 @@ namespace ZombieUnknown
             _map.AddEntity(light);
             var light2 = new PhantomLight("light2", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
             _map.AddEntity(light2);
-
-            _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
-
-            var human = new Human("human", humanSprite, new Coordinate(6, 5));
-            _map.AddEntity(human);
-
+            
             var rand = new Random();
-            for (var i = 0; i < 999; i++)
+            for (var i = 0; i < 500; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -166,12 +162,18 @@ namespace ZombieUnknown
                 _map.AddEntity(h);
             }
 
-            var food = new Food("food", foodSprite, new Coordinate(3, 4));
+            var food = new Food("food", foodSprite, new Coordinate(13, 14));
             _map.AddEntity(food);
             _pathfindingMap.AddBlockage(food);
 
+            var lamp = new Lamp("lamp", lampSprite, new Coordinate(11, 16));
+            _map.AddEntity(lamp);
+            _pathfindingMap.AddBlockage(lamp);
+
+            _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
+
             Console.Initialize(_spriteBatch, font, 10);
-            Console.WriteLine("THE CONSOLE");
+            Console.WriteLine("Post-apocalyptic Management Game");
             FrameRater.Initialize(_spriteBatch, font);
 
             _drawingManager.RegisterProvider(_map);
@@ -180,7 +182,7 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 
             GameState.RandomNumberGenerator = new Random();
-            GameState.MainCharacter = human;
+            //GameState.MainCharacter = human;
         }
 
         private AnimatedSprite BuildHumanSprite()

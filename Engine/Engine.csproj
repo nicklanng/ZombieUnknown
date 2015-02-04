@@ -108,6 +108,7 @@
     <Compile Include="Maths\Line.cs" />
     <Compile Include="Maths\NumericExtensions.cs" />
     <Compile Include="Pathfinding\AStarSolver.cs" />
+    <Compile Include="Pathfinding\IMovementBlocker.cs" />
     <Compile Include="Pathfinding\Node.cs" />
     <Compile Include="Pathfinding\Path.cs" />
     <Compile Include="Pathfinding\SearchedNode.cs" />

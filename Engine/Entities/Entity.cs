@@ -8,7 +8,7 @@ namespace Engine.Entities
 
         public string Name { get; private set; }
         public short ZIndex { get; protected set; }
-        protected Color Light { get; set; }
+        protected Color LightValue { get; set; }
 
         public Vector2 MapPosition
         {
@@ -16,8 +16,6 @@ namespace Engine.Entities
             set
             {
                 _mapPosition = value;
-                var parentTile = GameState.Map.GetTile(_mapPosition);
-                if (parentTile != null) Light = parentTile.Light;
             }
         }
 

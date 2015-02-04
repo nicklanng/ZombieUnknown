@@ -12,7 +12,6 @@ namespace Engine.Entities
 
         protected Sprite Sprite;
         protected bool IsStatic = true;
-        public bool BlocksTiles = false;
 
         public abstract float Speed { get; }
 
@@ -29,6 +28,8 @@ namespace Engine.Entities
 
         public override void Update(GameTime gameTime)
         {
+            var parentTile = GameState.Map.GetTile(MapPosition);
+            if (parentTile != null) LightValue = parentTile.Light;
             Sprite.Update(gameTime);
         }
 
@@ -46,7 +47,7 @@ namespace Engine.Entities
 
         public virtual IEnumerable<DrawingRequest> GetDrawings()
         {
-            yield return new DrawingRequest(Sprite, MapPosition, Light);
+            yield return new DrawingRequest(Sprite, MapPosition, LightValue);
         }
 
         public virtual void FaceDirection(IDirection direction)

@@ -193,40 +193,63 @@ namespace Engine.Maps
 
         public void AddBlockage(PhysicalEntity blockage)
         {
-            var position = (Coordinate) blockage.MapPosition;
+            var blocker = blockage as IMovementBlocker;
+            if (blocker == null) return;
+
+            var position = (Coordinate)blockage.MapPosition;
             var thisNode = GetNodeAt(position);
 
             var upCoord = position + Coordinate.NorthWest;
             var upTile = GetNodeAt(upCoord);
-            upTile.Neighbors.Remove(thisNode);
 
             var upLeftCoord = position + Coordinate.West;
             var upLeftTile = GetNodeAt(upLeftCoord);
-            upLeftTile.Neighbors.Remove(thisNode);
 
             var leftCoord = position + Coordinate.SouthWest;
             var leftTile = GetNodeAt(leftCoord);
-            leftTile.Neighbors.Remove(thisNode);
 
             var downLeftCoord = position + Coordinate.South;
             var downLeftTile = GetNodeAt(downLeftCoord);
-            downLeftTile.Neighbors.Remove(thisNode);
 
             var downCoord = position + Coordinate.SouthEast;
             var downTile = GetNodeAt(downCoord);
-            downTile.Neighbors.Remove(thisNode);
 
             var downRightCoord = position + Coordinate.East;
             var downRightTile = GetNodeAt(downRightCoord);
-            downRightTile.Neighbors.Remove(thisNode);
 
             var rightCoord = position + Coordinate.NorthEast;
             var rightTile = GetNodeAt(rightCoord);
-            rightTile.Neighbors.Remove(thisNode);
 
             var upRightCoord = position + Coordinate.North;
             var upRightTile = GetNodeAt(upRightCoord);
-            upRightTile.Neighbors.Remove(thisNode);
+
+            if (blocker.BlocksTile)
+            {
+                upRightTile.Neighbors.Remove(thisNode);
+                upTile.Neighbors.Remove(thisNode);
+                upLeftTile.Neighbors.Remove(thisNode);
+                leftTile.Neighbors.Remove(thisNode);
+                downLeftTile.Neighbors.Remove(thisNode);
+                downTile.Neighbors.Remove(thisNode);
+                downRightTile.Neighbors.Remove(thisNode);
+                rightTile.Neighbors.Remove(thisNode);
+            }
+
+            if (blocker.BlocksDiagonals)
+            {
+                downLeftTile.Neighbors.Remove(upLeftTile);
+                downLeftTile.Neighbors.Remove(downRightTile);
+
+                upLeftTile.Neighbors.Remove(upRightTile);
+                upLeftTile.Neighbors.Remove(downLeftTile);
+
+                upRightTile.Neighbors.Remove(upLeftTile);
+                upRightTile.Neighbors.Remove(downRightTile);
+
+                downRightTile.Neighbors.Remove(upRightTile);
+                downRightTile.Neighbors.Remove(downLeftTile);
+            }
+
 
             //_nodes[position.X, position.Y] = new Node(position);
         }
