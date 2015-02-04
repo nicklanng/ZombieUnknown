@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Engine.AI.BehaviorTrees
+﻿namespace Engine.AI.BehaviorTrees
 {
     public class Behavior
     {
@@ -11,9 +9,9 @@ namespace Engine.AI.BehaviorTrees
             _root = root;
         }
 
-        public GoalStatus Update()
+        public GoalStatus Update(Blackboard blackboard)
         {
-            return _root.Update();
+            return _root.Update(blackboard);
         }
     }
 }

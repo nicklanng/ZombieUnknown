@@ -4,20 +4,21 @@ using Engine.Entities;
 using Engine.Maps;
 using Microsoft.Xna.Framework;
 
-namespace Engine.AI.BehaviorTrees.Basic
+namespace Engine.AI.BehaviorTrees.Actions
 {
-    public class TakeOneStepAction : BehaviorAction
+    public class FollowPathAction : BehaviorAction
     {
-        public TakeOneStepAction(Blackboard blackboard) 
-            : base(blackboard)
+        protected override GoalStatus Action(Blackboard blackboard)
         {
-        }
-        
-        protected override GoalStatus Action()
-        {
-            var entity = (PhysicalEntity) Blackboard["Entity"];
-            var currentPath = (List<Coordinate>)Blackboard["MovementPath"];
+            var entity = (PhysicalEntity)blackboard["Entity"];
+            var currentPath = (List<Coordinate>)blackboard["MovementPath"];
             var nextStep = currentPath.First();
+
+            if (entity.MapPosition == (Vector2)nextStep)
+            {
+                blackboard["MovementPath"] = currentPath.Skip(1).ToList();
+                return GoalStatus.Completed;
+            }
 
             var directionVector = GetDirectionVector(entity.MapPosition, nextStep);
             var direction = Direction.CoordinateDirectionMap[directionVector];
@@ -32,8 +33,7 @@ namespace Engine.AI.BehaviorTrees.Basic
             if (moveAmount.Length() >= distanceToTarget.Length())
             {
                 entity.MapPosition = nextStep;
-                Blackboard["MovementPath"] = currentPath.Skip(1);
-
+                blackboard["MovementPath"] = currentPath.Skip(1).ToList();
                 return GoalStatus.Completed;
             }
 

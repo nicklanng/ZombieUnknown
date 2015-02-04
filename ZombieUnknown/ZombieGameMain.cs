@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Engine;
+using Engine.AI.BehaviorTrees;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
@@ -9,6 +11,8 @@ using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ZombieUnknown.AI;
+using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.Entities;
 using Console = Engine.Drawing.Console;
 
@@ -89,6 +93,8 @@ namespace ZombieUnknown
         /// </summary>
         protected override void LoadContent()
         {
+            BehaviorTreeStore.Generate();
+
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
             var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
@@ -147,13 +153,12 @@ namespace ZombieUnknown
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
-
             
             var human = new Human("human", humanSprite, new Coordinate(6, 5));
             _map.AddEntity(human);
 
             var rand = new Random();
-            for (var i = 0; i < 9; i++)
+            for (var i = 0; i < 0; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);

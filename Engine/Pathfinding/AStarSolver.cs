@@ -24,6 +24,7 @@ namespace Engine.Pathfinding
         {
             var path = FindPath(_startingNode, _endingNode);
             Solution = path.ToCoordinateList();
+            Solution.Reverse();
         }
 
         private Path FindPath(Node start, Node destination)

@@ -61,8 +61,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\BehaviorTrees\Basic\AbortConditional.cs" />
-    <Compile Include="AI\BehaviorTrees\Conditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\AbortBehaviorConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\HasPathBehaviorConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\IdleAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Composites\BehaviorComposite.cs" />
+    <Compile Include="AI\BehaviorTrees\Decorators\BehaviorDecorator.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\BehaviorConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Decorators\Inverter.cs" />
+    <Compile Include="AI\BehaviorTrees\Decorators\Repeater.cs" />
+    <Compile Include="AI\BehaviorTrees\Decorators\RepeaterUntilFail.cs" />
+    <Compile Include="AI\BehaviorTrees\Composites\Sequence.cs" />
     <Compile Include="AI\CompositeGoal.cs" />
     <Compile Include="AI\FollowPathGoal.cs" />
     <Compile Include="AI\Goal.cs" />
@@ -123,10 +131,10 @@
     <Compile Include="AI\WaitGoal.cs" />
     <Compile Include="AI\BehaviorTrees\Behavior.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorComponent.cs" />
-    <Compile Include="AI\BehaviorTrees\BehaviorAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\BehaviorAction.cs" />
     <Compile Include="AI\BehaviorTrees\Blackboard.cs" />
-    <Compile Include="AI\BehaviorTrees\Basic\CalculateRouteAction.cs" />
-    <Compile Include="AI\BehaviorTrees\Basic\TakeOneStepAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\CalculateRouteAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\FollowPathAction.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
