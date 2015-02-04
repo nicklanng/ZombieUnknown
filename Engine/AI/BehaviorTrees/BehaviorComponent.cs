@@ -1,9 +1,10 @@
-using System;
-
 namespace Engine.AI.BehaviorTrees
 {
 	public abstract class BehaviorComponent
 	{
-        public abstract GoalStatus Update();
+        public GoalStatus GoalStatus { get; protected set; }
+        
+	    public abstract GoalStatus Update();
+
 	}
 }

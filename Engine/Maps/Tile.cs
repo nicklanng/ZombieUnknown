@@ -19,7 +19,7 @@ namespace Engine.Maps
         public bool IsBlocked { get; set; }
         public Color Light { get; set; }
         public Vector2 Position { get; private set; }
-        public DrawableEntity DrawableEntity { get; private set; }
+        public PhysicalEntity PhysicalEntity { get; private set; }
 
         public bool HasLeftWall
         {
@@ -60,10 +60,10 @@ namespace Engine.Maps
 
         public void AddEntity(Entity entity)
         {
-            var moveableEntity = entity as DrawableEntity;
+            var moveableEntity = entity as PhysicalEntity;
             if (moveableEntity != null)
             {
-                DrawableEntity = moveableEntity;
+                PhysicalEntity = moveableEntity;
             }
 
             _entities.Add(entity);

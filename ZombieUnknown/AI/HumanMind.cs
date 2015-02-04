@@ -1,11 +1,7 @@
-﻿using System;
-using Engine;
+﻿using Engine;
 using Engine.AI;
-using Engine.Entities;
 using Engine.Maps;
 using ZombieUnknown.Entities;
-
-using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown.AI
 {
@@ -13,7 +9,7 @@ namespace ZombieUnknown.AI
     {
         public HumanMind(Human entity) : base(entity)
         {
-            entity.SetAnimation("idle", GameState.GameTime);
+            entity.SetAnimation("idle");
         }
 
         public override void Think()
@@ -22,7 +18,7 @@ namespace ZombieUnknown.AI
             //foreach (var entity in Entity.Vision.GetSeenEntities(Entity.GetCoordinate()))
             //{
             //    if (entity == Entity) continue;
-            //    if (entity is DrawableEntity)
+            //    if (entity is PhysicalEntity)
             //    {
             //        seenSomething = true;
             //        Console.WriteLine(DateTime.Now.ToLongTimeString() + " " + entity);

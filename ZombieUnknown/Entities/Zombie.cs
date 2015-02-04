@@ -10,7 +10,7 @@ using ZombieUnknown.AI;
 
 namespace ZombieUnknown.Entities
 {
-    class Zombie : DrawableEntity
+    class Zombie : PhysicalEntity
     {
         private const int VisionRange = 10;
         private const int FieldOfView = 90;
@@ -38,9 +38,9 @@ namespace ZombieUnknown.Entities
             Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
         }
 
-        public override void FaceDirection(IDirection direction, GameTime gameTime)
+        public override void FaceDirection(IDirection direction)
         {
-            base.FaceDirection(direction, gameTime);
+            base.FaceDirection(direction);
             Vision.UpdateVisibility(GetCoordinate(), FacingDirection);
         }
 

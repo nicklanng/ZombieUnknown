@@ -12,10 +12,10 @@ namespace Engine.AI
 
     public class TurnGoal : Goal
     {
-        private readonly DrawableEntity _entity;
+        private readonly PhysicalEntity _entity;
         private readonly TurnDirection _turnDirection;
 
-        public TurnGoal(DrawableEntity entity, TurnDirection turnDirection)
+        public TurnGoal(PhysicalEntity entity, TurnDirection turnDirection)
         {
             _entity = entity;
             _turnDirection = turnDirection;
@@ -32,8 +32,8 @@ namespace Engine.AI
 
             var newDirection = GetDirectionFromTurnDirection (_turnDirection);
 
-            _entity.FaceDirection(newDirection, GameState.GameTime);
-            _entity.SetAnimation("idle", GameState.GameTime);
+            _entity.FaceDirection(newDirection);
+            _entity.SetAnimation("idle");
 
             GoalStatus = GoalStatus.Completed;
         }

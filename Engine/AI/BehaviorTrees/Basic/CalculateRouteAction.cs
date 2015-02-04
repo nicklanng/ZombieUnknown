@@ -1,5 +1,4 @@
-﻿using System;
-using Engine.Pathfinding;
+﻿using Engine.Pathfinding;
 using Engine.Maps;
 using Engine.Entities;
 
@@ -12,11 +11,11 @@ namespace Engine.AI.BehaviorTrees.Basic
         {   
         }
 
-        protected override GoalStatus Action ()
+        protected override GoalStatus Action()
         {
             var aStarSolver = new AStarSolver(
-                GameState.PathfindingMap.GetNodeAt((Blackboard["Entity"] as DrawableEntity).GetCoordinate()), 
-                GameState.PathfindingMap.GetNodeAt(Blackboard["TargetCoordinate"] as Coordinate)
+                GameState.PathfindingMap.GetNodeAt(((PhysicalEntity) Blackboard["Entity"]).GetCoordinate()), 
+                GameState.PathfindingMap.GetNodeAt((Coordinate) Blackboard["TargetCoordinate"])
             );
             aStarSolver.Solve();
 

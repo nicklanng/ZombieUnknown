@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Engine.Drawing;
 using Engine.Entities;
 using Microsoft.Xna.Framework;
@@ -97,10 +95,10 @@ namespace Engine.Maps
             Lights.Remove(lightEntity);
         }
 
-        public DrawableEntity GetSelected(Coordinate coordinate)
+        public PhysicalEntity GetSelected(Coordinate coordinate)
         {
             var entities = _entities[coordinate.X, coordinate.Y];
-            return (DrawableEntity)entities.FirstOrDefault(e => e is DrawableEntity);
+            return (PhysicalEntity)entities.FirstOrDefault(e => e is PhysicalEntity);
         }
 
         public bool IsPositionOnMap(Coordinate coordinate)
@@ -122,7 +120,7 @@ namespace Engine.Maps
                 for (var x = 0; x < Width; x++)
                 {
                     drawingRequests.AddRange(_tiles[x, y].GetDrawings());
-                    foreach (var drawableEntity in _entities[x, y].OfType<DrawableEntity>())
+                    foreach (var drawableEntity in _entities[x, y].OfType<PhysicalEntity>())
                     {
                         drawingRequests.AddRange(drawableEntity.GetDrawings());
                     }

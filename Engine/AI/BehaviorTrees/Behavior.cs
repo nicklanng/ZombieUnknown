@@ -4,7 +4,7 @@ namespace Engine.AI.BehaviorTrees
 {
     public class Behavior
     {
-        private BehaviorComponent _root;
+        private readonly BehaviorComponent _root;
 
         public Behavior (BehaviorComponent root)
         {

@@ -6,14 +6,14 @@ namespace Engine.AI
 {
     public class TraverseEdgeGoal : Goal
     {
-        private readonly DrawableEntity _entity;
+        private readonly PhysicalEntity _entity;
 
         private Coordinate _origin;
         private readonly Coordinate _target;
         private readonly bool _run;
         private bool _tileSwapped;
 
-        public TraverseEdgeGoal(DrawableEntity entity, Coordinate target, bool run = false)
+        public TraverseEdgeGoal(PhysicalEntity entity, Coordinate target, bool run = false)
         {
             _entity = entity;
             _target = target;
@@ -39,8 +39,8 @@ namespace Engine.AI
                 var directionVector = _target - _origin;
                 var direction = Direction.CoordinateDirectionMap [directionVector];
 
-                _entity.FaceDirection (direction, GameState.GameTime);
-                _entity.SetAnimation(_run ? "run" : "walk", GameState.GameTime);
+                _entity.FaceDirection (direction);
+                _entity.SetAnimation(_run ? "run" : "walk");
             }
         }
 

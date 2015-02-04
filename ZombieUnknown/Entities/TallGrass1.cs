@@ -7,7 +7,7 @@ using Engine.Sprites;
 
 namespace ZombieUnknown.Entities
 {
-    class TallGrass1 : DrawableEntity
+    class TallGrass1 : PhysicalEntity
     {
         public TallGrass1(string name, Sprite sprite, Coordinate coordinate) 
             : base(name, sprite, coordinate)

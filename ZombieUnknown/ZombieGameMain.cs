@@ -73,6 +73,7 @@ namespace ZombieUnknown
             _uiManager = new UIManager();
 
             GameState.GraphicsDevice = GraphicsDevice;
+            GameState.GameTime = new GameTime();
 
             base.Initialize();
         }

@@ -10,7 +10,7 @@ using ZombieUnknown.AI;
 
 namespace ZombieUnknown.Entities
 {
-    public class Human : DrawableEntity, IMainCharacter
+    public class Human : PhysicalEntity, IMainCharacter
     {
         private const int VisionRange = 10;
         private const int FieldOfView = 90;

@@ -1,15 +1,14 @@
-﻿using System;
-using Engine.Entities;
+﻿using Engine.Entities;
 
 namespace Engine.AI
 {
     public class WaitGoal : Goal
     {
-        private readonly DrawableEntity _entity;
+        private readonly PhysicalEntity _entity;
         private readonly int _millisecondsToWaitFor;
         private int _goalStartedAt;
 
-        public WaitGoal(DrawableEntity entity, int millisecondsToWaitFor)
+        public WaitGoal(PhysicalEntity entity, int millisecondsToWaitFor)
         {
             _entity = entity;
             _millisecondsToWaitFor = millisecondsToWaitFor;
@@ -31,7 +30,7 @@ namespace Engine.AI
                 return;
             }
 
-            _entity.SetAnimation("idle", GameState.GameTime);
+            _entity.SetAnimation("idle");
 
             var timeGoalRunning = (int)(GameState.GameTime.TotalGameTime.TotalMilliseconds) - _goalStartedAt;
             if (timeGoalRunning >= _millisecondsToWaitFor) 

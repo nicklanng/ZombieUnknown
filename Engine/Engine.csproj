@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\BehaviorTrees\Basic\AbortConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditional.cs" />
     <Compile Include="AI\CompositeGoal.cs" />
     <Compile Include="AI\FollowPathGoal.cs" />
     <Compile Include="AI\Goal.cs" />
@@ -88,7 +90,7 @@
     <Compile Include="EngineSettings.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Light.cs" />
-    <Compile Include="Entities\DrawableEntity.cs" />
+    <Compile Include="Entities\PhysicalEntity.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Input\Mouse.cs" />
     <Compile Include="Maps\Coordinate.cs" />
@@ -124,7 +126,7 @@
     <Compile Include="AI\BehaviorTrees\BehaviorAction.cs" />
     <Compile Include="AI\BehaviorTrees\Blackboard.cs" />
     <Compile Include="AI\BehaviorTrees\Basic\CalculateRouteAction.cs" />
-    <Compile Include="AI\BehaviorTrees\Basic\TraverseEdgeAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Basic\TakeOneStepAction.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -138,8 +140,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AI\BehaviorTrees\" />
-    <Folder Include="AI\BehaviorTrees\Basic\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

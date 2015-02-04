@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public abstract class DrawableEntity : Entity, IDrawingProvider
+    public abstract class PhysicalEntity : Entity, IDrawingProvider
     {
         private string _currentAnimationType;
 
@@ -19,7 +19,7 @@ namespace Engine.Entities
 
         public IDirection FacingDirection { get; protected set; }
 
-        protected DrawableEntity(string name, Sprite sprite, Coordinate coordinate)
+        protected PhysicalEntity(string name, Sprite sprite, Coordinate coordinate)
             : base(name, coordinate)
         {
             Sprite = sprite.ShallowCopy();
@@ -32,16 +32,15 @@ namespace Engine.Entities
             Sprite.Update(gameTime);
         }
 
-        public void SetAnimation(string animationName, GameTime gameTime)
+        public void SetAnimation(string animationName)
         {
             if (animationName == _currentAnimationType)
             {
-                return;
             }
 
             _currentAnimationType = animationName;
 
-            UpdateAnimation(gameTime);
+            UpdateAnimation();
         }
 
         public virtual IEnumerable<DrawingRequest> GetDrawings()
@@ -49,7 +48,7 @@ namespace Engine.Entities
             yield return new DrawingRequest(Sprite, GetCoordinate(), Color.White);
         }
 
-        public virtual void FaceDirection(IDirection direction, GameTime gameTime)
+        public virtual void FaceDirection(IDirection direction)
         {
             if (IsStatic) 
             {
@@ -63,10 +62,10 @@ namespace Engine.Entities
 
             FacingDirection = direction;
 
-            UpdateAnimation(gameTime);
+            UpdateAnimation();
         }
 
-        private void UpdateAnimation(GameTime gameTime)
+        private void UpdateAnimation()
         {
             var animatedSprite = Sprite as AnimatedSprite;
 
@@ -77,7 +76,7 @@ namespace Engine.Entities
 
             var animationId = _currentAnimationType + FacingDirection.ToString();
 
-            animatedSprite.SetAnimation(animationId, gameTime);
+            animatedSprite.SetAnimation(animationId, GameState.GameTime);
         }
     }
 }
