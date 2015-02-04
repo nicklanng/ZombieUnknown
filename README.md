@@ -11,6 +11,8 @@ Done:
 * Lighting
 * Shadows cast from walls
 * A-star Pathfinding
+* Behavior Trees
+* Object Avoidance
 
 Doing:
-* Goal Based AI
+* Object Interaction
