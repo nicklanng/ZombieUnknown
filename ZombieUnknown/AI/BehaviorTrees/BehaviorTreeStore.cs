@@ -27,7 +27,15 @@ namespace ZombieUnknown.AI.BehaviorTrees
 
             var wholeThingRepeater = new Repeater(wholeThingSequence);
 
-            HumanBehavior = new Behavior(wholeThingRepeater);
+            /////////////////////////////////////////////////////////////
+
+            var getInteractionObject = new GetInteractionObjectAction();
+            var interactAction = new InteractAction();
+            var inverter = new Inverter(followPathRepeater);
+
+            var interationSequence = new Sequence(getInteractionObject, calculateRouteAction, inverter, interactAction);
+
+            HumanBehavior = new Behavior(interationSequence);
         }
 
     }

@@ -25,6 +25,7 @@
     <EnableCodeSigning>false</EnableCodeSigning>
     <CreatePackage>false</CreatePackage>
     <AssemblyName>ZombieGame.Mac</AssemblyName>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -41,6 +42,7 @@
     <EnableCodeSigning>true</EnableCodeSigning>
     <CreatePackage>true</CreatePackage>
     <AssemblyName>ZombieGame.Mac</AssemblyName>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mac|AnyCPU' ">
     <Optimize>false</Optimize>
@@ -53,6 +55,7 @@
     <UseSGen>false</UseSGen>
     <EnablePackageSigning>false</EnablePackageSigning>
     <DebugSymbols>true</DebugSymbols>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Windows|AnyCPU' ">
     <Optimize>false</Optimize>
@@ -64,6 +67,7 @@
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>false</UseSGen>
     <EnablePackageSigning>false</EnablePackageSigning>
+    <UseRefCounting>false</UseRefCounting>
   </PropertyGroup>
   <ItemGroup>]
     <Reference Include="MonoMac" /><Reference Include="Lidgren.Network"><HintPath>..\packages\MonoGame.Binaries.3.2.0\build\MonoMac\Lidgren.Network.dll</HintPath></Reference><Reference Include="MonoGame.Framework"><HintPath>..\packages\MonoGame.Binaries.3.2.0\build\MonoMac\MonoGame.Framework.dll</HintPath></Reference><Reference Include="Tao.Sdl"><HintPath>..\packages\MonoGame.Binaries.3.2.0\build\MonoMac\Tao.Sdl.dll</HintPath></Reference></ItemGroup>
@@ -75,14 +79,12 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="packages.config" />
+    <None Include="..\Content\Fonts\dbmf_4x5_box.license">
+      <Link>Content\Fonts\dbmf_4x5_box.license</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="../packages/MonoGame.Binaries.3.2.0/build/net40/MonoGame.Binaries.targets" Condition="Exists('../packages/MonoGame.Binaries.3.2.0/build/net40/MonoGame.Binaries.targets')" />
-  <ItemGroup>
-    <Folder Include="Content\" />
-    <Folder Include="Content\SpriteSheets\" />
-    <Folder Include="Content\Fonts\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZombieUnknown\ZombieUnknown.csproj">
       <Project>{FB42FDDA-8530-4F36-83C1-3D741E08ADC1}</Project>
@@ -90,11 +92,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.json">
+      <Link>Content\Fonts\dbmf_4x5_box.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.png">
+      <Link>Content\Fonts\dbmf_4x5_box.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\civf.json">
+      <Link>Content\SpriteSheets\civf.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\civf.png">
+      <Link>Content\SpriteSheets\civf.png</Link>
+    </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\cursor.png">
       <Link>Content\SpriteSheets\cursor.png</Link>
     </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\debug-tile-network.json">
+      <Link>Content\SpriteSheets\debug-tile-network.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\debug-tile-network.png">
+      <Link>Content\SpriteSheets\debug-tile-network.png</Link>
+    </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\debugIcons.png">
       <Link>Content\SpriteSheets\debugIcons.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\ethereal.json">
+      <Link>Content\SpriteSheets\ethereal.json</Link>
     </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\ethereal.png">
       <Link>Content\SpriteSheets\ethereal.png</Link>
@@ -102,32 +128,29 @@
     <BundleResource Include="..\Content\SpriteSheets\grass.png">
       <Link>Content\SpriteSheets\grass.png</Link>
     </BundleResource>
-    <BundleResource Include="..\Content\SpriteSheets\walls.png">
-      <Link>Content\SpriteSheets\walls.png</Link>
+    <BundleResource Include="..\Content\SpriteSheets\items.json">
+      <Link>Content\SpriteSheets\items.json</Link>
     </BundleResource>
-    <BundleResource Include="..\Content\SpriteSheets\xcom-forest.png">
-      <Link>Content\SpriteSheets\xcom-forest.png</Link>
-    </BundleResource>
-    <BundleResource Include="..\Content\SpriteSheets\zombie.png">
-      <Link>Content\SpriteSheets\zombie.png</Link>
-    </BundleResource>
-    <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.png">
-      <Link>Content\Fonts\dbmf_4x5_box.png</Link>
-    </BundleResource>
-    <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.json">
-      <Link>Content\Fonts\dbmf_4x5_box.json</Link>
-    </BundleResource>
-    <BundleResource Include="..\Content\SpriteSheets\ethereal.json">
-      <Link>Content\SpriteSheets\ethereal.json</Link>
+    <BundleResource Include="..\Content\SpriteSheets\items.png">
+      <Link>Content\SpriteSheets\items.png</Link>
     </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\walls.json">
       <Link>Content\SpriteSheets\walls.json</Link>
     </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\walls.png">
+      <Link>Content\SpriteSheets\walls.png</Link>
+    </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\xcom-forest.json">
       <Link>Content\SpriteSheets\xcom-forest.json</Link>
     </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\xcom-forest.png">
+      <Link>Content\SpriteSheets\xcom-forest.png</Link>
+    </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\zombie.json">
       <Link>Content\SpriteSheets\zombie.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\zombie.png">
+      <Link>Content\SpriteSheets\zombie.png</Link>
     </BundleResource>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace Engine.AI.BehaviorTrees.Decorators
 {
-    class Inverter : BehaviorDecorator
+    public class Inverter : BehaviorDecorator
     {
         public Inverter(BehaviorComponent behavior) : base(behavior) { }
 

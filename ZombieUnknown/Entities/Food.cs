@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace ZombieUnknown.Entities
 {
-    class Food : PhysicalEntity, IMovementBlocker
+    class Food : PhysicalEntity, IMovementBlocker, IInteractable
     {
         public Food(string name, Sprite sprite, Vector2 mapPosition) 
             : base(name, sprite, mapPosition)
@@ -20,5 +20,11 @@ namespace ZombieUnknown.Entities
 
         public bool BlocksTile { get { return true; } }
         public bool BlocksDiagonals { get { return true; } }
+
+        public AccessPosition[] AccessPositions {
+            get {
+                return new [] {new AccessPosition (Direction.South.Coordinate, Direction.North)};
+            }
+        }
     }
 }

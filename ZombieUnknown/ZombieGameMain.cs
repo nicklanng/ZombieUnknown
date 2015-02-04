@@ -154,7 +154,7 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 500; i++)
+            for (var i = 0; i < 1; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -182,6 +182,7 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 
             GameState.RandomNumberGenerator = new Random();
+            GameState.InteractionObject = food;
             //GameState.MainCharacter = human;
         }
 

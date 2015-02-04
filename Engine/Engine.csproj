@@ -136,6 +136,10 @@
     <Compile Include="AI\BehaviorTrees\Blackboard.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CalculateRouteAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\FollowPathAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\InteractAction.cs" />
+    <Compile Include="Entities\IInteractable.cs" />
+    <Compile Include="Entities\AccessPosition.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\GetInteractionObjectAction.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
