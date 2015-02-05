@@ -172,7 +172,7 @@ namespace ZombieUnknown
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
-            Console.Initialize(_spriteBatch, font, 10);
+            Console.Initialize(_spriteBatch, font, 1);
             Console.WriteLine("Post-apocalyptic Management Game");
             FrameRater.Initialize(_spriteBatch, font);
 

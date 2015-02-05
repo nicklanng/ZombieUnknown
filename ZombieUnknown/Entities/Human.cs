@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Engine;
+﻿using System;
 using Engine.AI.Senses;
-using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
+using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown.Entities
 {
@@ -22,19 +21,23 @@ namespace ZombieUnknown.Entities
 
         public HumanMind Mind { get; private set; }
         public Vision Vision { get; private set; }
-        
+        public double Hunger { get; set; }
+
         public Human(string name, Sprite sprite, Coordinate mapPosition)
             : base(name, sprite, mapPosition)
         {
-            //Vision = new Vision(VisionRange, FieldOfView);
             Mind = new HumanMind(this);
             IsStatic = false;
-            //Vision.UpdateVisibility(mapPosition, FacingDirection);
+
+            Hunger = 70;
         }
 
         public override void Update(GameTime gameTime)
         {
             Mind.Think();
+
+            Hunger -= gameTime.ElapsedGameTime.TotalSeconds;
+            Console.WriteLine("Hunger: " + Math.Ceiling(Hunger));
 
             base.Update(gameTime);
         }

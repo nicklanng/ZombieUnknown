@@ -3,5 +3,6 @@
     public interface IInteraction
     {
         int MillisToCompleteAction { get; }
+        void Interact(PhysicalEntity entity);
     }
 }

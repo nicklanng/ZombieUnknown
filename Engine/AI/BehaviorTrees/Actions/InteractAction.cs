@@ -8,10 +8,11 @@ namespace Engine.AI.BehaviorTrees.Actions
         protected override GoalStatus Action(Blackboard blackboard)
         {
             var entity = (PhysicalEntity)blackboard["Entity"];
+            var interactionTarget = (IInteractable)blackboard["InteractionTarget"];
+            var interactionAction = interactionTarget.Interactions[0];
 
             if (SavedResult == GoalStatus.Inactive)
             {
-                var interactionTarget = (IInteractable)blackboard["InteractionTarget"];
                 var accessPositions = interactionTarget.AccessPositions;
 
                 var accessPosition = accessPositions.SingleOrDefault(x => (x.PositionOffset + interactionTarget.MapPosition) == entity.MapPosition);
@@ -24,7 +25,6 @@ namespace Engine.AI.BehaviorTrees.Actions
                 entity.SetAnimation ("interact");
                 entity.FaceDirection(requiredDirection);
 
-                var interactionAction = interactionTarget.Interactions[0];
 
                 blackboard["TimeWhenInteractionFinished"] = GameState.GameTime.TotalGameTime.TotalMilliseconds + interactionAction.MillisToCompleteAction;
 
@@ -39,6 +39,8 @@ namespace Engine.AI.BehaviorTrees.Actions
                 if (timeNow >= timeWhenInteractionFinished)
                 {
                     entity.SetAnimation("idle");
+                    interactionAction.Interact(entity);
+
                     return GoalStatus.Completed;
                 }
             }
