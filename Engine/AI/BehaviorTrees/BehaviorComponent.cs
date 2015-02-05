@@ -6,18 +6,18 @@ namespace Engine.AI.BehaviorTrees
 	{
         protected Guid Guid = Guid.NewGuid();
 
-        public GoalStatus GoalStatus { get; protected set; }
+        protected GoalStatus SavedResult { get; set; }
 
 	    public GoalStatus Update(Blackboard blackboard)
 	    {
 	        var treeState = blackboard.TreeStatus;
 	        if (treeState.ContainsKey(Guid))
 	        {
-	            var savedResult = treeState[Guid];
+	            SavedResult = treeState[Guid];
 
-	            if (savedResult == GoalStatus.Completed || savedResult == GoalStatus.Failed)
+                if (SavedResult == GoalStatus.Completed || SavedResult == GoalStatus.Failed)
 	            {
-                    return savedResult;
+                    return SavedResult;
 	            }
 	        }
 
@@ -33,6 +33,7 @@ namespace Engine.AI.BehaviorTrees
 	        {
 	            treeState.Remove(Guid);
 	        }
+	        SavedResult = GoalStatus.Inactive;
 	    }
 
 	    protected abstract GoalStatus OnUpdate(Blackboard blackboard);

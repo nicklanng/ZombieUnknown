@@ -12,16 +12,17 @@
 
                 if (result == GoalStatus.Failed)
                 {
+                    Reset(blackboard);
                     return result;
                 }
 
                 if (result == GoalStatus.Active)
                 {
-
                     return result;
                 }
             }
 
+            Reset(blackboard);
             return GoalStatus.Completed;
         }
     }

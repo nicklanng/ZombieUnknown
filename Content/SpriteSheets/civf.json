@@ -431,6 +431,54 @@
       "width" : "32",
       "x" : "224",
       "y" : "320"
+    },
+    { "height" : "40",
+      "name" : "interactNorth",
+      "width" : "32",
+      "x" : "0",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactNorthEast",
+      "width" : "32",
+      "x" : "32",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactEast",
+      "width" : "32",
+      "x" : "64",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactSouthEast",
+      "width" : "32",
+      "x" : "96",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactSouth",
+      "width" : "32",
+      "x" : "128",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactSouthWest",
+      "width" : "32",
+      "x" : "160",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactWest",
+      "width" : "32",
+      "x" : "192",
+      "y" : "400"
+    },
+    { "height" : "40",
+      "name" : "interactNorthWest",
+      "width" : "32",
+      "x" : "224",
+      "y" : "400"
     }
   ]
 }

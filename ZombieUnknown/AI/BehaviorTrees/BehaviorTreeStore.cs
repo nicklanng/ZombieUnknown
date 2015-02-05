@@ -1,8 +1,8 @@
 ﻿using Engine.AI.BehaviorTrees;
 using Engine.AI.BehaviorTrees.Actions;
 using Engine.AI.BehaviorTrees.Composites;
-using Engine.AI.BehaviorTrees.Conditionals;
 using Engine.AI.BehaviorTrees.Decorators;
+using Engine.AI.BehaviorTrees.SubTrees;
 using ZombieUnknown.AI.BehaviorTrees.Actions;
 
 namespace ZombieUnknown.AI.BehaviorTrees
@@ -13,29 +13,14 @@ namespace ZombieUnknown.AI.BehaviorTrees
 
         public static void Generate()
         {
-            var hasPathConditional = new HasPathConditional();
-            var followPathAction = new FollowPathAction();
+            var wholeThingSequence = new Sequence(new CreateRandomMovementTargetAction(), new CalculateRouteAction(), new FollowPathSubTree());
+          
+            var walkToInteractionObject = new Inverter(new FollowPathSubTree());
 
-            var createRandomRoute = new CreateRandomMovementTargetAction();
-            var calculateRouteAction = new CalculateRouteAction();
+            var interationSequence = new Sequence(new GetInteractionObjectAction(), new CalculateRouteAction(), walkToInteractionObject, new InteractAction(), wholeThingSequence);
+            var repeater = new Repeater(interationSequence);
 
-            var idleAction = new IdleAction();
-            var followPathSequence = new Sequence(hasPathConditional, followPathAction, idleAction);
-            var followPathRepeater = new RepeaterUntilFail(followPathSequence);
-
-            var wholeThingSequence = new Sequence(createRandomRoute, calculateRouteAction, followPathRepeater);
-
-            var wholeThingRepeater = new Repeater(wholeThingSequence);
-
-            /////////////////////////////////////////////////////////////
-
-            var getInteractionObject = new GetInteractionObjectAction();
-            var interactAction = new InteractAction();
-            var inverter = new Inverter(followPathRepeater);
-
-            var interationSequence = new Sequence(getInteractionObject, calculateRouteAction, inverter, interactAction);
-
-            HumanBehavior = new Behavior(interationSequence);
+            HumanBehavior = new Behavior(repeater);
         }
 
     }

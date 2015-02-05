@@ -162,11 +162,11 @@ namespace ZombieUnknown
                 _map.AddEntity(h);
             }
 
-            var food = new Food("food", foodSprite, new Coordinate(13, 14));
+            var food = new Food("food", foodSprite, new Coordinate(13, 15));
             _map.AddEntity(food);
             _pathfindingMap.AddBlockage(food);
 
-            var lamp = new Lamp("lamp", lampSprite, new Coordinate(11, 16));
+            var lamp = new Lamp("lamp", lampSprite, new Coordinate(13, 14));
             _map.AddEntity(lamp);
             _pathfindingMap.AddBlockage(lamp);
 
@@ -368,6 +368,23 @@ namespace ZombieUnknown
             runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest6"), 0.06));
             runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest7"), 0.06));
 
+            var interactSouthEast = new Animation(AnimationType.RunOnce);
+            interactSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactSouthEast"), 1.0));
+            var interactSouth = new Animation(AnimationType.RunOnce);
+            interactSouth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactSouth"), 1.0));
+            var interactSouthWest = new Animation(AnimationType.RunOnce);
+            interactSouthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactSouthWest"), 1.0));
+            var interactWest = new Animation(AnimationType.RunOnce);
+            interactWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactWest"), 1.0));
+            var interactNorthWest = new Animation(AnimationType.RunOnce);
+            interactNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactNorthWest"), 1.0));
+            var interactNorth = new Animation(AnimationType.RunOnce);
+            interactNorth.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactNorth"), 1.0));
+            var interactNorthEast = new Animation(AnimationType.RunOnce);
+            interactNorthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactNorthEast"), 1.0));
+            var interactEast = new Animation(AnimationType.RunOnce);
+            interactEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactEast"), 1.0));
+
             humanAnimationList.Add("idleSouthEast", idleSouthEast);
             humanAnimationList.Add("idleSouth", idleSouth);
             humanAnimationList.Add("idleSouthWest", idleSouthWest);
@@ -394,6 +411,15 @@ namespace ZombieUnknown
             humanAnimationList.Add("runSouthWest", runSouthWest);
             humanAnimationList.Add("runWest", runWest);
             humanAnimationList.Add("runNorthWest", runNorthWest);
+
+            humanAnimationList.Add("interactSouthEast", interactSouthEast);
+            humanAnimationList.Add("interactSouth", interactSouth);
+            humanAnimationList.Add("interactSouthWest", interactSouthWest);
+            humanAnimationList.Add("interactWest", interactWest);
+            humanAnimationList.Add("interactNorthWest", interactNorthWest);
+            humanAnimationList.Add("interactNorth", interactNorth);
+            humanAnimationList.Add("interactNorthEast", interactNorthEast);
+            humanAnimationList.Add("interactEast", interactEast);
 
             var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
 

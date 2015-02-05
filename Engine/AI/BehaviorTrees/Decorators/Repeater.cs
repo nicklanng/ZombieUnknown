@@ -12,7 +12,7 @@
 
             if (result == GoalStatus.Completed || result == GoalStatus.Failed)
             {
-                Behavior.Reset(blackboard);
+                Reset(blackboard);
             }
 
             return GoalStatus.Active;

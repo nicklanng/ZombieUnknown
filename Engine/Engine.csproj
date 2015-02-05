@@ -71,6 +71,7 @@
     <Compile Include="AI\BehaviorTrees\Decorators\Repeater.cs" />
     <Compile Include="AI\BehaviorTrees\Decorators\RepeaterUntilFail.cs" />
     <Compile Include="AI\BehaviorTrees\Composites\Sequence.cs" />
+    <Compile Include="AI\BehaviorTrees\SubTrees\FollowPathSubTree.cs" />
     <Compile Include="AI\CompositeGoal.cs" />
     <Compile Include="AI\FollowPathGoal.cs" />
     <Compile Include="AI\Goal.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
     <Compile Include="Entities\IMainCharacter.cs" />
+    <Compile Include="Entities\Interactions\IInteraction.cs" />
     <Compile Include="Entities\PhantomLight.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
     <Compile Include="Manual2dCamera.cs" />
