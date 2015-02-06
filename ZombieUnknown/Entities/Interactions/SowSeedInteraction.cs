@@ -20,7 +20,7 @@ namespace ZombieUnknown.Entities.Interactions
         public void Interact(PhysicalEntity entity)
         {
             GameController.DeleteEntity(_entity);
-            ///GameController.SpawnEntity(_entity.MapPosition);
+            //GameController.SpawnEntity(new Human("human", _entity.MapPosition));
         }
     }
 }

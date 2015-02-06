@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\Actions\GetFoodInteractAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\SowSeedInteractAction.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\NeedFoodConditional.cs" />

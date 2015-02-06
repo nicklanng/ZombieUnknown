@@ -35,7 +35,11 @@ namespace Engine.Maps
                     _tiles[x, y].Update(gameTime);
                 }
             }
-            _entities.ForEach(e => e.Update(gameTime));
+
+            for (var i = 0; i < _entities.Count; i++)
+            {
+                _entities[i].Update(gameTime);
+            }
         }
 
         public Tile GetTile(Coordinate coordinate)

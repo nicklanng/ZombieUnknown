@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Engine;
-using Engine.AI.BehaviorTrees;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
@@ -11,7 +9,6 @@ using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ZombieUnknown.AI;
 using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.Entities;
 using Console = Engine.Drawing.Console;
@@ -225,7 +222,7 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 
             GameState.RandomNumberGenerator = new Random();
-            GameState.InteractionObject = food;
+            GameState.InteractionObject = cultivatedLand;
             //GameState.MainCharacter = human;
         }
 

@@ -8,5 +8,10 @@ namespace Engine
         {
             GameState.Map.RemoveEntity(entity);
         }
+
+        public static void SpawnEntity(Entity entity)
+        {
+            GameState.Map.AddEntity(entity);
+        }
     }
 }
