@@ -35,6 +35,9 @@ namespace ZombieUnknown
 
         public ZombieGameMain()
         {
+            Content.RootDirectory = "Content";
+
+#if WINDOWS
             _graphics = new GraphicsDeviceManager(this)
                 {
                     
@@ -42,11 +45,21 @@ namespace ZombieUnknown
                     PreferredBackBufferHeight = 1080,
                     IsFullScreen = false
                 };
-            Content.RootDirectory = "Content";
 
-#if WINDOWS
             //Window.IsBorderless = true;
 #endif
+#if MAC
+            _graphics = new GraphicsDeviceManager(this)
+            {
+
+                PreferredBackBufferWidth = 1366,
+                PreferredBackBufferHeight = 768,
+                IsFullScreen = true
+            };
+
+            //Window.IsBorderless = true;
+            #endif
+ 
 
             _graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = true;

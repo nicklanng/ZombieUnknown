@@ -9,8 +9,6 @@ namespace Engine.Pathfinding
     {
         private readonly Node _startingNode;
         private readonly Node _endingNode;
-        private readonly HashSet<SearchedNode> _closedList;
-        private readonly PriorityQueue<int, SearchedNode> _openList;
 
         public List<Coordinate> Solution { get; private set; } 
 

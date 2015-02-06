@@ -101,6 +101,12 @@
     <BundleResource Include="..\Content\Fonts\dbmf_4x5_box.png">
       <Link>Content\Fonts\dbmf_4x5_box.png</Link>
     </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\agriculture.json">
+      <Link>Content\SpriteSheets\agriculture.json</Link>
+    </BundleResource>
+    <BundleResource Include="..\Content\SpriteSheets\agriculture.png">
+      <Link>Content\SpriteSheets\agriculture.png</Link>
+    </BundleResource>
     <BundleResource Include="..\Content\SpriteSheets\civf.json">
       <Link>Content\SpriteSheets\civf.json</Link>
     </BundleResource>

@@ -72,7 +72,6 @@ namespace Engine.Maps
                 for (var y = 0; y < map.Height; y++)
                 {
                     var node = _nodes[x, y];
-                    var spriteList = _tileSprites[x, y];
 
                     var thisCoord = new Coordinate(x, y);
                     var thisTile = map.GetTile(thisCoord);
@@ -231,7 +230,6 @@ namespace Engine.Maps
 
             var position = (Coordinate)blockage.MapPosition;
             var thisNode = GetNodeAt(position);
-            var spriteList = _tileSprites[position.X, position.Y];
 
             var upCoord = position + Coordinate.NorthWest;
             var upTile = GetNodeAt(upCoord);
