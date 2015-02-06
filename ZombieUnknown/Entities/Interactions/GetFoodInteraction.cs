@@ -11,7 +11,7 @@ namespace ZombieUnknown.Entities.Interactions
             var human = (Human)entity;
             if (human != null)
             {
-                human.Hunger = 100;
+                human.Hunger = 20;
             }
         }
     }

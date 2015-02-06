@@ -109,12 +109,20 @@
       <Link>Content\Fonts\dbmf_4x5_box.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="..\Content\SpriteSheets\agriculture.json">
+      <Link>Content\Spritesheets\agriculture.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\Content\SpriteSheets\civf.json">
       <Link>Content\Spritesheets\civf.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Content\SpriteSheets\civf.png">
       <Link>Content\Spritesheets\civf.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\agriculture.png">
+      <Link>Content\Spritesheets\agriculture.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="..\Content\SpriteSheets\cursor.png">

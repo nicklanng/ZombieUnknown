@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Engine.AI.Senses;
+using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
@@ -29,7 +31,7 @@ namespace ZombieUnknown.Entities
             Mind = new HumanMind(this);
             IsStatic = false;
 
-            Hunger = 70;
+            Hunger = 40;
         }
 
         public override void Update(GameTime gameTime)
@@ -40,6 +42,11 @@ namespace ZombieUnknown.Entities
             Console.WriteLine("Hunger: " + Math.Ceiling(Hunger));
 
             base.Update(gameTime);
+        }
+
+        public override IEnumerable<DrawingRequest> GetDrawings()
+        {
+            yield return new DrawingRequest(Sprite, MapPosition, LightValue, new Vector2(0.000001f, 0.000001f));
         }
     }
 }

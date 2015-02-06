@@ -100,6 +100,8 @@ namespace ZombieUnknown
             var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
             var wallSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/walls");
             var itemsSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/items");
+            var agricultureSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/agriculture");
+            var debugTileNetworkSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/debug-tile-network");
 
             var font = new Font(fontSpriteSheet);
             
@@ -118,6 +120,39 @@ namespace ZombieUnknown
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass"),
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass1"),
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass2")
+            };
+
+
+            var cultivatedLandSprite = new StaticSprite("cultivatedLand", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "cultivatedLand");
+            var agricultureSprites = new List<Sprite>
+            {
+                new StaticSprite("wheatSown", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "wheatSown"),
+                new StaticSprite("wheatGrowing", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.5f)), "wheatGrowing"),
+                new StaticSprite("wheatGrown", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.9f)), "wheatGrown"),
+            };
+
+            var wheatAnimationList = new AnimationList();
+            var sown = new Animation(AnimationType.RunOnce);
+            sown.AddFrame(new AnimationFrame(agricultureSpriteSheet.GetFrameRectangle("wheatSown"), 1.0));
+            var growing = new Animation(AnimationType.RunOnce);
+            growing.AddFrame(new AnimationFrame(agricultureSpriteSheet.GetFrameRectangle("wheatGrowing"), 1.0));
+            var grown = new Animation(AnimationType.RunOnce);
+            grown.AddFrame(new AnimationFrame(agricultureSpriteSheet.GetFrameRectangle("wheatGrown"), 1.0));
+            wheatAnimationList.Add("sown", sown);
+            wheatAnimationList.Add("growing", growing);
+            wheatAnimationList.Add("grown", grown);
+            var wheatSprite = new AnimatedSprite("wheat", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), wheatAnimationList);
+
+            var debugTileNetwork = new List<Sprite>
+            {
+                new StaticSprite("north", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "north"),
+                new StaticSprite("west", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "west"),
+                new StaticSprite("east", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "east"),
+                new StaticSprite("south", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "south"),
+                new StaticSprite("northeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "northeast"),
+                new StaticSprite("southeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "southeast"),
+                new StaticSprite("southwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "southwest"),
+                new StaticSprite("northwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "northwest")
             };
 
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
@@ -145,7 +180,7 @@ namespace ZombieUnknown
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             GameState.Map = _map;
 
-            _pathfindingMap = new PathfindingMap();
+            _pathfindingMap = new PathfindingMap(debugTileNetwork);
             GameState.PathfindingMap = _pathfindingMap;
             
             var light = new PhantomLight("light", new Coordinate(12, 5), new Light(new Coordinate(2, 1), Color.Blue, 10));
@@ -154,13 +189,13 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 1; i++)
-            {
+            //for (var i = 0; i < 1; i++)
+            //{
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
-                var h = new Human("human" + i, humanSprite, new Coordinate(newLocationX, newLocationY));
+                var h = new Human("human", humanSprite, new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
-            }
+            //
 
             var food = new Food("food", foodSprite, new Coordinate(13, 15));
             _map.AddEntity(food);
@@ -169,6 +204,9 @@ namespace ZombieUnknown
             var lamp = new Lamp("lamp", lampSprite, new Coordinate(13, 14));
             _map.AddEntity(lamp);
             _pathfindingMap.AddBlockage(lamp);
+
+            var cultivatedLand = new CultivatedLand("cultivatedLand", cultivatedLandSprite, new Coordinate(10, 6));
+            _map.AddEntity(cultivatedLand);
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 

@@ -11,17 +11,21 @@ namespace Engine.Maps
     public class PathfindingMap : IDrawingProvider
     {
         private Node[,] _nodes;
-        private List<Sprite>[,] _tileSprites; 
+        private List<Sprite>[,] _tileSprites;
+        private readonly IEnumerable<Sprite> _debugSprites;
 
         public int Height { get; private set; }
         public int Width { get; private set; }
 
-        public PathfindingMap()
+        public PathfindingMap(IEnumerable<Sprite> debugSprites)
         {
+            _debugSprites = debugSprites;
+
             var map = GameState.Map;
             Height = map.Height;
             Width = map.Width;
             RegeneratePathfindingMap();
+            RebuildSprites();
         }
 
         public Node GetNodeAt(Coordinate coordinate)
@@ -46,8 +50,7 @@ namespace Engine.Maps
 
             return drawingRequests;
         }
-
-
+        
         private void RegeneratePathfindingMap()
         {
             var map = GameState.Map;
@@ -69,6 +72,7 @@ namespace Engine.Maps
                 for (var y = 0; y < map.Height; y++)
                 {
                     var node = _nodes[x, y];
+                    var spriteList = _tileSprites[x, y];
 
                     var thisCoord = new Coordinate(x, y);
                     var thisTile = map.GetTile(thisCoord);
@@ -191,6 +195,35 @@ namespace Engine.Maps
             }
         }
 
+        private void RebuildSprites()
+        {
+            _tileSprites = new List<Sprite>[Width, Height];
+
+            for (var x = 0; x < Width; x++)
+            {
+                for (var y = 0; y < Height; y++)
+                {
+                    _tileSprites[x, y] = new List<Sprite>(8);
+                    var node = GetNodeAt(new Coordinate(x, y));
+                    var neighbors = node.Neighbors;
+
+                    foreach (var neighbor in neighbors)
+                    {
+                        var direction = node.Coordinate - neighbor.Coordinate;
+
+                        if (direction == Direction.SouthEast.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "northwest"));
+                        if (direction == Direction.SouthWest.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "northeast"));
+                        if (direction == Direction.NorthEast.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "southwest"));
+                        if (direction == Direction.NorthWest.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "southeast"));
+                        if (direction == Direction.West.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "east"));
+                        if (direction == Direction.East.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "west"));
+                        if (direction == Direction.North.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "south"));
+                        if (direction == Direction.South.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "north"));
+                    }
+                }
+            }
+        }
+
         public void AddBlockage(PhysicalEntity blockage)
         {
             var blocker = blockage as IMovementBlocker;
@@ -198,6 +231,7 @@ namespace Engine.Maps
 
             var position = (Coordinate)blockage.MapPosition;
             var thisNode = GetNodeAt(position);
+            var spriteList = _tileSprites[position.X, position.Y];
 
             var upCoord = position + Coordinate.NorthWest;
             var upTile = GetNodeAt(upCoord);
@@ -251,7 +285,9 @@ namespace Engine.Maps
             }
 
 
-            //_nodes[position.X, position.Y] = new Node(position);
+            _nodes[position.X, position.Y] = new Node(position);
+
+            RebuildSprites();
         }
     }
 }
