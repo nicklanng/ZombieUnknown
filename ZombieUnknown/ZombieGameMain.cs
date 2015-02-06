@@ -105,30 +105,30 @@ namespace ZombieUnknown
 
             var font = new Font(fontSpriteSheet);
             
-            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.9f, 0.1f, 0.9f)), "left");
-            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.1f, 0.9f, 0.9f)), "right");
-            var internalJoinWallSprite = new StaticSprite("internalJoin", wallSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
-            var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), new BoundingBox(new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.2f, 0.2f, 0.9f)), "join");
+            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), "left");
+            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), "right");
+            var internalJoinWallSprite = new StaticSprite("internalJoin", wallSpriteSheet, new Vector2(16, 40), "join");
+            var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), "join");
 
             var humanSprite = BuildHumanSprite();
             var zombieSprite = BuildZombieSprite();
-            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.5f)), "food");
-            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.3f, 0.3f, 0.0f), new Vector3(0.7f, 0.7f, 0.9f)), "lamp");
+            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), "food");
+            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 32), "lamp");
 
             var terrainSprites = new List<Sprite>
             {
-                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "grass"),
-                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass1"),
-                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "tallGrass2")
+                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "grass"),
+                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass1"),
+                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2")
             };
 
 
-            var cultivatedLandSprite = new StaticSprite("cultivatedLand", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "cultivatedLand");
+            var cultivatedLandSprite = new StaticSprite("cultivatedLand", agricultureSpriteSheet, new Vector2(16, 32), "cultivatedLand");
             var agricultureSprites = new List<Sprite>
             {
-                new StaticSprite("wheatSown", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "wheatSown"),
-                new StaticSprite("wheatGrowing", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.5f)), "wheatGrowing"),
-                new StaticSprite("wheatGrown", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.9f)), "wheatGrown"),
+                new StaticSprite("wheatSown", agricultureSpriteSheet, new Vector2(16, 32), "wheatSown"),
+                new StaticSprite("wheatGrowing", agricultureSpriteSheet, new Vector2(16, 32), "wheatGrowing"),
+                new StaticSprite("wheatGrown", agricultureSpriteSheet, new Vector2(16, 32), "wheatGrown"),
             };
 
             var wheatAnimationList = new AnimationList();
@@ -141,18 +141,18 @@ namespace ZombieUnknown
             wheatAnimationList.Add("sown", sown);
             wheatAnimationList.Add("growing", growing);
             wheatAnimationList.Add("grown", grown);
-            var wheatSprite = new AnimatedSprite("wheat", agricultureSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), wheatAnimationList);
+            var wheatSprite = new AnimatedSprite("wheat", agricultureSpriteSheet, new Vector2(16, 32), wheatAnimationList);
 
             var debugTileNetwork = new List<Sprite>
             {
-                new StaticSprite("north", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "north"),
-                new StaticSprite("west", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "west"),
-                new StaticSprite("east", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "east"),
-                new StaticSprite("south", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "south"),
-                new StaticSprite("northeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "northeast"),
-                new StaticSprite("southeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "southeast"),
-                new StaticSprite("southwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "southwest"),
-                new StaticSprite("northwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.9f, 0.9f, 0.0f)), "northwest")
+                new StaticSprite("north", debugTileNetworkSpriteSheet, new Vector2(16, 32), "north"),
+                new StaticSprite("west", debugTileNetworkSpriteSheet, new Vector2(16, 32), "west"),
+                new StaticSprite("east", debugTileNetworkSpriteSheet, new Vector2(16, 32), "east"),
+                new StaticSprite("south", debugTileNetworkSpriteSheet, new Vector2(16, 32), "south"),
+                new StaticSprite("northeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), "northeast"),
+                new StaticSprite("southeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), "southeast"),
+                new StaticSprite("southwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), "southwest"),
+                new StaticSprite("northwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), "northwest")
             };
 
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
@@ -459,7 +459,7 @@ namespace ZombieUnknown
             humanAnimationList.Add("interactNorthEast", interactNorthEast);
             humanAnimationList.Add("interactEast", interactEast);
 
-            var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 32), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), humanAnimationList);
+            var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 32), humanAnimationList);
 
             return humanSprite;
         }
@@ -495,7 +495,7 @@ namespace ZombieUnknown
             zombieAnimationList.Add("idleNorthEast", idleNorthEast);
             zombieAnimationList.Add("idleEast", idleEast);
 
-            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 40), new BoundingBox(new Vector3(0.2f, 0.2f, 0.2f), new Vector3(0.8f, 0.8f, 0.8f)), zombieAnimationList);
+            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 40), zombieAnimationList);
 
             return zombieSprite;
         }

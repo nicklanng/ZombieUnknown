@@ -25,7 +25,7 @@ namespace Engine.Sprites
 
             foreach (var frame in spriteSheet.Frames)
             {
-                _characters.Add(frame.Key, new StaticSprite(frame.Key, spriteSheet, Vector2.Zero, new BoundingBox(), frame.Key));
+                _characters.Add(frame.Key, new StaticSprite(frame.Key, spriteSheet, Vector2.Zero, frame.Key));
             }
         }
 

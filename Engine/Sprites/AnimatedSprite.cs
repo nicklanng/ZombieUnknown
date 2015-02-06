@@ -10,8 +10,8 @@ namespace Engine.Sprites
         private TimeSpan _timeEnteredAnimationFrame;
         private int _frameIndex;
 
-        public AnimatedSprite(string name, SpriteSheet spriteSheet, Vector2 center, BoundingBox localBoundingBox, AnimationList animationList)
-            : base(name, spriteSheet, center, localBoundingBox)
+        public AnimatedSprite(string name, SpriteSheet spriteSheet, Vector2 center, AnimationList animationList)
+            : base(name, spriteSheet, center)
         {
             _animationList = animationList;
             _currentAnimation = _animationList.Default();
