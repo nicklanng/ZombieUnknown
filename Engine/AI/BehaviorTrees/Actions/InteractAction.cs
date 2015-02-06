@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Engine.Entities;
+using Engine.Maps;
+using Microsoft.Xna.Framework;
 
 namespace Engine.AI.BehaviorTrees.Actions
 {
@@ -10,7 +12,14 @@ namespace Engine.AI.BehaviorTrees.Actions
         protected override GoalStatus Action(Blackboard blackboard)
         {
             var entity = (PhysicalEntity)blackboard["Entity"];
-            var interactionTarget = (IInteractable)blackboard["InteractionTarget"];
+
+            var interactionTargetLocation = (Vector2)blackboard["InteractionTargetLocation"];
+            var entities = GameState.Map.GetEntitiesAt(interactionTargetLocation);
+            var interactionTarget = (IInteractable)entities.SingleOrDefault(x => (IInteractable)x != null);
+            if (interactionTarget == null) 
+            {
+                return GoalStatus.Failed;
+            }
 
             if (interactionTarget.Interactions.ContainsKey(InteractionText) == false)
             {

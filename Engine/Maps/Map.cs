@@ -67,15 +67,19 @@ namespace Engine.Maps
 
         public void RemoveEntity(Entity entity)
         {
-            _entities.Remove(entity);
+            _entities.Remove (entity);
 
             var lightEntity = entity as ILightSource;
-            if (lightEntity == null)
-            {
+            if (lightEntity == null) {
                 return;
             }
 
-            Lights.Remove(lightEntity);
+            Lights.Remove (lightEntity);
+        }
+
+        public List<Entity> GetEntitiesAt(Vector2 mapPosition) 
+        {
+            return _entities.Where(x => x.MapPosition == mapPosition).ToList();
         }
         
         public bool IsPositionOnMap(Coordinate coordinate)

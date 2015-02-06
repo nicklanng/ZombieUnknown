@@ -31,7 +31,7 @@ namespace ZombieUnknown.Entities
             Mind = new HumanMind(this);
             IsStatic = false;
 
-            Hunger = 40;
+            Hunger = 21;
         }
 
         public override void Update(GameTime gameTime)
