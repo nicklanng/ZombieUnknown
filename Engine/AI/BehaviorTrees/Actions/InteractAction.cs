@@ -3,13 +3,20 @@ using Engine.Entities;
 
 namespace Engine.AI.BehaviorTrees.Actions
 {
-    public class InteractAction : BehaviorAction
+    public abstract class InteractAction : BehaviorAction
     {
+        protected abstract string InteractionText { get; }
+
         protected override GoalStatus Action(Blackboard blackboard)
         {
             var entity = (PhysicalEntity)blackboard["Entity"];
             var interactionTarget = (IInteractable)blackboard["InteractionTarget"];
-            var interactionAction = interactionTarget.Interactions[0];
+
+            if (interactionTarget.Interactions.ContainsKey(InteractionText) == false)
+            {
+                return GoalStatus.Failed;
+            }
+            var interactionAction = interactionTarget.Interactions[InteractionText];
 
             if (SavedResult == GoalStatus.Inactive)
             {

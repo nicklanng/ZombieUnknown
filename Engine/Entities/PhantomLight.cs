@@ -1,4 +1,5 @@
 ﻿using Engine.Maps;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
@@ -6,10 +7,10 @@ namespace Engine.Entities
     {
         public Light Light { get; private set; }
 
-        public PhantomLight(string name, Coordinate mapPosition, Light light) 
+        public PhantomLight(string name, Coordinate mapPosition, Color color, short range) 
             : base(name, mapPosition)
         {
-            Light = light;
+            Light = new Light(mapPosition, color, range);
         }
     }
 }

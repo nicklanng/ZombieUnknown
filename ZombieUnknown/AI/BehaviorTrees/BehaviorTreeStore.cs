@@ -1,7 +1,6 @@
 ﻿using Engine.AI.BehaviorTrees;
 using Engine.AI.BehaviorTrees.Actions;
 using Engine.AI.BehaviorTrees.Composites;
-using Engine.AI.BehaviorTrees.Conditionals;
 using Engine.AI.BehaviorTrees.Decorators;
 using Engine.AI.BehaviorTrees.SubTrees;
 using ZombieUnknown.AI.BehaviorTrees.Actions;
@@ -19,7 +18,7 @@ namespace ZombieUnknown.AI.BehaviorTrees
           
             var walkToInteractionObject = new Inverter(new FollowPathSubTree());
 
-            var interationSequence = new Sequence(new NeedFoodConditional(), new GetInteractionObjectAction(), new CalculateRouteAction(), walkToInteractionObject, new InteractAction(), wholeThingSequence);
+            var interationSequence = new Sequence(new NeedFoodConditional(), new GetInteractionObjectAction(), new CalculateRouteAction(), walkToInteractionObject, new GetFoodInteractAction(), wholeThingSequence);
             var repeater = new Repeater(interationSequence);
 
 

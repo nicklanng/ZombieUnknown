@@ -60,12 +60,14 @@
     <None Include="ZombieUnknown.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\BehaviorTrees\Actions\GetFoodInteractAction.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\NeedFoodConditional.cs" />
     <Compile Include="Entities\CultivatedLand.cs" />
     <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\Interactions\GetFoodInteraction.cs" />
+    <Compile Include="Entities\Interactions\SowSeedInteraction.cs" />
     <Compile Include="Entities\Lamp.cs" />
     <Compile Include="Entities\TallGrass1.cs" />
     <Compile Include="IsometricConfiguration.cs" />

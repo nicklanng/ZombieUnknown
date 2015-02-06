@@ -1,6 +1,7 @@
-﻿using Engine.Entities;
+﻿using Engine;
+using Engine.Entities;
+using Engine.Maps;
 using Engine.Pathfinding;
-using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace ZombieUnknown.Entities
@@ -9,7 +10,8 @@ namespace ZombieUnknown.Entities
     {
         public Light Light { get; private set; }
 
-        public Lamp(string name, Sprite sprite, Vector2 mapPosition) : base(name, sprite, mapPosition)
+        public Lamp(string name, Coordinate mapPosition) 
+            : base(name, ResourceManager.GetSprite("lamp"), mapPosition)
         {
             Light = new Light(mapPosition, Color.White, 4);
         }

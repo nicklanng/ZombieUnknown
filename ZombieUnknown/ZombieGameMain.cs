@@ -103,17 +103,7 @@ namespace ZombieUnknown
             var agricultureSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/agriculture");
             var debugTileNetworkSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/debug-tile-network");
 
-            var font = new Font(fontSpriteSheet);
-            
-            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), "left");
-            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), "right");
-            var internalJoinWallSprite = new StaticSprite("internalJoin", wallSpriteSheet, new Vector2(16, 40), "join");
-            var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), "join");
 
-            var humanSprite = BuildHumanSprite();
-            var zombieSprite = BuildZombieSprite();
-            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), "food");
-            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 32), "lamp");
 
             var terrainSprites = new List<Sprite>
             {
@@ -121,15 +111,29 @@ namespace ZombieUnknown
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass1"),
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2")
             };
+            var zombieSprite = BuildZombieSprite();
 
+            var font = new Font(fontSpriteSheet);
+
+            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), "left");
+            ResourceManager.RegisterSprite(leftWallSprite);
+            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), "right");
+            ResourceManager.RegisterSprite(rightWallSprite);
+            var internalJoinWallSprite = new StaticSprite("internalJoin", wallSpriteSheet, new Vector2(16, 40), "join");
+            ResourceManager.RegisterSprite(internalJoinWallSprite);
+            var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), "join");
+            ResourceManager.RegisterSprite(externalJoinWallSprite);
+
+            var humanSprite = BuildHumanSprite();
+            ResourceManager.RegisterSprite(humanSprite);
+
+            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), "food");
+            ResourceManager.RegisterSprite(foodSprite);
+            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 32), "lamp");
+            ResourceManager.RegisterSprite(lampSprite);
 
             var cultivatedLandSprite = new StaticSprite("cultivatedLand", agricultureSpriteSheet, new Vector2(16, 32), "cultivatedLand");
-            var agricultureSprites = new List<Sprite>
-            {
-                new StaticSprite("wheatSown", agricultureSpriteSheet, new Vector2(16, 32), "wheatSown"),
-                new StaticSprite("wheatGrowing", agricultureSpriteSheet, new Vector2(16, 32), "wheatGrowing"),
-                new StaticSprite("wheatGrown", agricultureSpriteSheet, new Vector2(16, 32), "wheatGrown"),
-            };
+            ResourceManager.RegisterSprite(cultivatedLandSprite);
 
             var wheatAnimationList = new AnimationList();
             var sown = new Animation(AnimationType.RunOnce);
@@ -142,6 +146,7 @@ namespace ZombieUnknown
             wheatAnimationList.Add("growing", growing);
             wheatAnimationList.Add("grown", grown);
             var wheatSprite = new AnimatedSprite("wheat", agricultureSpriteSheet, new Vector2(16, 32), wheatAnimationList);
+            ResourceManager.RegisterSprite(wheatSprite);
 
             var debugTileNetwork = new List<Sprite>
             {
@@ -183,9 +188,9 @@ namespace ZombieUnknown
             _pathfindingMap = new PathfindingMap(debugTileNetwork);
             GameState.PathfindingMap = _pathfindingMap;
             
-            var light = new PhantomLight("light", new Coordinate(12, 5), new Light(new Coordinate(2, 1), Color.Blue, 10));
+            var light = new PhantomLight("light", new Coordinate(2, 1), Color.Blue, 10);
             _map.AddEntity(light);
-            var light2 = new PhantomLight("light2", new Coordinate(4, 5), new Light(new Coordinate(4, 5), Color.White, 10));
+            var light2 = new PhantomLight("light2", new Coordinate(4, 5), Color.White, 10);
             _map.AddEntity(light2);
             
             var rand = new Random();
@@ -193,19 +198,19 @@ namespace ZombieUnknown
             //{
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
-                var h = new Human("human", humanSprite, new Coordinate(newLocationX, newLocationY));
+                var h = new Human("human", new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
             //
 
-            var food = new Food("food", foodSprite, new Coordinate(13, 15));
+            var food = new Food("food", new Coordinate(13, 15));
             _map.AddEntity(food);
             _pathfindingMap.AddBlockage(food);
 
-            var lamp = new Lamp("lamp", lampSprite, new Coordinate(13, 14));
+            var lamp = new Lamp("lamp", new Coordinate(13, 14));
             _map.AddEntity(lamp);
             _pathfindingMap.AddBlockage(lamp);
 
-            var cultivatedLand = new CultivatedLand("cultivatedLand", cultivatedLandSprite, new Coordinate(10, 6));
+            var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 6));
             _map.AddEntity(cultivatedLand);
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));

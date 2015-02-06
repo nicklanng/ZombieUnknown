@@ -1,4 +1,5 @@
-﻿using Engine.Entities.Interactions;
+﻿using System.Collections.Generic;
+using Engine.Entities.Interactions;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
@@ -7,7 +8,7 @@ namespace Engine.Entities
     {
         AccessPosition[] AccessPositions { get; }
         Vector2 MapPosition { get; }
-        IInteraction[] Interactions { get; }
+        Dictionary<string, IInteraction> Interactions { get; }
     }
 }
 

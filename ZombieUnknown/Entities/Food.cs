@@ -1,17 +1,17 @@
-﻿using Engine.Entities;
+﻿using System.Collections.Generic;
+using Engine;
+using Engine.Entities;
 using Engine.Entities.Interactions;
 using Engine.Maps;
 using Engine.Pathfinding;
-using Engine.Sprites;
-using Microsoft.Xna.Framework;
 using ZombieUnknown.Entities.Interactions;
 
 namespace ZombieUnknown.Entities
 {
     class Food : PhysicalEntity, IMovementBlocker, IInteractable
     {
-        public Food(string name, Sprite sprite, Vector2 mapPosition) 
-            : base(name, sprite, mapPosition)
+        public Food(string name, Coordinate mapPosition) 
+            : base(name, ResourceManager.GetSprite("food"), mapPosition)
         {
         }
 
@@ -29,9 +29,14 @@ namespace ZombieUnknown.Entities
             }
         }
 
-        public IInteraction[] Interactions
+        public Dictionary<string, IInteraction> Interactions
         {
-            get { return new IInteraction[] { new GetFoodInteraction() }; }
+            get { 
+                return new Dictionary<string, IInteraction>
+                {
+                    { GetFoodInteraction.Text, new GetFoodInteraction() }
+                }; 
+            }
         }
     }
 }

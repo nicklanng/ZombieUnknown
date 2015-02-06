@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Engine;
 using Engine.AI.Senses;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
-using Engine.Sprites;
 using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
 using Console = Engine.Drawing.Console;
@@ -25,8 +25,8 @@ namespace ZombieUnknown.Entities
         public Vision Vision { get; private set; }
         public double Hunger { get; set; }
 
-        public Human(string name, Sprite sprite, Coordinate mapPosition)
-            : base(name, sprite, mapPosition)
+        public Human(string name, Coordinate mapPosition)
+            : base(name, ResourceManager.GetSprite("human"), mapPosition)
         {
             Mind = new HumanMind(this);
             IsStatic = false;
