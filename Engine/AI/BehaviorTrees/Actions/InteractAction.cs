@@ -15,7 +15,7 @@ namespace Engine.AI.BehaviorTrees.Actions
 
             var interactionTargetLocation = (Vector2)blackboard["InteractionTargetLocation"];
             var entities = GameState.Map.GetEntitiesAt(interactionTargetLocation);
-            var interactionTarget = (IInteractable)entities.SingleOrDefault(x => (IInteractable)x != null);
+            var interactionTarget = (IInteractable)entities.SingleOrDefault(x => x is IInteractable);
             if (interactionTarget == null) 
             {
                 return GoalStatus.Failed;
