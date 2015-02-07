@@ -200,17 +200,18 @@ namespace ZombieUnknown
             
             var light = new PhantomLight("light", new Coordinate(2, 1), Color.Blue, 10);
             _map.AddEntity(light);
+
             var light2 = new PhantomLight("light2", new Coordinate(4, 5), Color.White, 10);
             _map.AddEntity(light2);
             
             var rand = new Random();
-            //for (var i = 0; i < 1; i++)
-            //{
+            for (var i = 0; i < 1; i++)
+            {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
                 var h = new Human("human", new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
-            //
+            }
 
             var food = new Food("food", new Coordinate(13, 15));
             _map.AddEntity(food);
@@ -220,8 +221,17 @@ namespace ZombieUnknown
             _map.AddEntity(lamp);
             _pathfindingMap.AddBlockage(lamp);
 
-            var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 6));
+            var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 3));
             _map.AddEntity(cultivatedLand);
+
+            for (var x = 10; x < 14; x++)
+            {
+                for (var y = 5; y < 10; y++)
+                {
+                    var h = new Wheat("wheat", new Coordinate(x, y));
+                    _map.AddEntity(h);
+                }
+            }
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
 
@@ -234,8 +244,7 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(Console.DrawingProvider);
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 
-            GameState.RandomNumberGenerator = new Random();
-            GameState.InteractionObject = cultivatedLand;
+            GameState.InteractionObject = food;
             //GameState.MainCharacter = human;
         }
 

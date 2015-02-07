@@ -18,7 +18,7 @@ namespace ZombieUnknown.AI.BehaviorTrees
           
             var walkToInteractionObject = new Inverter(new FollowPathSubTree());
 
-            var interationSequence = new Sequence(new NeedFoodConditional(), new GetInteractionObjectAction(), new CalculateRouteAction(), walkToInteractionObject, new SowSeedInteractAction(), wholeThingSequence);
+            var interationSequence = new Sequence(new NeedFoodConditional(), new GetInteractionObjectAction(), new CalculateRouteAction(), walkToInteractionObject, new GetFoodInteractAction(), wholeThingSequence);
             var repeater = new Repeater(interationSequence);
 
 

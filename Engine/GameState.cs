@@ -14,7 +14,7 @@ namespace Engine
         public static GameTime GameTime { get; set; }
         public static GraphicsDevice GraphicsDevice { get; set; }
         public static Entity MainCharacter { get; set; }
-        public static Random RandomNumberGenerator { get; set; }
+        public static Random RandomNumberGenerator = new Random();
         public static IInteractable InteractionObject { get; set; } // temporary
     }
 }
