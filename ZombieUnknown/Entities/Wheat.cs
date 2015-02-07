@@ -15,7 +15,7 @@ namespace ZombieUnknown.Entities
         public Wheat(string name, Coordinate mapPosition)
             : base(name, ResourceManager.GetSprite("wheat"), mapPosition)
         {
-            _currentState = new SownState();
+            _currentState = WheatStates.Instance.SownState;
             _currentState.OnEnter(this);
         }
 

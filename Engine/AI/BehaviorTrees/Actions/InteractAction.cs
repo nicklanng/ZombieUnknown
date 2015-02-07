@@ -38,7 +38,7 @@ namespace Engine.AI.BehaviorTrees.Actions
                 }
 
                 var requiredDirection = accessPosition.Direction;
-                entity.SetAnimation ("interact");
+                entity.TransitionState("interact");
                 entity.FaceDirection(requiredDirection);
 
 
@@ -54,7 +54,7 @@ namespace Engine.AI.BehaviorTrees.Actions
 
                 if (timeNow >= timeWhenInteractionFinished)
                 {
-                    entity.SetAnimation("idle");
+                    entity.TransitionState("idle");
                     interactionAction.Interact(entity);
 
                     return GoalStatus.Completed;

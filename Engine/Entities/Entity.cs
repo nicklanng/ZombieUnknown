@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Engine.AI.FiniteStateMachines;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
     public abstract class Entity
     {
         private Vector2 _mapPosition;
+        protected State CurrentState;
 
         public string Name { get; private set; }
         public short ZIndex { get; protected set; }
@@ -29,5 +31,12 @@ namespace Engine.Entities
         }
 
         public virtual void Update() { }
+
+        public void TransitionState(string state)
+        {
+            if (CurrentState == null) return;
+
+            CurrentState = CurrentState.TransitionState(state, this);
+        }
     }
 }

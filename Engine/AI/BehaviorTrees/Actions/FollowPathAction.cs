@@ -23,7 +23,7 @@ namespace Engine.AI.BehaviorTrees.Actions
             var directionVector = GetDirectionVector(entity.MapPosition, nextStep);
             var direction = Direction.CoordinateDirectionMap[directionVector];
             entity.FaceDirection(direction);
-            entity.SetAnimation("walk");
+            entity.TransitionState("walk");
 
             var distanceToTarget = ((Vector2)nextStep - entity.MapPosition);
             var moveAmount = distanceToTarget;

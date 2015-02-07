@@ -7,16 +7,11 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
     public class SownState : State
     {
         private double _nextStateTrigger;
-
-        public SownState()
-        {
-            Transitions.Add("growing", new GrowingState());
-        }
         
         public override State Update(Entity entity)
         {
             var wheat = (Entities.Wheat)entity;
-            wheat.Growth += GameState.GameTime.ElapsedGameTime.TotalMilliseconds;
+            wheat.Growth += GameState.GameTime.ElapsedGameTime.TotalMilliseconds + GameState.RandomNumberGenerator.Next(300) - 150;
 
             if (wheat.Growth > _nextStateTrigger)
             {
@@ -31,7 +26,7 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
             var wheat = (Entities.Wheat)entity;
             wheat.SetAnimation("sown");
 
-            _nextStateTrigger = GameState.GameTime.TotalGameTime.TotalMilliseconds + 7500 + GameState.RandomNumberGenerator.Next(10000);
+            _nextStateTrigger = 10000;
         }
 
         public override void OnExit(Entity entity)

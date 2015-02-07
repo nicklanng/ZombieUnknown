@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
+using Engine.AI.FiniteStateMachines;
 using Engine.AI.Senses;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
 using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
+using ZombieUnknown.AI.FiniteStateMachines.Human;
 using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown.Entities
 {
-    public class Human : MobileEntity, IMainCharacter
+    public class Human : MobileEntity
     {
-        private const int VisionRange = 10;
-        private const int FieldOfView = 90;
-
         public override float Speed
         {
-            get { return IsRunning ? 30 : 15; }
+            get { return 15; }
         }
 
         public HumanMind Mind { get; private set; }
@@ -31,12 +30,16 @@ namespace ZombieUnknown.Entities
             Mind = new HumanMind(this);
             IsStatic = false;
 
+            CurrentState = HumanStates.Instance.IdleState;
+            CurrentState.OnEnter(this);
+
             Hunger = 21;
         }
 
         public override void Update()
         {
             Mind.Think();
+            CurrentState.Update(this);
 
             Hunger -= GameState.GameTime.ElapsedGameTime.TotalSeconds;
             Console.WriteLine("Hunger: " + Math.Ceiling(Hunger));

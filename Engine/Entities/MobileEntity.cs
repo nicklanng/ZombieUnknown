@@ -1,5 +1,4 @@
-﻿using System;
-using Engine.Maps;
+﻿using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
@@ -9,10 +8,9 @@ namespace Engine.Entities
     {
         public abstract float Speed { get; }
 
-        public bool IsRunning { set; get; }
         public IDirection FacingDirection { get; protected set; }
 
-        public MobileEntity(string name, Sprite sprite, Vector2 mapPosition) : base(name, sprite, mapPosition)
+        protected MobileEntity(string name, Sprite sprite, Vector2 mapPosition) : base(name, sprite, mapPosition)
         {
             IsStatic = false;
             FacingDirection = Direction.North;

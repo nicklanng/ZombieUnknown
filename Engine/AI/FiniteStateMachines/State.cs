@@ -22,6 +22,11 @@ namespace Engine.AI.FiniteStateMachines
             nextState.OnEnter(entity);
             return nextState;
         }
+
+        public void AddTransition(string transition, State state)
+        {
+            Transitions.Add(transition, state);
+        }
     }
 }
 

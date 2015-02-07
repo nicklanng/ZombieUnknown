@@ -1,5 +1,4 @@
-﻿using Engine.AI;
-using Engine.AI.BehaviorTrees;
+﻿using Engine.AI.BehaviorTrees;
 using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.Entities;
 
@@ -12,8 +11,6 @@ namespace ZombieUnknown.AI
 
         public HumanMind(Human entity)
         {
-            entity.SetAnimation("idle");
-
             _blackboard = new Blackboard(entity);
 
             _behavior = BehaviorTreeStore.HumanBehavior;
