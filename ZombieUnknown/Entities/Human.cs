@@ -34,14 +34,14 @@ namespace ZombieUnknown.Entities
             Hunger = 21;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Mind.Think();
 
-            Hunger -= gameTime.ElapsedGameTime.TotalSeconds;
+            Hunger -= GameState.GameTime.ElapsedGameTime.TotalSeconds;
             Console.WriteLine("Hunger: " + Math.Ceiling(Hunger));
 
-            base.Update(gameTime);
+            base.Update();
         }
 
         public override IEnumerable<DrawingRequest> GetDrawings()

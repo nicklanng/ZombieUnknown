@@ -28,11 +28,11 @@ namespace ZombieUnknown.Entities
             IsStatic = false;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             Mind.Think();
 
-            base.Update(gameTime);
+            base.Update();
         }
     }
 }

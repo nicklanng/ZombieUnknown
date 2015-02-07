@@ -38,7 +38,7 @@ namespace Engine.Maps
 
             for (var i = 0; i < _entities.Count; i++)
             {
-                _entities[i].Update(gameTime);
+                _entities[i].Update();
             }
         }
 

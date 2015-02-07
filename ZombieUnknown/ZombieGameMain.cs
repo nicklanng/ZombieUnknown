@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZombieUnknown.AI.BehaviorTrees;
+using ZombieUnknown.AI.FiniteStateMachines;
 using ZombieUnknown.Entities;
 using Console = Engine.Drawing.Console;
 

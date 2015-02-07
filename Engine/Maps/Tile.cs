@@ -50,12 +50,12 @@ namespace Engine.Maps
 
         public void Update(GameTime gameTime)
         {
-            if (_leftWallSprite != null) _leftWallSprite.Update(gameTime);
-            if (_rightWallSprite != null) _rightWallSprite.Update(gameTime);
-            if (_wallJoinSprite != null) _wallJoinSprite.Update(gameTime);
-            if (_floorSprite != null) _floorSprite.Update(gameTime);
+            if (_leftWallSprite != null) _leftWallSprite.Update();
+            if (_rightWallSprite != null) _rightWallSprite.Update();
+            if (_wallJoinSprite != null) _wallJoinSprite.Update();
+            if (_floorSprite != null) _floorSprite.Update();
 
-            _entities.ForEach(x => x.Update(gameTime));
+            _entities.ForEach(x => x.Update());
         }
 
         public void AddEntity(Entity entity)

@@ -19,11 +19,11 @@ namespace Engine.Entities
             Sprite = sprite.ShallowCopy();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             var parentTile = GameState.Map.GetTile(MapPosition);
             if (parentTile != null) LightValue = parentTile.Light;
-            Sprite.Update(gameTime);
+            Sprite.Update();
         }
 
         public virtual void SetAnimation(string animationName)

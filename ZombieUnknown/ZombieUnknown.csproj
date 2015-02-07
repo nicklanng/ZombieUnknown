@@ -65,6 +65,9 @@
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\NeedFoodConditional.cs" />
+    <Compile Include="AI\FiniteStateMachines\Wheat\GrowingState.cs" />
+    <Compile Include="AI\FiniteStateMachines\Wheat\GrownState.cs" />
+    <Compile Include="AI\FiniteStateMachines\Wheat\SownState.cs" />
     <Compile Include="Entities\CultivatedLand.cs" />
     <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\Interactions\GetFoodInteraction.cs" />

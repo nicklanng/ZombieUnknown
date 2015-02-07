@@ -10,7 +10,7 @@ namespace ZombieUnknown.AI.BehaviorTrees
 {
     public static class BehaviorTreeStore
     {
-        public static Behavior HumanBehavior { get; set; }
+        public static Behavior HumanBehavior { get; private set; }
 
         public static void Generate()
         {

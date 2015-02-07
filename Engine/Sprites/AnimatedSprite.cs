@@ -18,14 +18,14 @@ namespace Engine.Sprites
             SpriteSheetRectangle = _currentAnimation[_frameIndex].Frame;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             if (_currentAnimation.AnimationType == AnimationType.RunOnce && _frameIndex == _currentAnimation.NumberOfFrames - 1)
             {
                 return;
             }
 
-            var now = gameTime.TotalGameTime;
+            var now = GameState.GameTime.TotalGameTime;
             var timeSinceLastFrame = now - _timeEnteredAnimationFrame;
             if (timeSinceLastFrame.TotalSeconds >= _currentAnimation[_frameIndex].Duration)
             {

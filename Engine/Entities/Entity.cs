@@ -28,6 +28,6 @@ namespace Engine.Entities
             ZIndex = 0;
         }
 
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update() { }
     }
 }

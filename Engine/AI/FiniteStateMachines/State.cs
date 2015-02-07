@@ -1,40 +1,14 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Engine.Entities;
+﻿using Engine.Entities;
 
 namespace Engine.AI.FiniteStateMachines
 {
     public abstract class State
     {
-        protected Entity Entity;
+        public abstract State Update(Entity entity);
 
-        public FiniteStateMachine FiniteStateMachine { get; set; }
-        public Dictionary<string, State> Transitions { get; set; }
+        public abstract void OnEnter(Entity entity);
 
-        public State(FiniteStateMachine finiteStateMachine, Entity entity)
-        {
-            FiniteStateMachine = finiteStateMachine;
-            Entity = entity;
-            Transitions = new Dictionary<string, State>();
-        }
-
-        public void AddTransition(string name, State stateToTransitionTo)
-        {
-            Transitions.Add(name, stateToTransitionTo);
-        }
-
-        public virtual void Update(GameTime gameTime)
-        {
-        }
-
-        public virtual void OnEnter(GameTime gameTime) 
-        {
-        }
-
-        public virtual void OnExit(GameTime gameTime) 
-        {
-        }
+        public abstract void OnExit(Entity entity);
     }
 }
 

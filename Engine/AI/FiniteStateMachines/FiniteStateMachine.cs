@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Engine.Entities;
 
 namespace Engine.AI.FiniteStateMachines
 {
@@ -7,35 +6,25 @@ namespace Engine.AI.FiniteStateMachines
     {
         private State _currentState;
 
-        public FiniteStateMachine ()
+        public void Initialize(Entity entity)
         {
-
+            _currentState.OnEnter(entity);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(Entity entity)
         {
-            _currentState.Update(gameTime);
+            _currentState.Update(entity);
         }
 
-        public void AssignStartingState(State state, GameTime gameTime)
+        public void AssignStartingState(State state)
         {
             _currentState = state;
-            _currentState.OnEnter(gameTime);
         }
 
-        public void HandleTransition(string transitionName, GameTime gameTime)
+        public void HandleTransition(string transitionName, Entity entity)
         {
-            var possibleTransitions = _currentState.Transitions;
-            if (!possibleTransitions.ContainsKey(transitionName))
-            {
-                return;
-            }
-
-            var nextState = possibleTransitions[transitionName];
-
-            _currentState.OnExit(gameTime);
-            _currentState = nextState;
-            _currentState.OnEnter(gameTime);
+            _currentState.OnExit(entity);
+            _currentState.OnEnter(entity);
         }
     }
 }
