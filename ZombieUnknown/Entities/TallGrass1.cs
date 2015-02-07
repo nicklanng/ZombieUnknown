@@ -10,10 +10,5 @@ namespace ZombieUnknown.Entities
             : base(name, sprite, mapPosition)
         {
         }
-
-        public override float Speed
-        {
-            get { return 0; }
-        }
     }
 }

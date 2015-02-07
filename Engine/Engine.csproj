@@ -71,15 +71,9 @@
     <Compile Include="AI\BehaviorTrees\Decorators\RepeaterUntilFail.cs" />
     <Compile Include="AI\BehaviorTrees\Composites\Sequence.cs" />
     <Compile Include="AI\BehaviorTrees\SubTrees\FollowPathSubTree.cs" />
-    <Compile Include="AI\CompositeGoal.cs" />
-    <Compile Include="AI\FollowPathGoal.cs" />
-    <Compile Include="AI\Goal.cs" />
     <Compile Include="AI\GoalStatus.cs" />
-    <Compile Include="AI\IGoal.cs" />
-    <Compile Include="AI\Mind.cs" />
     <Compile Include="AI\Senses\Sense.cs" />
     <Compile Include="AI\Senses\Vision.cs" />
-    <Compile Include="AI\TraverseEdgeGoal.cs" />
     <Compile Include="Drawing\Console.cs" />
     <Compile Include="Drawing\DrawingManager.cs" />
     <Compile Include="Drawing\DrawingRequest.cs" />
@@ -130,9 +124,7 @@
     <Compile Include="Sprites\SpriteSheetFrameDictionary.cs" />
     <Compile Include="Sprites\StaticSprite.cs" />
     <Compile Include="Maps\Tile.cs" />
-    <Compile Include="AI\TurnGoal.cs" />
     <Compile Include="Maps\Direction.cs" />
-    <Compile Include="AI\WaitGoal.cs" />
     <Compile Include="AI\BehaviorTrees\Behavior.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorComponent.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\BehaviorAction.cs" />
@@ -143,6 +135,9 @@
     <Compile Include="Entities\IInteractable.cs" />
     <Compile Include="Entities\AccessPosition.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetInteractionObjectAction.cs" />
+    <Compile Include="AI\FiniteStateMachines\State.cs" />
+    <Compile Include="AI\FiniteStateMachines\FiniteStateMachine.cs" />
+    <Compile Include="Entities\MobileEntity.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -157,4 +152,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AI\FiniteStateMachines\" />
+  </ItemGroup>
 </Project>

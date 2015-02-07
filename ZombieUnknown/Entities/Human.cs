@@ -11,7 +11,7 @@ using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown.Entities
 {
-    public class Human : PhysicalEntity, IMainCharacter
+    public class Human : MobileEntity, IMainCharacter
     {
         private const int VisionRange = 10;
         private const int FieldOfView = 90;

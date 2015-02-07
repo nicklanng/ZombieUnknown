@@ -5,12 +5,12 @@ using ZombieUnknown.Entities;
 
 namespace ZombieUnknown.AI
 {
-    public class HumanMind : Mind<Human>
+    public class HumanMind
     {
         private readonly Blackboard _blackboard;
         private readonly Behavior _behavior;
 
-        public HumanMind(Human entity) : base(entity)
+        public HumanMind(Human entity)
         {
             entity.SetAnimation("idle");
 
@@ -19,7 +19,7 @@ namespace ZombieUnknown.AI
             _behavior = BehaviorTreeStore.HumanBehavior;
         }
 
-        public override void Think()
+        public void Think()
         {
             _behavior.Update(_blackboard);
         }

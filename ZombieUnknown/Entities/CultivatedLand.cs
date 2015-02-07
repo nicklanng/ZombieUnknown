@@ -14,11 +14,6 @@ namespace ZombieUnknown.Entities
         {
         }
 
-        public override float Speed
-        {
-            get { return 0; }
-        }
-
         public AccessPosition[] AccessPositions
         {
             get {

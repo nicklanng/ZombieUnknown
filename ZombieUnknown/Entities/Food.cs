@@ -15,11 +15,6 @@ namespace ZombieUnknown.Entities
         {
         }
 
-        public override float Speed
-        {
-            get { return 0; }
-        }
-
         public bool BlocksTile { get { return true; } }
         public bool BlocksDiagonals { get { return true; } }
 

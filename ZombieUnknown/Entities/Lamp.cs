@@ -16,11 +16,6 @@ namespace ZombieUnknown.Entities
             Light = new Light(mapPosition, Color.White, 4);
         }
 
-        public override float Speed
-        {
-            get { return 0; }
-        }
-
         public bool BlocksTile { get { return true; } }
         public bool BlocksDiagonals { get { return false; } }
 

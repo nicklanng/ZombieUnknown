@@ -10,7 +10,7 @@ namespace Engine.AI.BehaviorTrees.Actions
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {
-            var entity = (PhysicalEntity)blackboard["Entity"];
+            var entity = (MobileEntity)blackboard["Entity"];
             var currentPath = (List<Coordinate>)blackboard["MovementPath"];
             var nextStep = currentPath.First();
 

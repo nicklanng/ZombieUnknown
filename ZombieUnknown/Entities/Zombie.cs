@@ -7,7 +7,7 @@ using ZombieUnknown.AI;
 
 namespace ZombieUnknown.Entities
 {
-    class Zombie : PhysicalEntity
+    class Zombie : MobileEntity
     {
         private const int VisionRange = 10;
         private const int FieldOfView = 90;

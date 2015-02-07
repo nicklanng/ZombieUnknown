@@ -11,7 +11,7 @@ namespace Engine.AI.BehaviorTrees.Actions
 
         protected override GoalStatus Action(Blackboard blackboard)
         {
-            var entity = (PhysicalEntity)blackboard["Entity"];
+            var entity = (MobileEntity)blackboard["Entity"];
 
             var interactionTargetLocation = (Vector2)blackboard["InteractionTargetLocation"];
             var entities = GameState.Map.GetEntitiesAt(interactionTargetLocation);
