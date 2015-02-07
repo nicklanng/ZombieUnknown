@@ -7,6 +7,11 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
     public class SownState : State
     {
         private double _nextStateTrigger;
+
+        public SownState()
+        {
+            Transitions.Add("growing", new GrowingState());
+        }
         
         public override State Update(Entity entity)
         {
@@ -15,9 +20,7 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
 
             if (wheat.Growth > _nextStateTrigger)
             {
-                var nextState = new GrowingState();
-                nextState.OnEnter(entity);
-                return nextState;
+                return TransitionState("growing", entity);
             }
 
             return this;
@@ -33,7 +36,6 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
 
         public override void OnExit(Entity entity)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

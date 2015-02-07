@@ -7,6 +7,11 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
     public class GrowingState : State
     {
         private double _nextStateTrigger;
+
+        public GrowingState()
+        {
+            Transitions.Add("grown", new GrownState());
+        }
         
         public override State Update(Entity entity)
         {
@@ -15,9 +20,7 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
 
             if (GameState.GameTime.TotalGameTime.TotalMilliseconds > _nextStateTrigger)
             {
-                var nextState = new GrownState();
-                nextState.OnEnter(entity);
-                return nextState;
+                return TransitionState("grown", entity);
             }
 
             return this;
