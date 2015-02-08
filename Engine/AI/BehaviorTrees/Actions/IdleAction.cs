@@ -6,7 +6,7 @@ namespace Engine.AI.BehaviorTrees.Actions
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {
-            var entity = (PhysicalEntity)blackboard["Entity"];
+            var entity = (PhysicalEntity)blackboard["subject"];
             entity.TransitionState("idle");
 
             return GoalStatus.Completed;

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public class PhantomLight : Entity, ILightSource
+    public class PhantomLight : PhysicalEntity, ILightSource
     {
         public Light Light { get; private set; }
 

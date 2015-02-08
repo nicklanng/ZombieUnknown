@@ -4,23 +4,20 @@ using Engine.Entities.Interactions;
 
 namespace ZombieUnknown.Entities.Interactions
 {
-    class SowSeedInteraction : IInteraction
+    class SowSeedInteraction : Interaction
     {
-        private readonly PhysicalEntity _entity;
-
         public static string Text = "Sow Seed";
 
-        public int MillisToCompleteAction { get { return 1000; } }
+        public override int MillisToCompleteAction { get { return 1000; } }
 
-        public SowSeedInteraction(PhysicalEntity entity)
+        public SowSeedInteraction(PhysicalEntity subject) : base(subject)
         {
-            _entity = entity;
         }
 
-        public void Interact(PhysicalEntity entity)
+        public override void Interact(PhysicalEntity entity)
         {
-            GameController.DeleteEntity(_entity);
-            GameController.SpawnEntity(new Wheat("wheat", _entity.MapPosition));
+            GameController.DeleteEntity(Subject);
+            GameController.SpawnEntity(new Wheat("wheat", Subject.MapPosition));
         }
     }
 }

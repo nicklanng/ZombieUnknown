@@ -5,7 +5,7 @@ using ZombieUnknown.AI.FiniteStateMachines.Wheat;
 
 namespace ZombieUnknown.Entities
 {
-    public class Wheat : PhysicalEntity
+    public class Wheat : VisibleEntity
     {
         public double Growth = 0;
 

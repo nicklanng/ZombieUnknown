@@ -74,16 +74,21 @@
     <Compile Include="AI\FiniteStateMachines\Wheat\SownState.cs" />
     <Compile Include="AI\FiniteStateMachines\Wheat\WheatStates.cs" />
     <Compile Include="Entities\CultivatedLand.cs" />
-    <Compile Include="Entities\Food.cs" />
+    <Compile Include="Entities\FoodContainer.cs" />
     <Compile Include="Entities\Interactions\GetFoodInteraction.cs" />
     <Compile Include="Entities\Interactions\SowSeedInteraction.cs" />
     <Compile Include="Entities\Lamp.cs" />
     <Compile Include="Entities\TallGrass1.cs" />
+    <Compile Include="InventoryObjects\FoodObject.cs" />
+    <Compile Include="InventoryObjects\Wearables\Backback.cs" />
+    <Compile Include="InventoryObjects\Wearables\IWearable.cs" />
+    <Compile Include="InventoryObjects\Wearables\WearableRig.cs" />
+    <Compile Include="InventoryObjects\Wearables\WearableType.cs" />
     <Compile Include="IsometricConfiguration.cs" />
     <Compile Include="AI\HumanMind.cs" />
     <Compile Include="AI\ZombieMind.cs" />
-    <Compile Include="Entities\Human.cs" />
-    <Compile Include="Entities\Zombie.cs" />
+    <Compile Include="Entities\Mobiles\Human.cs" />
+    <Compile Include="Entities\Mobiles\Zombie.cs" />
     <Compile Include="ZombieGameMain.cs" />
     <Compile Include="Entities\Wheat.cs" />
   </ItemGroup>
@@ -99,4 +104,5 @@
       <Name>Engine</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public abstract class MobileEntity : PhysicalEntity
+    public abstract class MobileEntity : VisibleEntity
     {
         public abstract float Speed { get; }
 

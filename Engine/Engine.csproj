@@ -81,10 +81,16 @@
     <Compile Include="Drawing\VirtualScreen.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
-    <Compile Include="Entities\Interactions\IInteraction.cs" />
+    <Compile Include="Entities\Interactions\Interaction.cs" />
+    <Compile Include="Entities\VisibleEntity.cs" />
     <Compile Include="Entities\PhantomLight.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
+    <Compile Include="InventoryObjects\IInventoryObject.cs" />
+    <Compile Include="InventoryObjects\IStorage.cs" />
+    <Compile Include="InventoryObjects\Size.cs" />
+    <Compile Include="InventoryObjects\Storage.cs" />
+    <Compile Include="InventoryObjects\StorageLocation.cs" />
     <Compile Include="Manual2dCamera.cs" />
     <Compile Include="EngineSettings.cs" />
     <Compile Include="Entities\Entity.cs" />

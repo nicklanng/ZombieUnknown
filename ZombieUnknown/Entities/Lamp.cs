@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace ZombieUnknown.Entities
 {
-    public class Lamp : PhysicalEntity, ILightSource, IMovementBlocker
+    public class Lamp : VisibleEntity, ILightSource, IMovementBlocker
     {
         public Light Light { get; private set; }
 

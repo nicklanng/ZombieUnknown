@@ -8,7 +8,7 @@ namespace Engine.AI.BehaviorTrees
     {
         public Blackboard(Entity entity)
         {
-            this["Entity"] = entity;
+            this["subject"] = entity;
             this["Tree"] = new Dictionary<Guid, GoalStatus>();
         }
 

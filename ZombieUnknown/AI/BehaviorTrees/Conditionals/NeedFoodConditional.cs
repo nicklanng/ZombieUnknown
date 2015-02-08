@@ -1,6 +1,7 @@
 ﻿using Engine.AI.BehaviorTrees;
 using Engine.AI.BehaviorTrees.Conditionals;
 using ZombieUnknown.Entities;
+using ZombieUnknown.Entities.Mobiles;
 
 namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
 {
@@ -8,7 +9,7 @@ namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
     {
         protected override bool Test(Blackboard blackboard)
         {
-            var human = (Human)blackboard["Entity"];
+            var human = (Human)blackboard["subject"];
             if (human == null)
             {
                 return false;

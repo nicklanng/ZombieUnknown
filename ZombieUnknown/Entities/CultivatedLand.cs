@@ -7,7 +7,7 @@ using ZombieUnknown.Entities.Interactions;
 
 namespace ZombieUnknown.Entities
 {
-    public class CultivatedLand : PhysicalEntity
+    public class CultivatedLand : VisibleEntity
     {
         public CultivatedLand(string name, Coordinate mapPosition) 
             : base(name, ResourceManager.GetSprite("cultivatedLand"), mapPosition)
@@ -31,11 +31,11 @@ namespace ZombieUnknown.Entities
             }
         }
 
-        protected override Dictionary<string, IInteraction> InteractionList
+        protected override Dictionary<string, Interaction> InteractionList
         {
             get
             {
-                return new Dictionary<string, IInteraction>
+                return new Dictionary<string, Interaction>
                 {
                     { SowSeedInteraction.Text, new SowSeedInteraction(this) }
                 };

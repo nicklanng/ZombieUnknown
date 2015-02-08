@@ -1,21 +1,30 @@
 ﻿using Engine.Entities;
 using Engine.Entities.Interactions;
+using ZombieUnknown.Entities.Mobiles;
+using ZombieUnknown.InventoryObjects;
 
 namespace ZombieUnknown.Entities.Interactions
 {
-    public class GetFoodInteraction : IInteraction
+    public class GetFoodInteraction : Interaction
     {
         public static string Text = "Get Food";
 
-        public int MillisToCompleteAction { get { return 2000; } }
+        public override int MillisToCompleteAction { get { return 2000; } }
 
-        public void Interact(PhysicalEntity entity)
+        public GetFoodInteraction(PhysicalEntity subject) 
+            : base(subject)
         {
-            var human = (Human)entity;
+        }
+
+        public override void Interact(PhysicalEntity actor)
+        {
+            var human = (Human)actor;
             if (human != null)
             {
                 human.Hunger = 60;
+                human.GiveItem(new FoodObject());
             }
+
         }
     }
 }

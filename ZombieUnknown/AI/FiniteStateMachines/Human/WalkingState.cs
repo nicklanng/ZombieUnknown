@@ -12,7 +12,7 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Human
 
         public override void OnEnter(Entity entity)
         {
-            ((PhysicalEntity)entity).SetAnimation("walk");
+            ((VisibleEntity)entity).SetAnimation("walk");
         }
 
         public override void OnExit(Entity entity)

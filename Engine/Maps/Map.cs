@@ -10,7 +10,7 @@ namespace Engine.Maps
     public class Map : IDrawingProvider
     {
         private readonly Tile[,] _tiles;
-        private readonly List<Entity> _entities;
+        private readonly List<PhysicalEntity> _entities;
 
         public List<ILightSource> Lights { get; private set; }
         public short Width { get; private set; }
@@ -22,7 +22,7 @@ namespace Engine.Maps
             Height = height;
 
             _tiles = tiles;
-            _entities = new List<Entity>();
+            _entities = new List<PhysicalEntity>();
             Lights = new List<ILightSource>();
         }
 
@@ -51,8 +51,8 @@ namespace Engine.Maps
 
             return _tiles[coordinate.X, coordinate.Y];
         }
-        
-        public void AddEntity(Entity entity)
+
+        public void AddEntity(PhysicalEntity entity)
         {
             _entities.Add(entity);
 
@@ -65,7 +65,7 @@ namespace Engine.Maps
             Lights.Add(lightEntity);
         }
 
-        public void RemoveEntity(Entity entity)
+        public void RemoveEntity(PhysicalEntity entity)
         {
             _entities.Remove (entity);
 
@@ -77,7 +77,7 @@ namespace Engine.Maps
             Lights.Remove (lightEntity);
         }
 
-        public List<Entity> GetEntitiesAt(Vector2 mapPosition) 
+        public List<PhysicalEntity> GetEntitiesAt(Vector2 mapPosition) 
         {
             return _entities.Where(x => x.MapPosition == mapPosition).ToList();
         }

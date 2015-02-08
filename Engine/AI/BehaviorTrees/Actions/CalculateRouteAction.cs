@@ -9,7 +9,7 @@ namespace Engine.AI.BehaviorTrees.Actions
         protected override GoalStatus Action(Blackboard blackboard)
         {
             var aStarSolver = new AStarSolver(
-                GameState.PathfindingMap.GetNodeAt(((PhysicalEntity) blackboard["Entity"]).MapPosition), 
+                GameState.PathfindingMap.GetNodeAt(((PhysicalEntity) blackboard["subject"]).MapPosition), 
                 GameState.PathfindingMap.GetNodeAt((Coordinate) blackboard["TargetCoordinate"])
             );
             var solutionFound = aStarSolver.Solve();

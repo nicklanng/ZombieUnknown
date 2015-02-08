@@ -2,10 +2,9 @@
 using Engine.Entities;
 using Engine.Maps;
 using Engine.Sprites;
-using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
 
-namespace ZombieUnknown.Entities
+namespace ZombieUnknown.Entities.Mobiles
 {
     class Zombie : MobileEntity
     {

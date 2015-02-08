@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZombieUnknown.AI.BehaviorTrees;
-using ZombieUnknown.AI.FiniteStateMachines;
 using ZombieUnknown.Entities;
+using ZombieUnknown.Entities.Mobiles;
 using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown
@@ -208,7 +208,7 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 2; i++)
+            for (var i = 0; i < 1; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -216,7 +216,7 @@ namespace ZombieUnknown
                 _map.AddEntity(h);
             }
 
-            var food = new Food("food", new Coordinate(13, 15));
+            var food = new FoodContainer("food", new Coordinate(13, 15));
             _map.AddEntity(food);
             _pathfindingMap.AddBlockage(food);
 

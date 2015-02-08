@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Sprites;
@@ -9,8 +8,6 @@ namespace Engine.Maps
 {
     public class Tile : IDrawingProvider
     {
-        private List<Entity> _entities;
-
         private Sprite _leftWallSprite;
         private Sprite _rightWallSprite;
         private Sprite _wallJoinSprite;
@@ -44,7 +41,6 @@ namespace Engine.Maps
             _rightWallSprite = rightWall;
             _wallJoinSprite = wallJoinSprite;
 
-            _entities = new List<Entity>();
             Light = Color.White;
         }
 
@@ -54,28 +50,8 @@ namespace Engine.Maps
             if (_rightWallSprite != null) _rightWallSprite.Update();
             if (_wallJoinSprite != null) _wallJoinSprite.Update();
             if (_floorSprite != null) _floorSprite.Update();
-
-            _entities.ForEach(x => x.Update());
         }
-
-        public void AddEntity(Entity entity)
-        {
-            var moveableEntity = entity as PhysicalEntity;
-            if (moveableEntity != null)
-            {
-                PhysicalEntity = moveableEntity;
-            }
-
-            _entities.Add(entity);
-            
-            _entities = new List<Entity>(_entities.OrderBy(x => x.ZIndex));
-        }
-
-        public void RemoveEntity(Entity entity)
-        {
-            _entities.Remove(entity);
-        }
-
+        
         public IEnumerable<DrawingRequest> GetDrawings()
         {
             if (_floorSprite != null)
