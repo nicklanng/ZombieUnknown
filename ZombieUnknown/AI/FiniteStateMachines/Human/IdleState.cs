@@ -5,6 +5,8 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Human
 {
     class IdleState : State
     {
+        public override string Name { get { return "Idle"; } }
+
         public override State Update(Entity entity)
         {
             return this;

@@ -60,11 +60,17 @@
     <None Include="ZombieUnknown.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\BehaviorTrees\Actions\DieAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetFoodInteractAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\SowSeedInteractAction.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
-    <Compile Include="AI\BehaviorTrees\Conditionals\NeedFoodConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\HasFoodConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\IsDeadConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\ShouldDieConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\NeedToEatConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\SubTrees\TryToDieSubTree.cs" />
+    <Compile Include="AI\FiniteStateMachines\Human\DyingState.cs" />
     <Compile Include="AI\FiniteStateMachines\Human\HumanStates.cs" />
     <Compile Include="AI\FiniteStateMachines\Human\IdleState.cs" />
     <Compile Include="AI\FiniteStateMachines\Human\InteractingState.cs" />
@@ -74,6 +80,7 @@
     <Compile Include="AI\FiniteStateMachines\Wheat\SownState.cs" />
     <Compile Include="AI\FiniteStateMachines\Wheat\WheatStates.cs" />
     <Compile Include="Entities\CultivatedLand.cs" />
+    <Compile Include="Entities\DeadHuman.cs" />
     <Compile Include="Entities\FoodContainer.cs" />
     <Compile Include="Entities\Interactions\GetFoodInteraction.cs" />
     <Compile Include="Entities\Interactions\SowSeedInteraction.cs" />

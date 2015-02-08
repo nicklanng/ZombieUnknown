@@ -18,7 +18,7 @@
                 return result;
             }
 
-            return GoalStatus.Active;
+            return GoalStatus.Running;
         }
     }
 }

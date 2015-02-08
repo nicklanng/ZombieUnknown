@@ -16,7 +16,7 @@
                     return result;
                 }
 
-                if (result == GoalStatus.Active)
+                if (result == GoalStatus.Running)
                 {
                     return result;
                 }

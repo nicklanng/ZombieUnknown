@@ -5,6 +5,7 @@ namespace Engine.AI.BehaviorTrees
 	public abstract class BehaviorComponent
 	{
         protected Guid Guid = Guid.NewGuid();
+        protected bool EvaluateEveryTime = false;
 
         protected GoalStatus SavedResult { get; set; }
 
@@ -24,7 +25,10 @@ namespace Engine.AI.BehaviorTrees
 	        }
 
 	        var result = OnUpdate(blackboard);
-            blackboard.TreeStatus[Guid] = result;
+	        blackboard.TreeStatus[Guid] = result;
+            
+            if (EvaluateEveryTime) Reset(blackboard);
+
 	        return result;
 	    }
 

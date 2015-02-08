@@ -7,7 +7,9 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
     public class SownState : State
     {
         private double _nextStateTrigger;
-        
+
+        public override string Name { get { return "Sown"; } }
+
         public override State Update(Entity entity)
         {
             var wheat = (Entities.Wheat)entity;

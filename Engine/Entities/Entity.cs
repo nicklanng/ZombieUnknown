@@ -1,5 +1,4 @@
 ﻿using Engine.AI.FiniteStateMachines;
-using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
@@ -8,7 +7,6 @@ namespace Engine.Entities
         protected State CurrentState;
 
         public string Name { get; private set; }
-
 
         protected Entity(string name)
         {

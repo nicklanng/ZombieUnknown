@@ -5,6 +5,8 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
 {
     public class GrownState : State
     {
+        public override string Name { get { return "Grown"; } }
+
         public override State Update(Entity entity)
         {
             return this;

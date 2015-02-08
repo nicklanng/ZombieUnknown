@@ -3,7 +3,7 @@
     public enum GoalStatus
     {
         Inactive,
-        Active,
+        Running,
         Completed,
         Failed
     }

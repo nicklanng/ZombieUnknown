@@ -432,6 +432,30 @@
       "x" : "224",
       "y" : "320"
     },
+	{ "height" : "40",
+      "name" : "dying0",
+      "width" : "32",
+      "x" : "0",
+      "y" : "360"
+    },
+    { "height" : "40",
+      "name" : "dying1",
+      "width" : "32",
+      "x" : "32",
+      "y" : "360"
+    },
+    { "height" : "40",
+      "name" : "dying2",
+      "width" : "32",
+      "x" : "64",
+      "y" : "360"
+    },
+    { "height" : "40",
+      "name" : "dead",
+      "width" : "32",
+      "x" : "96",
+      "y" : "360"
+    },
     { "height" : "40",
       "name" : "interactNorth",
       "width" : "32",

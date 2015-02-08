@@ -115,9 +115,8 @@ namespace ZombieUnknown
             var itemsSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/items");
             var agricultureSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/agriculture");
             var debugTileNetworkSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/debug-tile-network");
-
-
-
+            var humanSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/civf");
+            
             var terrainSprites = new List<Sprite>
             {
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "grass"),
@@ -137,8 +136,11 @@ namespace ZombieUnknown
             var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), "join");
             ResourceManager.RegisterSprite(externalJoinWallSprite);
 
-            var humanSprite = BuildHumanSprite();
+            var humanSprite = BuildHumanSprite(humanSpriteSheet);
             ResourceManager.RegisterSprite(humanSprite);
+
+            var deadHumansprite = new StaticSprite("deadHuman", humanSpriteSheet, new Vector2(16, 32), "dead");
+            ResourceManager.RegisterSprite(deadHumansprite);
 
             var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), "food");
             ResourceManager.RegisterSprite(foodSprite);
@@ -208,7 +210,7 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 2000; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -255,10 +257,8 @@ namespace ZombieUnknown
             //GameState.MainCharacter = human;
         }
 
-        private AnimatedSprite BuildHumanSprite()
+        private AnimatedSprite BuildHumanSprite(SpriteSheet humanSpriteSheet)
         {
-            var humanSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/civf");
-
             var humanAnimationList = new AnimationList();
             var idleSouthEast = new Animation(AnimationType.RunOnce);
             idleSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("idleSouthEast"), 1.0));
@@ -437,6 +437,13 @@ namespace ZombieUnknown
             runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest6"), 0.06));
             runNorthWest.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("walkNorthWest7"), 0.06));
 
+
+            var dying = new Animation(AnimationType.RunOnce);
+            dying.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("dying0"), 0.2));
+            dying.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("dying1"), 0.2));
+            dying.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("dying2"), 0.2));
+            dying.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("dead"), 0.2));
+
             var interactSouthEast = new Animation(AnimationType.RunOnce);
             interactSouthEast.AddFrame(new AnimationFrame(humanSpriteSheet.GetFrameRectangle("interactSouthEast"), 1.0));
             var interactSouth = new Animation(AnimationType.RunOnce);
@@ -480,6 +487,15 @@ namespace ZombieUnknown
             humanAnimationList.Add("runSouthWest", runSouthWest);
             humanAnimationList.Add("runWest", runWest);
             humanAnimationList.Add("runNorthWest", runNorthWest);
+
+            humanAnimationList.Add("dyingNorth", dying);
+            humanAnimationList.Add("dyingNorthEast", dying);
+            humanAnimationList.Add("dyingEast", dying);
+            humanAnimationList.Add("dyingSouthEast", dying);
+            humanAnimationList.Add("dyingSouth", dying);
+            humanAnimationList.Add("dyingSouthWest", dying);
+            humanAnimationList.Add("dyingWest", dying);
+            humanAnimationList.Add("dyingNorthWest", dying);
 
             humanAnimationList.Add("interactSouthEast", interactSouthEast);
             humanAnimationList.Add("interactSouth", interactSouth);

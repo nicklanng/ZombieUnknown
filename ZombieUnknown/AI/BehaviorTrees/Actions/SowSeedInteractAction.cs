@@ -1,4 +1,5 @@
 ﻿using Engine.AI.BehaviorTrees.Actions;
+using ZombieUnknown.Entities.Interactions;
 
 namespace ZombieUnknown.AI.BehaviorTrees.Actions
 {
@@ -6,7 +7,7 @@ namespace ZombieUnknown.AI.BehaviorTrees.Actions
     {
         protected override string InteractionText
         {
-            get { return "Sow Seed"; }
+            get { return SowSeedInteraction.Text; }
         }
     }
 }

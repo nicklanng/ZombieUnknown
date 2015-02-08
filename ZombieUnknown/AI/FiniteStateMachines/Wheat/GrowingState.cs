@@ -8,6 +8,8 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
     {
         private double _nextStateTrigger;
 
+        public override string Name { get { return "Growing"; } }
+
         public override State Update(Entity entity)
         {
             var wheat = (Entities.Wheat)entity;

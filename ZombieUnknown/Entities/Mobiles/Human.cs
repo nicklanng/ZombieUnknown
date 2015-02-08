@@ -15,17 +15,17 @@ namespace ZombieUnknown.Entities.Mobiles
 {
     class Human : MobileEntity
     {
-        private readonly WearableRig _rig;
         private readonly HumanMind _mind;
 
+        public WearableRig Rig { get; private set; }
         public double Hunger { get; set; }
         public override float Speed { get { return 15; } }
 
         public Human(string name, Coordinate mapPosition)
             : base(name, ResourceManager.GetSprite("human"), mapPosition)
         {
-            _rig = new WearableRig();
-            _rig.PutOn(new Backback());
+            Rig = new WearableRig();
+            Rig.PutOn(new Backback());
 
             _mind = new HumanMind(this);
 
@@ -34,7 +34,7 @@ namespace ZombieUnknown.Entities.Mobiles
             CurrentState = HumanStates.Instance.IdleState;
             CurrentState.OnEnter(this);
 
-            Hunger = 20;
+            Hunger = 5;
         }
 
         public override void Update()
@@ -43,7 +43,6 @@ namespace ZombieUnknown.Entities.Mobiles
             CurrentState.Update(this);
 
             Hunger -= GameState.GameTime.ElapsedGameTime.TotalSeconds;
-            Console.WriteLine("Hunger: " + Math.Ceiling(Hunger));
 
             base.Update();
         }
@@ -55,7 +54,7 @@ namespace ZombieUnknown.Entities.Mobiles
 
         public void GiveItem(IInventoryObject inventoryObject)
         {
-            var inventories = _rig.GetInventories();
+            var inventories = Rig.GetInventories();
             foreach (var inventory in inventories)
             {
                 var availableSlot = inventory.GetAvailableSlot(inventoryObject);
@@ -65,6 +64,11 @@ namespace ZombieUnknown.Entities.Mobiles
                     return;
                 }
             }
+        }
+
+        public string GetCurrentStateName()
+        {
+            return CurrentState.Name;
         }
     }
 }

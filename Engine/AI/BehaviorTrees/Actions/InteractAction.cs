@@ -43,10 +43,10 @@ namespace Engine.AI.BehaviorTrees.Actions
 
                 blackboard["TimeWhenInteractionFinished"] = GameState.GameTime.TotalGameTime.TotalMilliseconds + interactionAction.MillisToCompleteAction;
 
-                return GoalStatus.Active;
+                return GoalStatus.Running;
             }
 
-            if (SavedResult == GoalStatus.Active)
+            if (SavedResult == GoalStatus.Running)
             {
                 var timeWhenInteractionFinished = (double)blackboard["TimeWhenInteractionFinished"];
                 var timeNow = GameState.GameTime.TotalGameTime.TotalMilliseconds;
@@ -60,7 +60,7 @@ namespace Engine.AI.BehaviorTrees.Actions
                 }
             }
             
-            return GoalStatus.Active;
+            return GoalStatus.Running;
         }
     }
 }

@@ -53,5 +53,17 @@ namespace Engine.Entities
 
             animatedSprite.SetAnimation(CurrentAnimationType, GameState.GameTime);
         }
+
+        public bool IsAnimationComplete()
+        {
+            var animatedSprite = Sprite as AnimatedSprite;
+
+            if (animatedSprite == null)
+            {
+                return true;
+            }
+
+            return animatedSprite.IsAnimationComplete();
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace Engine.AI.FiniteStateMachines
 {
     public abstract class State
     {
+        public abstract string Name { get; }
+
         protected Dictionary<string, State> Transitions = new Dictionary<string, State>();
         
         public abstract State Update(Entity entity);

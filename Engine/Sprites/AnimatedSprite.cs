@@ -9,6 +9,7 @@ namespace Engine.Sprites
         private Animation _currentAnimation;
         private TimeSpan _timeEnteredAnimationFrame;
         private int _frameIndex;
+        private bool _animationComplete;
 
         public AnimatedSprite(string name, SpriteSheet spriteSheet, Vector2 center, AnimationList animationList)
             : base(name, spriteSheet, center)
@@ -20,8 +21,11 @@ namespace Engine.Sprites
 
         public override void Update()
         {
+            _animationComplete = false;
+
             if (_currentAnimation.AnimationType == AnimationType.RunOnce && _frameIndex == _currentAnimation.NumberOfFrames - 1)
             {
+                _animationComplete = true;
                 return;
             }
 
@@ -40,9 +44,14 @@ namespace Engine.Sprites
         public void SetAnimation(string animationName, GameTime gameTime)
         {
             _currentAnimation = _animationList.GetAnimation(animationName);
-            _frameIndex = _frameIndex % _currentAnimation.NumberOfFrames;
+            _frameIndex = 0;
             SpriteSheetRectangle = _currentAnimation[_frameIndex].Frame;
             _timeEnteredAnimationFrame = gameTime.TotalGameTime;
+        }
+
+        public bool IsAnimationComplete()
+        {
+            return _animationComplete;
         }
     }
 }

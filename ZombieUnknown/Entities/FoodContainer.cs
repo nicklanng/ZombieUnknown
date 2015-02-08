@@ -21,10 +21,7 @@ namespace ZombieUnknown.Entities
             : base(name, ResourceManager.GetSprite("food"), mapPosition)
         {
             Storage = new Storage(new Size(7, 9));
-            Storage.Insert(new StorageLocation(0, 0), new FoodObject());
-            Storage.Insert(new StorageLocation(0, 1), new FoodObject());
-            Storage.Insert(new StorageLocation(4, 2), new FoodObject());
-            Storage.Insert(new StorageLocation(1, 5), new FoodObject());
+            //Storage.Insert(new StorageLocation(1, 5), new FoodObject());
         }
 
         public override AccessPosition[] AccessPositions

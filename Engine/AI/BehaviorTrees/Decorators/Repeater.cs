@@ -15,7 +15,7 @@
                 Reset(blackboard);
             }
 
-            return GoalStatus.Active;
+            return GoalStatus.Running;
         }
     }
 }

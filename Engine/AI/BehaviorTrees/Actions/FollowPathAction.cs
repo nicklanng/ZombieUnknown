@@ -34,12 +34,13 @@ namespace Engine.AI.BehaviorTrees.Actions
             {
                 entity.MapPosition = nextStep;
                 blackboard["MovementPath"] = currentPath.Skip(1).ToList();
+                entity.TransitionState("idle");
                 return GoalStatus.Completed;
             }
 
             entity.MapPosition += moveAmount;
 
-            return GoalStatus.Active;
+            return GoalStatus.Running;
         }
 
         private static Vector2 GetDirectionVector(Vector2 currentPosition, Vector2 targetPosition)
