@@ -134,7 +134,7 @@
     <Compile Include="AI\BehaviorTrees\Actions\FollowPathAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\InteractAction.cs" />
     <Compile Include="Entities\AccessPosition.cs" />
-    <Compile Include="AI\BehaviorTrees\Actions\GetInteractionObjectAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\GetFoodSource.cs" />
     <Compile Include="AI\FiniteStateMachines\State.cs" />
     <Compile Include="AI\FiniteStateMachines\FiniteStateMachine.cs" />
     <Compile Include="Entities\MobileEntity.cs" />

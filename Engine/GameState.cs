@@ -15,6 +15,8 @@ namespace Engine
         public static GraphicsDevice GraphicsDevice { get; set; }
         public static Entity MainCharacter { get; set; }
         public static Random RandomNumberGenerator = new Random();
+
         public static PhysicalEntity InteractionObject { get; set; } // temporary
+        public static PhysicalEntity ZombieTarget { get; set; } // temporary
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Engine.Maps;
 
 namespace Engine.AI.BehaviorTrees.Actions
 {
-    public class GetInteractionObjectAction : BehaviorAction
+    public class GetFoodSource : BehaviorAction
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {

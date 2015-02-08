@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Engine;
 using Engine.Drawing;
 using Engine.Entities;
@@ -9,7 +8,6 @@ using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
 using ZombieUnknown.AI.FiniteStateMachines.Human;
 using ZombieUnknown.InventoryObjects.Wearables;
-using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
@@ -34,7 +32,7 @@ namespace ZombieUnknown.Entities.Mobiles
             CurrentState = HumanStates.Instance.IdleState;
             CurrentState.OnEnter(this);
 
-            Hunger = 5;
+            Hunger = 20;
         }
 
         public override void Update()

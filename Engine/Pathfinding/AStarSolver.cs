@@ -7,6 +7,7 @@ namespace Engine.Pathfinding
 {
     public class AStarSolver
     {
+        private readonly int _maxPathLength;
         private readonly Node _startingNode;
         private readonly Node _endingNode;
 
@@ -16,6 +17,12 @@ namespace Engine.Pathfinding
         {
             _startingNode = startingNode;
             _endingNode = endingNode;
+        }
+
+        public AStarSolver(Node startingNode, Node endingNode, int maxPathLength) 
+            : this(startingNode, endingNode)
+        {
+            _maxPathLength = maxPathLength;
         }
 
         public bool Solve()
@@ -43,22 +50,26 @@ namespace Engine.Pathfinding
                 if (path.LastStep.Equals(destination))
                     return path;
                 closed.Add(path.LastStep);
+                if (_maxPathLength > 1 && path.Count() == _maxPathLength)
+                {
+                    return path;
+                }
                 foreach (var neighbor in path.LastStep.Neighbors)
                 {
                     var d = path.TotalCost + GetStepCost(path.LastStep, neighbor);
                     var newPath = path.AddStep(neighbor, d);
-                    queue.Enqueue(newPath.TotalCost + CalculateManhattenHeuristic(neighbor), newPath);
+                    queue.Enqueue(newPath.TotalCost + CalculateHeuristic(neighbor), newPath);
                 }
             }
             return null;
         }
 
-        private int CalculateManhattenHeuristic(Node currentNode)
+        private int CalculateHeuristic(Node currentNode)
         {
             var x = Math.Abs(_endingNode.Coordinate.X - currentNode.Coordinate.X);
             var y = Math.Abs(_endingNode.Coordinate.Y - currentNode.Coordinate.Y);
-
-            return x + y;
+            
+            return 10 * (x + y) - 4 * Math.Abs(x - y);
         }
 
         private int GetStepCost(Node lastStep, Node thisStep)

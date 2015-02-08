@@ -62,7 +62,10 @@
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\Actions\DieAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetFoodInteractAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\GetFoodSourceAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\GetHumanAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\SowSeedInteractAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\ZombieCalculateRouteAction.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\HasFoodConditional.cs" />

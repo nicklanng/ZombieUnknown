@@ -1,35 +1,32 @@
-﻿using Engine.AI.Senses;
+﻿using Engine;
+using Engine.AI.Senses;
 using Engine.Entities;
 using Engine.Maps;
-using Engine.Sprites;
 using ZombieUnknown.AI;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
     class Zombie : MobileEntity
     {
-        private const int VisionRange = 10;
-        private const int FieldOfView = 90;
+        private readonly ZombieMind _mind;
 
         public override float Speed
         {
-            get { return 5; }
+            get { return 10; }
         }
 
-        public ZombieMind Mind { get; private set; }
         public Vision Vision { get; private set; }
 
-        public Zombie(string name, Sprite sprite, Coordinate mapPosition)
-            : base(name, sprite, mapPosition)
+        public Zombie(string name, Coordinate mapPosition)
+            : base(name, ResourceManager.GetSprite("zombie"), mapPosition)
         {
-            Vision = new Vision(VisionRange, FieldOfView);
-            Mind = new ZombieMind(this);
+            _mind = new ZombieMind(this);
             IsStatic = false;
         }
 
         public override void Update()
         {
-            Mind.Think();
+            _mind.Think();
 
             base.Update();
         }

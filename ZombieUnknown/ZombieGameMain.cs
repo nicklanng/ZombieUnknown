@@ -59,7 +59,7 @@ namespace ZombieUnknown
             };
 
             //Window.IsBorderless = true;
-            #endif
+#endif
  
 
             _graphics.SynchronizeWithVerticalRetrace = false;
@@ -124,6 +124,7 @@ namespace ZombieUnknown
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2")
             };
             var zombieSprite = BuildZombieSprite();
+            ResourceManager.RegisterSprite(zombieSprite);
 
             var font = new Font(fontSpriteSheet);
 
@@ -210,12 +211,22 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 2000; i++)
+            for (var i = 0; i < 1; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
                 var h = new Human("human" + i, new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
+
+                GameState.ZombieTarget = h;
+            }
+
+            for (var i = 0; i < 50; i++)
+            {
+                var newLocationX = rand.Next(GameState.Map.Width);
+                var newLocationY = rand.Next(GameState.Map.Height);
+                var zombie = new Zombie("zombie" + i, new Coordinate(newLocationX, newLocationY));
+                _map.AddEntity(zombie);
             }
 
             var food = new FoodContainer("food", new Coordinate(13, 15));
