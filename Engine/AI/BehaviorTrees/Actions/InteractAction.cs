@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Engine.Entities;
-using Engine.Maps;
 using Microsoft.Xna.Framework;
 
 namespace Engine.AI.BehaviorTrees.Actions
@@ -15,7 +14,7 @@ namespace Engine.AI.BehaviorTrees.Actions
 
             var interactionTargetLocation = (Vector2)blackboard["InteractionTargetLocation"];
             var entities = GameState.Map.GetEntitiesAt(interactionTargetLocation);
-            var interactionTarget = (IInteractable)entities.SingleOrDefault(x => x is IInteractable);
+            var interactionTarget = (PhysicalEntity)entities.Last(x => x is PhysicalEntity);
             if (interactionTarget == null) 
             {
                 return GoalStatus.Failed;

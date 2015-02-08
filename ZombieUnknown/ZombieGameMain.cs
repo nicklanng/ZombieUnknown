@@ -84,6 +84,8 @@ namespace ZombieUnknown
 #endif
 
             _camera = new Camera(new Vector2(_virtualScreen.VirtualWidth, _virtualScreen.VirtualHeight), 100, new IsometricConfiguration());
+            _camera.ScreenCenterPosition = new Vector2(3, 143);
+
             _drawingManager = new DrawingManager(_camera);
             _uiManager = new UIManager();
 
@@ -206,11 +208,11 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 2; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
-                var h = new Human("human", new Coordinate(newLocationX, newLocationY));
+                var h = new Human("human" + i, new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
             }
 
@@ -221,6 +223,10 @@ namespace ZombieUnknown
             var lamp = new Lamp("lamp", new Coordinate(13, 14));
             _map.AddEntity(lamp);
             _pathfindingMap.AddBlockage(lamp);
+
+            var lamp2 = new Lamp("lamp2", new Coordinate(13, 4));
+            _map.AddEntity(lamp2);
+            _pathfindingMap.AddBlockage(lamp2);
 
             var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 3));
             _map.AddEntity(cultivatedLand);

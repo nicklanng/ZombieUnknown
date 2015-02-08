@@ -14,6 +14,7 @@ namespace ZombieUnknown.AI
             _blackboard = new Blackboard(entity);
 
             _behavior = BehaviorTreeStore.HumanBehavior;
+
         }
 
         public void Think()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Engine.AI.FiniteStateMachines;
 using Engine.Drawing;
-using Engine.Maps;
+using Engine.Entities.Interactions;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
@@ -53,6 +54,30 @@ namespace Engine.Entities
             }
 
             animatedSprite.SetAnimation(CurrentAnimationType, GameState.GameTime);
+        }
+        
+        public virtual AccessPosition[] AccessPositions
+        {
+            get { return new AccessPosition[0]; }
+        }
+
+        protected virtual Dictionary<string, IInteraction> InteractionList
+        {
+            get { return new Dictionary<string, IInteraction>(); }
+        }
+
+        public Dictionary<string, IInteraction> Interactions
+        {
+            get
+            {
+                if (CurrentState is IInteractableState)
+                {
+                    var interactableState = (IInteractableState)CurrentState;
+                    return interactableState.Interactions;
+                }
+
+                return InteractionList;
+            }
         }
     }
 }

@@ -48,11 +48,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="MonoGame.Framework">
       <HintPath>..\packages\MonoGame.Binaries.3.2.0\build\MonoMac\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -71,6 +66,7 @@
     <Compile Include="AI\BehaviorTrees\Decorators\RepeaterUntilFail.cs" />
     <Compile Include="AI\BehaviorTrees\Composites\Sequence.cs" />
     <Compile Include="AI\BehaviorTrees\SubTrees\FollowPathSubTree.cs" />
+    <Compile Include="AI\FiniteStateMachines\IInteractableState.cs" />
     <Compile Include="AI\GoalStatus.cs" />
     <Compile Include="AI\Senses\Sense.cs" />
     <Compile Include="AI\Senses\Vision.cs" />
@@ -131,7 +127,6 @@
     <Compile Include="AI\BehaviorTrees\Actions\CalculateRouteAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\FollowPathAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\InteractAction.cs" />
-    <Compile Include="Entities\IInteractable.cs" />
     <Compile Include="Entities\AccessPosition.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetInteractionObjectAction.cs" />
     <Compile Include="AI\FiniteStateMachines\State.cs" />

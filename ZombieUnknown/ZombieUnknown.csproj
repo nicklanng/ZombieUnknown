@@ -88,16 +88,10 @@
     <Compile Include="Entities\Wheat.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Lidgren.Network">
-      <HintPath>..\packages\MonoGame.Binaries.3.2.0\build\$(MonogamePlatform)\Lidgren.Network.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>..\packages\MonoGame.Binaries.3.2.0\build\$(MonogamePlatform)\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="Tao.Sdl">
-      <HintPath>..\packages\MonoGame.Binaries.3.2.0\build\$(MonogamePlatform)\Tao.Sdl.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.csproj">

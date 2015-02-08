@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine;
-using Engine.AI.FiniteStateMachines;
 using Engine.AI.Senses;
 using Engine.Drawing;
 using Engine.Entities;
@@ -33,7 +32,7 @@ namespace ZombieUnknown.Entities
             CurrentState = HumanStates.Instance.IdleState;
             CurrentState.OnEnter(this);
 
-            Hunger = 21;
+            Hunger = 50;
         }
 
         public override void Update()

@@ -7,14 +7,14 @@ namespace ZombieUnknown.Entities.Interactions
     {
         public static string Text = "Get Food";
 
-        public int MillisToCompleteAction { get { return 2000; } }
+        public int MillisToCompleteAction { get { return 100; } }
 
         public void Interact(PhysicalEntity entity)
         {
             var human = (Human)entity;
             if (human != null)
             {
-                human.Hunger += 50;
+                human.Hunger = 60;
             }
         }
     }

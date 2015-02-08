@@ -10,6 +10,8 @@ namespace Engine.AI.BehaviorTrees
 
 	    public GoalStatus Update(Blackboard blackboard)
 	    {
+            SavedResult = GoalStatus.Inactive;
+
 	        var treeState = blackboard.TreeStatus;
 	        if (treeState.ContainsKey(Guid))
 	        {
@@ -33,7 +35,6 @@ namespace Engine.AI.BehaviorTrees
 	        {
 	            treeState.Remove(Guid);
 	        }
-	        SavedResult = GoalStatus.Inactive;
 	    }
 
 	    protected abstract GoalStatus OnUpdate(Blackboard blackboard);

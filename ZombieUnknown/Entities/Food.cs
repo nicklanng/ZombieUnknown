@@ -8,7 +8,7 @@ using ZombieUnknown.Entities.Interactions;
 
 namespace ZombieUnknown.Entities
 {
-    class Food : PhysicalEntity, IMovementBlocker, IInteractable
+    class Food : PhysicalEntity, IMovementBlocker
     {
         public Food(string name, Coordinate mapPosition) 
             : base(name, ResourceManager.GetSprite("food"), mapPosition)
@@ -18,13 +18,14 @@ namespace ZombieUnknown.Entities
         public bool BlocksTile { get { return true; } }
         public bool BlocksDiagonals { get { return true; } }
 
-        public AccessPosition[] AccessPositions {
+        public override AccessPosition[] AccessPositions
+        {
             get {
                 return new [] {new AccessPosition (Direction.South.Coordinate, Direction.North)};
             }
         }
 
-        public Dictionary<string, IInteraction> Interactions
+        protected override Dictionary<string, IInteraction> InteractionList
         {
             get { 
                 return new Dictionary<string, IInteraction>
