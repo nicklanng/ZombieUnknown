@@ -45,7 +45,7 @@ namespace Engine.Pathfinding
                 closed.Add(path.LastStep);
                 foreach (var neighbor in path.LastStep.Neighbors)
                 {
-                    var d = path.TotalCost + 10; // diagnoals?
+                    var d = path.TotalCost + GetStepCost(path.LastStep, neighbor);
                     var newPath = path.AddStep(neighbor, d);
                     queue.Enqueue(newPath.TotalCost + CalculateManhattenHeuristic(neighbor), newPath);
                 }
@@ -59,6 +59,20 @@ namespace Engine.Pathfinding
             var y = Math.Abs(_endingNode.Coordinate.Y - currentNode.Coordinate.Y);
 
             return x + y;
+        }
+
+        private int GetStepCost(Node lastStep, Node thisStep)
+        {
+            var movementCoordinate = thisStep.Coordinate - lastStep.Coordinate;
+            var direction = Direction.CoordinateDirectionMap[movementCoordinate];
+
+            if (direction == Direction.NorthEast || direction == Direction.NorthWest ||
+                direction == Direction.SouthEast || direction == Direction.SouthWest)
+            {
+                return 14;
+            }
+
+            return 10;
         }
     }
 }
