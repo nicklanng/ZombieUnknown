@@ -1,5 +1,6 @@
 ﻿using Engine.Entities;
 using Engine.Entities.Interactions;
+using Engine.InventoryObjects;
 using ZombieUnknown.Entities.Mobiles;
 using ZombieUnknown.InventoryObjects;
 
@@ -18,11 +19,31 @@ namespace ZombieUnknown.Entities.Interactions
 
         public override void Interact(PhysicalEntity actor)
         {
-            var human = (Human)actor;
-            if (human != null)
+            var inventory = ((IStorage) Subject).Storage;
+            var items = inventory.ListItems();
+
+            StorageLocation locationOfItemToGet = null;
+            foreach (var tuple in items)
             {
-                human.Hunger = 60;
-                human.GiveItem(new FoodObject());
+                var storageLocation = tuple.Item1;
+                var item = tuple.Item2;
+
+                if (item is FoodObject)
+                {
+                    locationOfItemToGet = storageLocation;
+                }
+            }
+
+            if (locationOfItemToGet != null)
+            {
+                var item = inventory.TakeItemAt(locationOfItemToGet);
+                
+                var human = (Human)actor;
+                if (human != null)
+                {
+                    human.Hunger = 60;
+                    human.GiveItem(item);
+                }
             }
 
         }
