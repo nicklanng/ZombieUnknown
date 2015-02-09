@@ -13,7 +13,7 @@ namespace ZombieUnknown.Entities.Mobiles
 
         public override float Speed
         {
-            get { return 5; }
+            get { return 10; }
         }
 
         public Vision Vision { get; private set; }

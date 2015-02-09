@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Maps
 {
@@ -32,6 +33,35 @@ namespace Engine.Maps
             {West.Coordinate, West},
             {NorthWest.Coordinate, NorthWest}
         };
+
+        public static IDirection GetDirectionFromVector(Vector2 directionVector)
+        {
+            var angleOfTravel = (float)(Math.Atan2(North.Coordinate.Y, North.Coordinate.X) - Math.Atan2(directionVector.Y, directionVector.X));
+            var degrees = ((MathHelper.ToDegrees(angleOfTravel) + 360 + 22.5) % 360);
+            var direction = (int)Math.Floor(degrees / 45);
+
+            switch (direction)
+            {
+                case 0:
+                    return North;
+                case 1:
+                    return NorthEast;
+                case 2:
+                    return East;
+                case 3:
+                    return SouthEast;
+                case 4:
+                    return South;
+                case 5:
+                    return SouthWest;
+                case 6:
+                    return West;
+                case 7:
+                    return NorthWest;
+            }
+
+            return North;
+        }
     }
         
     public class North : IDirection

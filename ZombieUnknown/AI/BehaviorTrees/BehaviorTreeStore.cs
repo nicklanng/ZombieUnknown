@@ -34,7 +34,7 @@ namespace ZombieUnknown.AI.BehaviorTrees
 
         private static void BuildZombieBehaviorTree()
         {
-            var interationSequence = new Sequence(new GetHumanAction(), new ZombieCalculateRouteAction(), new FollowPathSubTree());
+            var interationSequence = new Sequence(new GetHumanAction(), new MoveTowardsTarget());
             var root = new Repeater(interationSequence);
             ZombieBehavior = new Behavior(root);
         }

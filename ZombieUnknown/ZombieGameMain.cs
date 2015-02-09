@@ -222,7 +222,7 @@ namespace ZombieUnknown
                 GameState.ZombieTarget = h;
             }
 
-            for (var i = 0; i < 50; i++)
+            for (var i = 0; i < 20; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -255,7 +255,7 @@ namespace ZombieUnknown
             }
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
-            _lightMap = new LightMap(_map, new Color(0.8f, 0.8f, 0.8f));
+            //_lightMap = new LightMap(_map, new Color(0.8f, 0.8f, 0.8f));
 
             Console.Initialize(_spriteBatch, font, 1);
             Console.WriteLine("Post-apocalyptic Management Game");

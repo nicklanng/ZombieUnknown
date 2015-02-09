@@ -2,7 +2,6 @@
 using Engine.AI;
 using Engine.AI.BehaviorTrees;
 using Engine.AI.BehaviorTrees.Actions;
-using Engine.Maps;
 
 namespace ZombieUnknown.AI.BehaviorTrees.Actions
 {
@@ -10,7 +9,7 @@ namespace ZombieUnknown.AI.BehaviorTrees.Actions
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {
-            blackboard["TargetCoordinate"] = (Coordinate)GameState.ZombieTarget.MapPosition;
+            blackboard["TargetCoordinate"] = GameState.ZombieTarget.MapPosition;
 
             return GoalStatus.Completed;
         }
