@@ -2,12 +2,13 @@
 using Engine.AI.Senses;
 using Engine.Entities;
 using Engine.Maps;
+using Engine.Pathfinding;
 using ZombieUnknown.AI;
 using ZombieUnknown.AI.FiniteStateMachines.Human;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
-    class Zombie : MobileEntity
+    class Zombie : MobileEntity, IMovementBlocker
     {
         private readonly ZombieMind _mind;
 
@@ -34,5 +35,8 @@ namespace ZombieUnknown.Entities.Mobiles
 
             base.Update();
         }
+
+        public bool BlocksTile { get; private set; }
+        public bool BlocksDiagonals { get; private set; }
     }
 }

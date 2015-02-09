@@ -1,6 +1,7 @@
 ﻿using System;
 using Engine.Entities;
 using Engine.Maps;
+using Engine.Pathfinding;
 using Microsoft.Xna.Framework;
 
 namespace Engine.AI.BehaviorTrees.Actions
@@ -23,19 +24,33 @@ namespace Engine.AI.BehaviorTrees.Actions
             moveAmount.Normalize();
             moveAmount = moveAmount * entity.Speed * 0.001f;
 
+            Vector2 estimatedEndPosition;
             if (moveAmount.Length() >= distanceToTarget.Length())
             {
-                entity.MapPosition = target;
+                estimatedEndPosition = target;
                 
                 entity.TransitionState("idle");
             }
             else
             {
-                entity.MapPosition += moveAmount;
+                estimatedEndPosition = entity.MapPosition + moveAmount;
             }
 
+            var movementblocker = (IMovementBlocker)entity;
+            if (movementblocker == null)
+            {
+                entity.MapPosition = estimatedEndPosition;
+                return GoalStatus.Completed;
+            }
 
-            return GoalStatus.Completed;
+            var canMoveThere = GameState.Map.IsPositionClear(movementblocker, estimatedEndPosition, 0.5f);
+            if (canMoveThere)
+            {
+                entity.MapPosition = estimatedEndPosition;
+                return GoalStatus.Completed;
+            }
+
+            return GoalStatus.Failed;
         }
 
         

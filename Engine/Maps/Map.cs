@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Engine.Drawing;
 using Engine.Entities;
+using Engine.Pathfinding;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Maps
@@ -110,6 +111,23 @@ namespace Engine.Maps
             }
 
             return drawingRequests;
+        }
+
+        public bool IsPositionClear(IMovementBlocker entity, Vector2 estimatedEndPosition, float width)
+        {
+            var physicalEntities = _entities.OfType<IMovementBlocker>();
+            foreach (var physicalEntity in physicalEntities)
+            {
+                if (physicalEntity == entity) continue;
+
+                var mapPosition = physicalEntity.MapPosition;
+                if (Math.Abs((estimatedEndPosition - mapPosition).Length()) < width)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

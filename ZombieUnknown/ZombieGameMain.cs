@@ -222,7 +222,7 @@ namespace ZombieUnknown
                 GameState.ZombieTarget = h;
             }
 
-            for (var i = 0; i < 20; i++)
+            for (var i = 0; i < 50; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);

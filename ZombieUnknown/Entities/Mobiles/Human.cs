@@ -4,6 +4,7 @@ using Engine.Drawing;
 using Engine.Entities;
 using Engine.InventoryObjects;
 using Engine.Maps;
+using Engine.Pathfinding;
 using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
 using ZombieUnknown.AI.FiniteStateMachines.Human;
@@ -11,7 +12,7 @@ using ZombieUnknown.InventoryObjects.Wearables;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
-    class Human : MobileEntity
+    class Human : MobileEntity, IMovementBlocker
     {
         private readonly HumanMind _mind;
 
@@ -68,5 +69,8 @@ namespace ZombieUnknown.Entities.Mobiles
         {
             return CurrentState.Name;
         }
+
+        public bool BlocksTile { get; private set; }
+        public bool BlocksDiagonals { get; private set; }
     }
 }
