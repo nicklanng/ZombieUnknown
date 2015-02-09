@@ -26,9 +26,9 @@ namespace ZombieUnknown.InventoryObjects.Wearables
             return result;
         }
 
-        public IEnumerable<Storage> GetInventories()
+        public StorageCollection GetInventories()
         {
-            return _wearables.Values.OfType<IStorage>().Select(x => x.Storage);
+            return _wearables.Values.OfType<IStorage>().Select(x => x.Storage).ToStorageCollection();
         }
     }
 }

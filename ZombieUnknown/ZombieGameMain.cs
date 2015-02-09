@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Mobiles;
+using ZombieUnknown.InventoryObjects;
 using Console = Engine.Drawing.Console;
 
 namespace ZombieUnknown
@@ -218,11 +219,11 @@ namespace ZombieUnknown
                 var newLocationY = rand.Next(GameState.Map.Height);
                 var h = new Human("human" + i, new Coordinate(newLocationX, newLocationY));
                 _map.AddEntity(h);
-
+                h.GiveItem(new WheatSeedObject());
                 GameState.ZombieTarget = h;
             }
 
-            for (var i = 0; i < 50; i++)
+            for (var i = 0; i < 5; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -266,7 +267,7 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(Console.DrawingProvider);
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
 
-            GameState.InteractionObject = food;
+            GameState.InteractionObject = cultivatedLand;
             //GameState.MainCharacter = human;
         }
 

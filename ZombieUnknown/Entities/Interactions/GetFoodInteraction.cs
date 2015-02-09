@@ -1,4 +1,5 @@
-﻿using Engine.Entities;
+﻿using System.Security.Cryptography;
+using Engine.Entities;
 using Engine.Entities.Interactions;
 using Engine.InventoryObjects;
 using ZombieUnknown.Entities.Mobiles;
@@ -46,6 +47,11 @@ namespace ZombieUnknown.Entities.Interactions
                 }
             }
 
+        }
+
+        public override bool IsPossible(PhysicalEntity actor)
+        {
+            return actor is Human;
         }
     }
 }

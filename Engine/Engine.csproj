@@ -91,6 +91,7 @@
     <Compile Include="InventoryObjects\IStorage.cs" />
     <Compile Include="InventoryObjects\Size.cs" />
     <Compile Include="InventoryObjects\Storage.cs" />
+    <Compile Include="InventoryObjects\StorageCollection.cs" />
     <Compile Include="InventoryObjects\StorageLocation.cs" />
     <Compile Include="Manual2dCamera.cs" />
     <Compile Include="EngineSettings.cs" />

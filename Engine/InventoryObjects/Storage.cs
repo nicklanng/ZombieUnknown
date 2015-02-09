@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Engine.InventoryObjects
 {
     public class Storage
     {
-        private readonly bool[,] _storeMask;
+        private bool[,] _storeMask;
 
         private readonly Size _space;
         private readonly IInventoryObject[,] _store;
-        
+
         public Storage(Size size)
         {
             _space = size;
             _store = new IInventoryObject[_space.Width, _space.Height];
+            ClearStoreMask();
+        }
+
+        private void ClearStoreMask()
+        {
             _storeMask = new bool[_space.Width, _space.Height];
         }
 
@@ -76,14 +82,15 @@ namespace Engine.InventoryObjects
 
         private void RebuildStoreMask()
         {
-            _storeMask.Initialize();
+            ClearStoreMask();
 
             for (short x = 0; x < _space.Width; x++)
             {
                 for (short y = 0; y < _space.Height; y++)
                 {
                     var item = _store[x, y];
-                    if (item == null) continue;
+                    if (item == null)
+                        continue;
 
                     var itemSize = item.Size;
                     for (short itemX = 0; itemX < itemSize.Width; itemX++)
@@ -95,6 +102,16 @@ namespace Engine.InventoryObjects
                     }
                 }
             }
+        }
+
+        public bool HasItemOfType<T>() where T : IInventoryObject
+        {
+            return ListItems().Any(itm => itm.Item2 is T);
+        }
+
+        public T TakeItemOfType<T>()
+        {
+            return (T)ListItems().First(x => x.Item2 is T).Item2;
         }
     }
 }

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\Actions\DieAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\GetCultivatedLandTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetFoodInteractAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetFoodSourceAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetHumanAction.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="InventoryObjects\Wearables\IWearable.cs" />
     <Compile Include="InventoryObjects\Wearables\WearableRig.cs" />
     <Compile Include="InventoryObjects\Wearables\WearableType.cs" />
+    <Compile Include="InventoryObjects\WheatSeedObject.cs" />
     <Compile Include="IsometricConfiguration.cs" />
     <Compile Include="AI\HumanMind.cs" />
     <Compile Include="AI\ZombieMind.cs" />
