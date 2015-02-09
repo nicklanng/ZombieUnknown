@@ -116,6 +116,7 @@ namespace ZombieUnknown
             var agricultureSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/agriculture");
             var debugTileNetworkSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/debug-tile-network");
             var humanSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/civf");
+            var zombieSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/civm");
             
             var terrainSprites = new List<Sprite>
             {
@@ -123,7 +124,7 @@ namespace ZombieUnknown
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass1"),
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2")
             };
-            var zombieSprite = BuildZombieSprite();
+            var zombieSprite = BuildZombieSprite(zombieSpriteSheet);
             ResourceManager.RegisterSprite(zombieSprite);
 
             var font = new Font(fontSpriteSheet);
@@ -254,6 +255,7 @@ namespace ZombieUnknown
             }
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
+            _lightMap = new LightMap(_map, new Color(0.8f, 0.8f, 0.8f));
 
             Console.Initialize(_spriteBatch, font, 1);
             Console.WriteLine("Post-apocalyptic Management Game");
@@ -521,11 +523,9 @@ namespace ZombieUnknown
 
             return humanSprite;
         }
-
-        private AnimatedSprite BuildZombieSprite()
+        
+        private AnimatedSprite BuildZombieSprite(SpriteSheet zombieSpriteSheet)
         {
-            var zombieSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/zombie");
-
             var zombieAnimationList = new AnimationList();
             var idleSouthEast = new Animation(AnimationType.RunOnce);
             idleSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleSouthEast"), 1.0));
@@ -544,6 +544,190 @@ namespace ZombieUnknown
             var idleEast = new Animation(AnimationType.RunOnce);
             idleEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("idleEast"), 1.0));
 
+            var walkNorth = new Animation(AnimationType.Looped);
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth0"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth1"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth2"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth3"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth4"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth5"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth6"), 0.45));
+            walkNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth7"), 0.45));
+
+            var walkNorthEast = new Animation(AnimationType.Looped);
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast0"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast1"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast2"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast3"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast4"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast5"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast6"), 0.45));
+            walkNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast7"), 0.45));
+
+            var walkEast = new Animation(AnimationType.Looped);
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast0"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast1"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast2"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast3"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast4"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast5"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast6"), 0.45));
+            walkEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast7"), 0.45));
+
+            var walkSouthEast = new Animation(AnimationType.Looped);
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast0"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast1"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast2"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast3"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast4"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast5"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast6"), 0.45));
+            walkSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast7"), 0.45));
+
+            var walkSouth = new Animation(AnimationType.Looped);
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth0"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth1"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth2"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth3"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth4"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth5"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth6"), 0.45));
+            walkSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth7"), 0.45));
+
+            var walkSouthWest = new Animation(AnimationType.Looped);
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest0"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest1"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest2"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest3"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest4"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest5"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest6"), 0.45));
+            walkSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest7"), 0.45));
+
+            var walkWest = new Animation(AnimationType.Looped);
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest0"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest1"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest2"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest3"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest4"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest5"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest6"), 0.45));
+            walkWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest7"), 0.45));
+
+            var walkNorthWest = new Animation(AnimationType.Looped);
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest0"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest1"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest2"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest3"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest4"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest5"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest6"), 0.45));
+            walkNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest7"), 0.45));
+
+            var runNorth = new Animation(AnimationType.Looped);
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth0"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth1"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth2"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth3"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth4"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth5"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth6"), 0.06));
+            runNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorth7"), 0.06));
+
+            var runNorthEast = new Animation(AnimationType.Looped);
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast0"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast1"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast2"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast3"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast4"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast5"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast6"), 0.06));
+            runNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthEast7"), 0.06));
+
+            var runEast = new Animation(AnimationType.Looped);
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast0"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast1"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast2"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast3"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast4"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast5"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast6"), 0.06));
+            runEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkEast7"), 0.06));
+
+            var runSouthEast = new Animation(AnimationType.Looped);
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast0"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast1"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast2"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast3"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast4"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast5"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast6"), 0.06));
+            runSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthEast7"), 0.06));
+
+            var runSouth = new Animation(AnimationType.Looped);
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth0"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth1"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth2"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth3"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth4"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth5"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth6"), 0.06));
+            runSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouth7"), 0.06));
+
+            var runSouthWest = new Animation(AnimationType.Looped);
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest0"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest1"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest2"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest3"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest4"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest5"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest6"), 0.06));
+            runSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkSouthWest7"), 0.06));
+
+            var runWest = new Animation(AnimationType.Looped);
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest0"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest1"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest2"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest3"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest4"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest5"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest6"), 0.06));
+            runWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkWest7"), 0.06));
+
+            var runNorthWest = new Animation(AnimationType.Looped);
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest0"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest1"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest2"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest3"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest4"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest5"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest6"), 0.06));
+            runNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("walkNorthWest7"), 0.06));
+
+
+            var dying = new Animation(AnimationType.RunOnce);
+            dying.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("dying0"), 0.2));
+            dying.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("dying1"), 0.2));
+            dying.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("dying2"), 0.2));
+            dying.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("dead"), 0.2));
+
+            var interactSouthEast = new Animation(AnimationType.RunOnce);
+            interactSouthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactSouthEast"), 1.0));
+            var interactSouth = new Animation(AnimationType.RunOnce);
+            interactSouth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactSouth"), 1.0));
+            var interactSouthWest = new Animation(AnimationType.RunOnce);
+            interactSouthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactSouthWest"), 1.0));
+            var interactWest = new Animation(AnimationType.RunOnce);
+            interactWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactWest"), 1.0));
+            var interactNorthWest = new Animation(AnimationType.RunOnce);
+            interactNorthWest.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactNorthWest"), 1.0));
+            var interactNorth = new Animation(AnimationType.RunOnce);
+            interactNorth.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactNorth"), 1.0));
+            var interactNorthEast = new Animation(AnimationType.RunOnce);
+            interactNorthEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactNorthEast"), 1.0));
+            var interactEast = new Animation(AnimationType.RunOnce);
+            interactEast.AddFrame(new AnimationFrame(zombieSpriteSheet.GetFrameRectangle("interactEast"), 1.0));
+
             zombieAnimationList.Add("idleSouthEast", idleSouthEast);
             zombieAnimationList.Add("idleSouth", idleSouth);
             zombieAnimationList.Add("idleSouthWest", idleSouthWest);
@@ -553,7 +737,43 @@ namespace ZombieUnknown
             zombieAnimationList.Add("idleNorthEast", idleNorthEast);
             zombieAnimationList.Add("idleEast", idleEast);
 
-            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 40), zombieAnimationList);
+            zombieAnimationList.Add("walkNorth", walkNorth);
+            zombieAnimationList.Add("walkNorthEast", walkNorthEast);
+            zombieAnimationList.Add("walkEast", walkEast);
+            zombieAnimationList.Add("walkSouthEast", walkSouthEast);
+            zombieAnimationList.Add("walkSouth", walkSouth);
+            zombieAnimationList.Add("walkSouthWest", walkSouthWest);
+            zombieAnimationList.Add("walkWest", walkWest);
+            zombieAnimationList.Add("walkNorthWest", walkNorthWest);
+
+            zombieAnimationList.Add("runNorth", runNorth);
+            zombieAnimationList.Add("runNorthEast", runNorthEast);
+            zombieAnimationList.Add("runEast", runEast);
+            zombieAnimationList.Add("runSouthEast", runSouthEast);
+            zombieAnimationList.Add("runSouth", runSouth);
+            zombieAnimationList.Add("runSouthWest", runSouthWest);
+            zombieAnimationList.Add("runWest", runWest);
+            zombieAnimationList.Add("runNorthWest", runNorthWest);
+
+            zombieAnimationList.Add("dyingNorth", dying);
+            zombieAnimationList.Add("dyingNorthEast", dying);
+            zombieAnimationList.Add("dyingEast", dying);
+            zombieAnimationList.Add("dyingSouthEast", dying);
+            zombieAnimationList.Add("dyingSouth", dying);
+            zombieAnimationList.Add("dyingSouthWest", dying);
+            zombieAnimationList.Add("dyingWest", dying);
+            zombieAnimationList.Add("dyingNorthWest", dying);
+
+            zombieAnimationList.Add("interactSouthEast", interactSouthEast);
+            zombieAnimationList.Add("interactSouth", interactSouth);
+            zombieAnimationList.Add("interactSouthWest", interactSouthWest);
+            zombieAnimationList.Add("interactWest", interactWest);
+            zombieAnimationList.Add("interactNorthWest", interactNorthWest);
+            zombieAnimationList.Add("interactNorth", interactNorth);
+            zombieAnimationList.Add("interactNorthEast", interactNorthEast);
+            zombieAnimationList.Add("interactEast", interactEast);
+
+            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 32), zombieAnimationList);
 
             return zombieSprite;
         }

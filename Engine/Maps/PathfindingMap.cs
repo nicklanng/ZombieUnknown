@@ -283,7 +283,7 @@ namespace Engine.Maps
             }
 
 
-            _nodes[position.X, position.Y] = new Node(position);
+            //_nodes[position.X, position.Y] = new Node(position);
 
             RebuildSprites();
         }

@@ -3,6 +3,7 @@ using Engine.AI.Senses;
 using Engine.Entities;
 using Engine.Maps;
 using ZombieUnknown.AI;
+using ZombieUnknown.AI.FiniteStateMachines.Human;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
@@ -12,7 +13,7 @@ namespace ZombieUnknown.Entities.Mobiles
 
         public override float Speed
         {
-            get { return 10; }
+            get { return 5; }
         }
 
         public Vision Vision { get; private set; }
@@ -22,6 +23,9 @@ namespace ZombieUnknown.Entities.Mobiles
         {
             _mind = new ZombieMind(this);
             IsStatic = false;
+
+            CurrentState = HumanStates.Instance.IdleState;
+            CurrentState.OnEnter(this);
         }
 
         public override void Update()

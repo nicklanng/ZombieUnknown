@@ -124,6 +124,10 @@
       <Link>Content\Spritesheets\agriculture.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\Content\SpriteSheets\civm.png">
+      <Link>Content\Spritesheets\civm.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="..\Content\SpriteSheets\cursor.png">
       <Link>Content\Spritesheets\cursor.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -144,6 +148,10 @@
       <Link>Content\Spritesheets\grass.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="..\Content\SpriteSheets\civm.json">
+      <Link>Content\Spritesheets\civm.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\Content\SpriteSheets\items.png">
       <Link>Content\Spritesheets\items.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
