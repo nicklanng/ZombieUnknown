@@ -213,7 +213,7 @@ namespace ZombieUnknown
             _map.AddEntity(light2);
             
             var rand = new Random();
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 2; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);
@@ -223,7 +223,7 @@ namespace ZombieUnknown
                 GameState.ZombieTarget = h;
             }
 
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 0; i++)
             {
                 var newLocationX = rand.Next(GameState.Map.Width);
                 var newLocationY = rand.Next(GameState.Map.Height);

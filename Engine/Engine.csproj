@@ -66,6 +66,7 @@
     <Compile Include="AI\BehaviorTrees\Decorators\Repeater.cs" />
     <Compile Include="AI\BehaviorTrees\Decorators\RepeaterUntilFail.cs" />
     <Compile Include="AI\BehaviorTrees\Composites\Sequence.cs" />
+    <Compile Include="AI\BehaviorTrees\Decorators\Succeeder.cs" />
     <Compile Include="AI\BehaviorTrees\SubTrees\FollowPathSubTree.cs" />
     <Compile Include="AI\FiniteStateMachines\IInteractableState.cs" />
     <Compile Include="AI\GoalStatus.cs" />
