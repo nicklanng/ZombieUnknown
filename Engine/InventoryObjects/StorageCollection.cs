@@ -19,6 +19,11 @@ namespace Engine.InventoryObjects
             var storageOfType = this.First(st => st.HasItemOfType<T>());
             return storageOfType.TakeItemOfType<T>();
         }
+
+        public void AddItem(IInventoryObject inventoryObject)
+        {
+            this.First().Insert(inventoryObject);
+        }
     }
 
     public static class StorageCollectionExtensions

@@ -5,11 +5,10 @@ using Engine.AI.BehaviorTrees.Conditionals;
 using Microsoft.Xna.Framework;
 using ZombieUnknown.Entities.Interactions;
 using ZombieUnknown.Entities.Mobiles;
-using ZombieUnknown.InventoryObjects;
 
 namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
 {
-    class CanPlantWheatConditional : BehaviorConditional
+    internal class CanHarvestWheatConditional : BehaviorConditional
     {
         protected override bool Test(Blackboard blackboard)
         {
@@ -23,11 +22,11 @@ namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
                 return false;
             }
 
-            if (subject.Interactions.ContainsKey(SowSeedInteraction.Text) == false)
+            if (subject.Interactions.ContainsKey(HarvestWheatInteraction.Text) == false)
             {
                 return false;
             }
-            var interactionAction = subject.Interactions[SowSeedInteraction.Text];
+            var interactionAction = subject.Interactions[HarvestWheatInteraction.Text];
 
             return interactionAction.IsPossible(actor);
         }

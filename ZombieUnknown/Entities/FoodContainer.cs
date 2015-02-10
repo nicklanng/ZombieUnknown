@@ -36,7 +36,7 @@ namespace ZombieUnknown.Entities
             get { 
                 return new Dictionary<string, Interaction>
                 {
-                    { GetFoodInteraction.Text, new GetFoodInteraction(this) }
+                    { GetFoodInteraction.Text, new GetFoodInteraction() }
                 }; 
             }
         }

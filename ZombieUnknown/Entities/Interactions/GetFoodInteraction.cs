@@ -12,15 +12,10 @@ namespace ZombieUnknown.Entities.Interactions
         public static string Text = "Get Food";
 
         public override int MillisToCompleteAction { get { return 2000; } }
-
-        public GetFoodInteraction(PhysicalEntity subject) 
-            : base(subject)
+        
+        public override void Interact(PhysicalEntity subject, PhysicalEntity actor)
         {
-        }
-
-        public override void Interact(PhysicalEntity actor)
-        {
-            var inventory = ((IStorage) Subject).Storage;
+            var inventory = ((IStorage) subject).Storage;
             var items = inventory.ListItems();
 
             StorageLocation locationOfItemToGet = null;

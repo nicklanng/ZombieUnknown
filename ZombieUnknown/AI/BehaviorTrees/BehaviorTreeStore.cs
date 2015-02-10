@@ -25,6 +25,9 @@ namespace ZombieUnknown.AI.BehaviorTrees
             var eatFood = new Sequence(new GetFoodSourceAction(), new CalculateRouteAction(),
                                        new Inverter(new FollowPathSubTree()), new GetFoodInteractAction());
 
+            var harvestWheat = new Sequence(new GetGrownWheatTargetAction(), new CanHarvestWheatConditional(), new CalculateRouteAction(),
+                                            new Inverter(new FollowPathSubTree()), new HarvestWheatInteractAction());
+
             var wander = new Sequence(new CreateRandomMovementTargetAction(), new CalculateRouteAction(),
                                       new Inverter(new FollowPathSubTree()));
 
@@ -32,9 +35,10 @@ namespace ZombieUnknown.AI.BehaviorTrees
                                           new GetCultivatedLandTargetAction(),
                                           new CalculateRouteAction(),
                                           new Inverter(new FollowPathSubTree()),
-                                          new SowSeedInteractAction());
+                                          new SowSeedInteractAction(),
+                                          wander);
 
-            var root = new Repeater(new Sequence(new TryToDieSubTree(), new Succeeder(eatFood), new Succeeder(plantWheat), wander));
+            var root = new Repeater(new Sequence(new Succeeder(harvestWheat), new Succeeder(plantWheat)));
 
             HumanBehavior = new Behavior(root);
         }

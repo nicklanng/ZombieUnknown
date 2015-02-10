@@ -52,6 +52,12 @@ namespace Engine.InventoryObjects
             return null;
         }
 
+        public void Insert(IInventoryObject inventoryObject)
+        {
+            var availableSlot = GetAvailableSlot(inventoryObject);
+            Insert(availableSlot, inventoryObject);
+        }
+
         public void Insert(StorageLocation location, IInventoryObject inventoryObject)
         {
             _store[location.X, location.Y] = inventoryObject;
@@ -109,9 +115,10 @@ namespace Engine.InventoryObjects
             return ListItems().Any(itm => itm.Item2 is T);
         }
 
-        public T TakeItemOfType<T>()
+        public T TakeItemOfType<T>() where T : IInventoryObject
         {
-            return (T)ListItems().First(x => x.Item2 is T).Item2;
+            var itemToRemove = ListItems().First(x => x.Item2 is T);
+            return (T)TakeItemAt(itemToRemove.Item1);
         }
     }
 }
