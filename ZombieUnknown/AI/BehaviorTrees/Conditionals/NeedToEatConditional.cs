@@ -9,10 +9,6 @@ namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
         protected override bool Test(Blackboard blackboard)
         {
             var human = (Human)blackboard["subject"];
-            if (human == null)
-            {
-                return false;
-            }
 
             return human.Hunger < 20;
         }

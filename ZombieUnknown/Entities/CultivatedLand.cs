@@ -37,7 +37,7 @@ namespace ZombieUnknown.Entities
             {
                 return new Dictionary<string, Interaction>
                 {
-                    { SowSeedInteraction.Text, new SowSeedInteraction(this) }
+                    { SowSeedInteraction.Text, new SowSeedInteraction() }
                 };
             }
         }
