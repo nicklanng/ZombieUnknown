@@ -12,7 +12,7 @@ using ZombieUnknown.InventoryObjects.Wearables;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
-    class Human : MobileEntity, IMovementBlocker
+    public class Human : MobileEntity, IMovementBlocker
     {
         private readonly HumanMind _mind;
 

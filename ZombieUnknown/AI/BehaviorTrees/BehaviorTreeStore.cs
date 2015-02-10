@@ -5,7 +5,6 @@ using Engine.AI.BehaviorTrees.Decorators;
 using Engine.AI.BehaviorTrees.SubTrees;
 using ZombieUnknown.AI.BehaviorTrees.Actions;
 using ZombieUnknown.AI.BehaviorTrees.Conditionals;
-using ZombieUnknown.AI.BehaviorTrees.SubTrees;
 
 namespace ZombieUnknown.AI.BehaviorTrees
 {
@@ -22,23 +21,23 @@ namespace ZombieUnknown.AI.BehaviorTrees
 
         private static void BuildHumanBehaviorTree()
         {
-            var eatFood = new Sequence(new GetFoodSourceAction(), new CalculateRouteAction(),
-                                       new Inverter(new FollowPathSubTree()), new GetFoodInteractAction());
+            //var eatFood = new Sequence(new GetFoodSourceAction(), new CalculateRouteAction(),
+            //                           new Inverter(new FollowPathSubTree()), new GetFoodInteractAction());
+            //
+            //var harvestWheat = new Sequence(new GetGrownWheatTargetAction(), new CanHarvestWheatConditional(), new CalculateRouteAction(),
+            //                                new Inverter(new FollowPathSubTree()), new HarvestWheatInteractAction());
 
-            var harvestWheat = new Sequence(new GetGrownWheatTargetAction(), new CanHarvestWheatConditional(), new CalculateRouteAction(),
-                                            new Inverter(new FollowPathSubTree()), new HarvestWheatInteractAction());
+            //var wander = new Sequence(new CreateRandomMovementTargetAction(), new CalculateRouteAction(),
+            //                          new Inverter(new FollowPathSubTree()));
 
-            var wander = new Sequence(new CreateRandomMovementTargetAction(), new CalculateRouteAction(),
-                                      new Inverter(new FollowPathSubTree()));
-
-            var plantWheat = new Sequence(new CanPlantWheatConditional(),
-                                          new GetCultivatedLandTargetAction(),
+            var plantWheat = new Sequence(new GetCultivatedLandTargetAction(),
+                                          new CanSowSeedsConditional(),
                                           new CalculateRouteAction(),
                                           new Inverter(new FollowPathSubTree()),
-                                          new SowSeedInteractAction(),
-                                          wander);
+                                          new SowSeedInteractAction());
 
-            var root = new Repeater(new Sequence(new Succeeder(harvestWheat), new Succeeder(plantWheat)));
+            //var root = new Repeater(new Sequence(new Succeeder(harvestWheat), new Succeeder(plantWheat)));
+            var root = plantWheat;
 
             HumanBehavior = new Behavior(root);
         }

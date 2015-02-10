@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Engine.AI.FiniteStateMachines;
+﻿using Engine.AI.FiniteStateMachines;
 using Engine.Entities;
-using Engine.Entities.Interactions;
-using ZombieUnknown.Entities.Interactions;
 
 namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
 {
-    public class GrownState : State, IInteractableState
+    public class GrownState : State
     {
         public override string Name { get { return "Grown"; } }
 
@@ -24,16 +20,6 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
 
         public override void OnExit(Entity entity)
         {
-        }
-
-        public Dictionary<string, Interaction> Interactions
-        {
-            get { return new Dictionary<string, Interaction>
-                  
-                {
-                    { HarvestWheatInteraction.Text, new HarvestWheatInteraction() }
-                }; 
-            }
         }
     }
 }

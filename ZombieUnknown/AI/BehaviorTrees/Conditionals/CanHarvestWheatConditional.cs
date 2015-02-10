@@ -2,7 +2,9 @@
 using Engine;
 using Engine.AI.BehaviorTrees;
 using Engine.AI.BehaviorTrees.Conditionals;
+using Engine.Entities.Interactions;
 using Microsoft.Xna.Framework;
+using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Interactions;
 using ZombieUnknown.Entities.Mobiles;
 
@@ -16,19 +18,13 @@ namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
 
             var interactionTargetLocation = (Vector2)blackboard["InteractionTargetLocation"];
             var entities = GameState.Map.GetEntitiesAt(interactionTargetLocation);
-            var subject = entities.LastOrDefault();
+            var subject = entities.LastOrDefault() as Wheat;
             if (subject == null)
             {
                 return false;
             }
-
-            if (subject.Interactions.ContainsKey(HarvestWheatInteraction.Text) == false)
-            {
-                return false;
-            }
-            var interactionAction = subject.Interactions[HarvestWheatInteraction.Text];
-
-            return interactionAction.IsPossible(actor);
+            return actor.CanPerformInteractionOn(subject)
+                        .OfType<HarvestWheatInteraction>();
         }
     }
 }

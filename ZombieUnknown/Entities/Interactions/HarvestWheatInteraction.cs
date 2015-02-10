@@ -1,36 +1,33 @@
 ﻿using Engine;
-using Engine.Entities;
 using Engine.Entities.Interactions;
 using ZombieUnknown.Entities.Mobiles;
 using ZombieUnknown.InventoryObjects;
 
 namespace ZombieUnknown.Entities.Interactions
 {
-    internal class HarvestWheatInteraction : Interaction
+    internal class HarvestWheatInteraction : IInteraction<Wheat, Human>
     {
         public static string Text = "Harvest Wheat";
 
-        public override int MillisToCompleteAction
+        public int MillisToCompleteAction
         {
             get { return 1000; }
         }
-        
-        public override void Interact(PhysicalEntity subject, PhysicalEntity actor)
-        {
-            if (IsPossible(actor))
-            {
-                var humanActor = (Human)actor;
 
-                humanActor.Rig.GetInventories().AddItem(new WheatSeedObject());
-                humanActor.Rig.GetInventories().AddItem(new WheatObject());
+        public void Interact(Wheat subject, Human actor)
+        {
+            if (IsPossible(subject, actor))
+            {
+                actor.Rig.GetInventories().AddItem(new WheatSeedObject());
+                actor.Rig.GetInventories().AddItem(new WheatObject());
                 GameController.DeleteEntity(subject);
                 GameController.SpawnEntity(new CultivatedLand("cultivatedLand", subject.MapPosition));
             }
         }
 
-        public override bool IsPossible(PhysicalEntity actor)
+        public bool IsPossible(Wheat subject, Human actor)
         {
-            return true;
+            return subject.IsGrown;
         }
     }
 }

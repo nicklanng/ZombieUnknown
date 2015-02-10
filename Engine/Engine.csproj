@@ -68,7 +68,6 @@
     <Compile Include="AI\BehaviorTrees\Composites\Sequence.cs" />
     <Compile Include="AI\BehaviorTrees\Decorators\Succeeder.cs" />
     <Compile Include="AI\BehaviorTrees\SubTrees\FollowPathSubTree.cs" />
-    <Compile Include="AI\FiniteStateMachines\IInteractableState.cs" />
     <Compile Include="AI\GoalStatus.cs" />
     <Compile Include="AI\Senses\Sense.cs" />
     <Compile Include="AI\Senses\Vision.cs" />
@@ -84,6 +83,10 @@
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
     <Compile Include="Entities\Interactions\Interaction.cs" />
+    <Compile Include="Entities\Interactions\InteractionExtensions.cs" />
+    <Compile Include="Entities\Interactions\InteractionIsPossibleWrapper.cs" />
+    <Compile Include="Entities\Interactions\ITargetInteraction.cs" />
+    <Compile Include="Entities\Interactions\TargetInteraction.cs" />
     <Compile Include="Entities\VisibleEntity.cs" />
     <Compile Include="Entities\PhantomLight.cs" />
     <Compile Include="GameController.cs" />

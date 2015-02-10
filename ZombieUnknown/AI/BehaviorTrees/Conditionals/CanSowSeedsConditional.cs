@@ -2,14 +2,15 @@
 using Engine;
 using Engine.AI.BehaviorTrees;
 using Engine.AI.BehaviorTrees.Conditionals;
+using Engine.Entities.Interactions;
 using Microsoft.Xna.Framework;
+using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Interactions;
 using ZombieUnknown.Entities.Mobiles;
-using ZombieUnknown.InventoryObjects;
 
 namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
 {
-    class CanPlantWheatConditional : BehaviorConditional
+    internal class CanSowSeedsConditional : BehaviorConditional
     {
         protected override bool Test(Blackboard blackboard)
         {
@@ -17,19 +18,13 @@ namespace ZombieUnknown.AI.BehaviorTrees.Conditionals
 
             var interactionTargetLocation = (Vector2)blackboard["InteractionTargetLocation"];
             var entities = GameState.Map.GetEntitiesAt(interactionTargetLocation);
-            var subject = entities.LastOrDefault();
+            var subject = entities.LastOrDefault() as CultivatedLand;
             if (subject == null)
             {
                 return false;
             }
-
-            if (subject.Interactions.ContainsKey(SowSeedInteraction.Text) == false)
-            {
-                return false;
-            }
-            var interactionAction = subject.Interactions[SowSeedInteraction.Text];
-
-            return interactionAction.IsPossible(actor);
+            return actor.CanPerformInteractionOn(subject)
+                        .OfType<SowSeedsInteraction>();
         }
     }
 }

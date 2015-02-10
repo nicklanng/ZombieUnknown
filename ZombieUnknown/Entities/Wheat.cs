@@ -28,18 +28,22 @@ namespace ZombieUnknown.Entities
             get
             {
                 return new[]
-                {
-                    new AccessPosition (Direction.South.Coordinate, Direction.North),
-                    new AccessPosition (Direction.North.Coordinate, Direction.South),
-                    new AccessPosition (Direction.West.Coordinate, Direction.East),
-                    new AccessPosition (Direction.East.Coordinate, Direction.West),
-                    new AccessPosition (Direction.NorthEast.Coordinate, Direction.SouthWest),
-                    new AccessPosition (Direction.SouthEast.Coordinate, Direction.NorthWest),
-                    new AccessPosition (Direction.NorthWest.Coordinate, Direction.SouthEast),
-                    new AccessPosition (Direction.SouthWest.Coordinate, Direction.NorthEast),
-                };
+                       {
+                           new AccessPosition(Direction.South.Coordinate, Direction.North),
+                           new AccessPosition(Direction.North.Coordinate, Direction.South),
+                           new AccessPosition(Direction.West.Coordinate, Direction.East),
+                           new AccessPosition(Direction.East.Coordinate, Direction.West),
+                           new AccessPosition(Direction.NorthEast.Coordinate, Direction.SouthWest),
+                           new AccessPosition(Direction.SouthEast.Coordinate, Direction.NorthWest),
+                           new AccessPosition(Direction.NorthWest.Coordinate, Direction.SouthEast),
+                           new AccessPosition(Direction.SouthWest.Coordinate, Direction.NorthEast),
+                       };
             }
+        }
+
+        public bool IsGrown
+        {
+            get { return CurrentState == WheatStates.Instance.GrownState; }
         }
     }
 }
-

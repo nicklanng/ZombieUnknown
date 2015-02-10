@@ -72,7 +72,7 @@
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\CanHarvestWheatConditional.cs" />
-    <Compile Include="AI\BehaviorTrees\Conditionals\CanPlantWheatConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\CanSowSeedsConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\HasFoodConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\IsDeadConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\ShouldDieConditional.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="Entities\FoodContainer.cs" />
     <Compile Include="Entities\Interactions\GetFoodInteraction.cs" />
     <Compile Include="Entities\Interactions\HarvestWheatInteraction.cs" />
-    <Compile Include="Entities\Interactions\SowSeedInteraction.cs" />
+    <Compile Include="Entities\Interactions\SowSeedsInteraction.cs" />
     <Compile Include="Entities\Lamp.cs" />
     <Compile Include="Entities\TallGrass1.cs" />
     <Compile Include="InventoryObjects\FoodObject.cs" />

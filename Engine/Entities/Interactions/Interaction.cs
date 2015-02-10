@@ -1,14 +1,11 @@
 ﻿namespace Engine.Entities.Interactions
 {
-    public abstract class Interaction
+    public interface IInteraction<in TSubject, in TActor>
     {
-        public virtual int MillisToCompleteAction
-        {
-            get { return 100; }
-        }
+        int MillisToCompleteAction { get; }
 
-        public abstract void Interact(PhysicalEntity subject, PhysicalEntity actor);
+        void Interact(TSubject subject, TActor actor);
 
-        public abstract bool IsPossible(PhysicalEntity actor);
+        bool IsPossible(TSubject subject, TActor actor);
     }
 }
