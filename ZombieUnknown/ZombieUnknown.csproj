@@ -69,6 +69,7 @@
     <Compile Include="AI\BehaviorTrees\Actions\ZombieCalculateRouteAction.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\CanPlantWheatConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\HasFoodConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\IsDeadConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\ShouldDieConditional.cs" />
