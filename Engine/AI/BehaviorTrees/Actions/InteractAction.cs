@@ -7,22 +7,22 @@ namespace Engine.AI.BehaviorTrees.Actions
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {
-            var targetInteraction = (ITargetInteraction)blackboard["TargetInteraction"];
+            var targetedInteraction = (ITargetedInteraction)blackboard["TargetInteraction"];
             if (SavedResult == GoalStatus.Inactive)
             {
-                var accessPositions = targetInteraction.Subject.AccessPositions;
+                var accessPositions = targetedInteraction.Subject.AccessPositions;
 
-                var accessPosition = accessPositions.SingleOrDefault(x => (x.PositionOffset + targetInteraction.Subject.MapPosition) == targetInteraction.Actor.MapPosition);
+                var accessPosition = accessPositions.SingleOrDefault(x => (x.PositionOffset + targetedInteraction.Subject.MapPosition) == targetedInteraction.Actor.MapPosition);
                 if (accessPosition == null)
                 {
                     return GoalStatus.Failed;
                 }
 
                 var requiredDirection = accessPosition.Direction;
-                targetInteraction.Actor.TransitionState("interact");
-                targetInteraction.Actor.FaceDirection(requiredDirection);
+                targetedInteraction.Actor.TransitionState("interact");
+                targetedInteraction.Actor.FaceDirection(requiredDirection);
 
-                blackboard["TimeWhenInteractionFinished"] = GameState.GameTime.TotalGameTime.TotalMilliseconds + targetInteraction.MillisToCompleteAction;
+                blackboard["TimeWhenInteractionFinished"] = GameState.GameTime.TotalGameTime.TotalMilliseconds + targetedInteraction.MillisToCompleteAction;
 
                 return GoalStatus.Running;
             }
@@ -34,8 +34,8 @@ namespace Engine.AI.BehaviorTrees.Actions
 
                 if (timeNow >= timeWhenInteractionFinished)
                 {
-                    targetInteraction.Actor.TransitionState("idle");
-                    targetInteraction.Interact();
+                    targetedInteraction.Actor.TransitionState("idle");
+                    targetedInteraction.Interact();
 
                     return GoalStatus.Completed;
                 }

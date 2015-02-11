@@ -82,11 +82,14 @@
     <Compile Include="Drawing\VirtualScreen.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
+    <Compile Include="Entities\Interactions\IInteractionTypeProvider.cs" />
     <Compile Include="Entities\Interactions\Interaction.cs" />
     <Compile Include="Entities\Interactions\InteractionExtensions.cs" />
     <Compile Include="Entities\Interactions\InteractionIsPossibleWrapper.cs" />
-    <Compile Include="Entities\Interactions\ITargetInteraction.cs" />
-    <Compile Include="Entities\Interactions\TargetInteraction.cs" />
+    <Compile Include="Entities\Interactions\InteractionManager.cs" />
+    <Compile Include="Entities\Interactions\InteractionSingleton.cs" />
+    <Compile Include="Entities\Interactions\ITargetedInteraction.cs" />
+    <Compile Include="Entities\Interactions\TargetedInteraction.cs" />
     <Compile Include="Entities\VisibleEntity.cs" />
     <Compile Include="Entities\PhantomLight.cs" />
     <Compile Include="GameController.cs" />

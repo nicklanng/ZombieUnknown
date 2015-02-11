@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Engine;
 using Engine.Drawing;
 using Engine.Entities;
+using Engine.Entities.Interactions;
 using Engine.Maps;
 using Engine.Serialization;
 using Engine.Sprites;
@@ -11,6 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.Entities;
+using ZombieUnknown.Entities.Interactions;
 using ZombieUnknown.Entities.Mobiles;
 using ZombieUnknown.InventoryObjects;
 using Console = Engine.Drawing.Console;
@@ -108,7 +110,7 @@ namespace ZombieUnknown
         protected override void LoadContent()
         {
             BehaviorTreeStore.Generate();
-
+            RegisterInteractions();
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
             var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
@@ -269,6 +271,13 @@ namespace ZombieUnknown
 
             GameState.InteractionObject = cultivatedLand;
             //GameState.MainCharacter = human;
+        }
+
+        private static void RegisterInteractions()
+        {
+            InteractionManager.RegisterInteraction<SowSeedsInteraction>();
+            InteractionManager.RegisterInteraction<GetFoodInteraction>();
+            InteractionManager.RegisterInteraction<HarvestWheatInteraction>();
         }
 
         private AnimatedSprite BuildHumanSprite(SpriteSheet humanSpriteSheet)

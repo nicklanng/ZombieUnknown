@@ -5,26 +5,23 @@ using ZombieUnknown.InventoryObjects;
 
 namespace ZombieUnknown.Entities.Interactions
 {
-    internal class SowSeedsInteraction : IInteraction<CultivatedLand, Human>
+    internal class SowSeedsInteraction : InteractionSingleton<CultivatedLand, Human>
     {
         public static string Text = "Sow Seed";
 
-        public int MillisToCompleteAction
+        public override int MillisToCompleteAction
         {
             get { return 1000; }
         }
 
-        public void Interact(CultivatedLand subject, Human actor)
+        protected override void Execute(CultivatedLand subject, Human actor)
         {
-            if (IsPossible(subject, actor))
-            {
-                actor.Rig.GetInventories().TakeItemOfType<WheatSeedObject>();
-                GameController.DeleteEntity(subject);
-                GameController.SpawnEntity(new Wheat("wheat", subject.MapPosition));
-            }
+            actor.Rig.GetInventories().TakeItemOfType<WheatSeedObject>();
+            GameController.DeleteEntity(subject);
+            GameController.SpawnEntity(new Wheat("wheat", subject.MapPosition));
         }
 
-        public bool IsPossible(CultivatedLand subject, Human actor)
+        public override bool IsPossible(CultivatedLand subject, Human actor)
         {
             return actor.Rig.GetInventories().HasItemOfType<WheatSeedObject>();
         }

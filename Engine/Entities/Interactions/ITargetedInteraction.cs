@@ -1,6 +1,6 @@
 namespace Engine.Entities.Interactions
 {
-    public interface ITargetInteraction
+    public interface ITargetedInteraction
     {
         MobileEntity Actor { get; }
         PhysicalEntity Subject { get; }
