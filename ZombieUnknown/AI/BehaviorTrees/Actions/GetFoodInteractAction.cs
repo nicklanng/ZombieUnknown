@@ -21,8 +21,9 @@ namespace ZombieUnknown.AI.BehaviorTrees.Actions
             }
 
             var actor = (Human)blackboard["subject"];
-            blackboard["TargetInteraction"] = InteractionManager.CreateTargetedInteractionFor(target, actor).ForInteraction<GetFoodInteraction>();
-            
+            blackboard["TargetInteraction"] = InteractionManager.CreateTargetedInteractionFor(target, actor)
+                                                                .WithInteraction<GetFoodInteraction>();
+
             return base.Action(blackboard);
         }
     }

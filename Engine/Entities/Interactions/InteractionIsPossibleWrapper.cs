@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Engine.Entities.Interactions
+﻿namespace Engine.Entities.Interactions
 {
-    public class InteractionIsPossibleWrapper<TActor, TSubject>
+    public class InteractionIsPossibleWrapper<TActor, TSubject> where TSubject : PhysicalEntity where TActor : MobileEntity
     {
         public InteractionIsPossibleWrapper(TActor actor, TSubject subject)
         {
@@ -13,9 +11,12 @@ namespace Engine.Entities.Interactions
         private TActor Actor { get; set; }
         private TSubject Subject { get; set; }
 
-        public bool OfType<TInteraction>() where TInteraction : IInteraction<TSubject, TActor>, new()
+        public bool OfType<TInteraction>() where TInteraction : InteractionSingleton<TSubject, TActor>, new()
         {
-            return Activator.CreateInstance<TInteraction>().IsPossible(Subject, Actor);
+            var targetedInteraction = InteractionManager.CreateTargetedInteractionFor(Subject, Actor)
+                                                        .WithInteraction<TInteraction>();
+
+            return targetedInteraction.IsPossible();
         }
     }
 }

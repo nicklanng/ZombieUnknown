@@ -48,7 +48,7 @@ namespace Engine.Entities.Interactions
                 _subject = subject;
             }
 
-            public TargetedInteraction<TInteraction, TSubject, TActor> ForInteraction<TInteraction>() where TInteraction : InteractionSingleton<TSubject, TActor>
+            public TargetedInteraction<TInteraction, TSubject, TActor> WithInteraction<TInteraction>() where TInteraction : InteractionSingleton<TSubject, TActor>
             {
                 var interaction = GetInteractionOfType<TInteraction>();
                 return new TargetedInteraction<TInteraction, TSubject, TActor>(interaction, _subject, _actor);
