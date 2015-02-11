@@ -20,11 +20,6 @@ namespace Engine.Entities.Interactions
             Interactions.Add(Activator.CreateInstance<TInteraction>());
         }
 
-        public static TargetedInteractionCreator<TSubject, TActor> CreateTargetedInteractionFor<TSubject, TActor>(TSubject subject, TActor actor) where TSubject : PhysicalEntity where TActor : MobileEntity
-        {
-            return new TargetedInteractionCreator<TSubject, TActor>(subject, actor);
-        }
-
         public static TInteraction GetInteractionOfType<TInteraction>() where TInteraction : IInteraction
         {
             return (TInteraction)Interactions.Single(i => i is TInteraction);
@@ -35,24 +30,6 @@ namespace Engine.Entities.Interactions
             var comparisonType = typeof(T);
             return (comparisonType == type ||
                     comparisonType.IsSubclassOf(type));
-        }
-
-        public class TargetedInteractionCreator<TSubject, TActor> where TSubject : PhysicalEntity where TActor : MobileEntity
-        {
-            private readonly TActor _actor;
-            private readonly TSubject _subject;
-
-            public TargetedInteractionCreator(TSubject subject, TActor actor)
-            {
-                _actor = actor;
-                _subject = subject;
-            }
-
-            public TargetedInteraction<TInteraction, TSubject, TActor> WithInteraction<TInteraction>() where TInteraction : InteractionSingleton<TSubject, TActor>
-            {
-                var interaction = GetInteractionOfType<TInteraction>();
-                return new TargetedInteraction<TInteraction, TSubject, TActor>(interaction, _subject, _actor);
-            }
         }
     }
 }

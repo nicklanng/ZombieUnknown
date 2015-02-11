@@ -13,10 +13,9 @@
 
         public bool OfType<TInteraction>() where TInteraction : InteractionSingleton<TSubject, TActor>, new()
         {
-            var targetedInteraction = InteractionManager.CreateTargetedInteractionFor(Subject, Actor)
-                                                        .WithInteraction<TInteraction>();
+            var targetedInteraction = InteractionManager.GetInteractionOfType<TInteraction>();
 
-            return targetedInteraction.IsPossible();
+            return targetedInteraction.IsPossible(Subject, Actor);
         }
     }
 }

@@ -87,8 +87,6 @@
     <Compile Include="Entities\Interactions\InteractionIsPossibleWrapper.cs" />
     <Compile Include="Entities\Interactions\InteractionManager.cs" />
     <Compile Include="Entities\Interactions\InteractionSingleton.cs" />
-    <Compile Include="Entities\Interactions\ITargetedInteraction.cs" />
-    <Compile Include="Entities\Interactions\TargetedInteraction.cs" />
     <Compile Include="Entities\VisibleEntity.cs" />
     <Compile Include="Entities\PhantomLight.cs" />
     <Compile Include="GameController.cs" />
