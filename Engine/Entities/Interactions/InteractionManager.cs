@@ -25,7 +25,7 @@ namespace Engine.Entities.Interactions
             return new TargetedInteractionCreator<TSubject, TActor>(subject, actor);
         }
 
-        private static TInteraction GetInteractionOfType<TInteraction>() where TInteraction : IInteraction
+        public static TInteraction GetInteractionOfType<TInteraction>() where TInteraction : IInteraction
         {
             return (TInteraction)Interactions.Single(i => i is TInteraction);
         }

@@ -1,28 +1,40 @@
 ﻿using System.Linq;
+using Engine.Entities;
 using Engine.Entities.Interactions;
 
 namespace Engine.AI.BehaviorTrees.Actions
 {
-    public abstract class InteractAction : BehaviorAction
+    public abstract class InteractAction<TInteraction, TSubject, TActor> : BehaviorAction where TSubject : PhysicalEntity
+                                                                                          where TActor : MobileEntity
+                                                                                          where TInteraction : IInteraction<TSubject, TActor>
     {
-        protected override GoalStatus Action(Blackboard blackboard)
+        private IInteraction<TSubject, TActor> _interaction;
+
+        public IInteraction<TSubject, TActor> Interaction
         {
-            var targetedInteraction = (ITargetedInteraction)blackboard["TargetInteraction"];
+            get { return _interaction ?? (_interaction = InteractionManager.GetInteractionOfType<TInteraction>()); }
+        }
+
+        protected sealed override GoalStatus Action(Blackboard blackboard)
+        {
+            var actor = (TActor)blackboard["subject"];
+            var subject = (TSubject)GameState.InteractionObject;
+
             if (SavedResult == GoalStatus.Inactive)
             {
-                var accessPositions = targetedInteraction.Subject.AccessPositions;
+                var accessPositions = subject.AccessPositions;
 
-                var accessPosition = accessPositions.SingleOrDefault(x => (x.PositionOffset + targetedInteraction.Subject.MapPosition) == targetedInteraction.Actor.MapPosition);
+                var accessPosition = accessPositions.SingleOrDefault(x => (x.PositionOffset + subject.MapPosition) == actor.MapPosition);
                 if (accessPosition == null)
                 {
                     return GoalStatus.Failed;
                 }
 
                 var requiredDirection = accessPosition.Direction;
-                targetedInteraction.Actor.TransitionState("interact");
-                targetedInteraction.Actor.FaceDirection(requiredDirection);
+                actor.TransitionState("interact");
+                actor.FaceDirection(requiredDirection);
 
-                blackboard["TimeWhenInteractionFinished"] = GameState.GameTime.TotalGameTime.TotalMilliseconds + targetedInteraction.MillisToCompleteAction;
+                blackboard["TimeWhenInteractionFinished"] = GameState.GameTime.TotalGameTime.TotalMilliseconds + Interaction.MillisToCompleteAction;
 
                 return GoalStatus.Running;
             }
@@ -34,8 +46,8 @@ namespace Engine.AI.BehaviorTrees.Actions
 
                 if (timeNow >= timeWhenInteractionFinished)
                 {
-                    targetedInteraction.Actor.TransitionState("idle");
-                    targetedInteraction.Interact();
+                    actor.TransitionState("idle");
+                    Interaction.Interact(subject, actor);
 
                     return GoalStatus.Completed;
                 }
