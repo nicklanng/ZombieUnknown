@@ -34,7 +34,7 @@ namespace ZombieUnknown.AI.BehaviorTrees
                                           new CanSowSeedsConditional(),
                                           new CalculateRouteAction(),
                                           new Inverter(new FollowPathSubTree()),
-                                          new SowSeedInteractAction());
+                                          new SowSeedsInteractAction());
 
             //var root = new Repeater(new Sequence(new Succeeder(harvestWheat), new Succeeder(plantWheat)));
             var root = plantWheat;

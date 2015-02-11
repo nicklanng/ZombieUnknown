@@ -9,7 +9,7 @@ using ZombieUnknown.Entities.Mobiles;
 
 namespace ZombieUnknown.AI.BehaviorTrees.Actions
 {
-    internal class SowSeedInteractAction : InteractAction
+    internal class SowSeedsInteractAction : InteractAction
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {
@@ -21,7 +21,7 @@ namespace ZombieUnknown.AI.BehaviorTrees.Actions
             }
 
             var actor = (Human)blackboard["subject"];
-            blackboard["TargetInteraction"] = InteractionManager.CreateTargetedInteraction<SowSeedsInteraction, CultivatedLand, Human>(target, actor);
+            blackboard["TargetInteraction"] = InteractionManager.CreateTargetedInteraction(target, actor).ForInteraction<SowSeedsInteraction>();
 
             return base.Action(blackboard);
         }

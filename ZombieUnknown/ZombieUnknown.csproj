@@ -67,7 +67,7 @@
     <Compile Include="AI\BehaviorTrees\Actions\GetGrownWheatTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetHumanAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\HarvestWheatInteractAction.cs" />
-    <Compile Include="AI\BehaviorTrees\Actions\SowSeedInteractAction.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\SowSeedsInteractAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\ZombieCalculateRouteAction.cs" />
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
