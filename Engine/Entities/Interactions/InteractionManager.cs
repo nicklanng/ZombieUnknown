@@ -6,26 +6,26 @@ namespace Engine.Entities.Interactions
 {
     public static class InteractionManager
     {
-        private static readonly IList<IInteractionTypeProvider> Interactions = new List<IInteractionTypeProvider>();
+        private static readonly IList<IInteraction> Interactions = new List<IInteraction>();
 
-        public static IEnumerable<IInteraction<TSubject, TActor>> GetInteractionsForType<TActor, TSubject>()
+        public static IEnumerable<IInteraction<TSubject, TActor>> GetInteractionsForTypes<TActor, TSubject>()
         {
             return Interactions.Where(i => i.ActorType.IsParentOrSameTypeAs<TActor>() &&
                                            i.SubjectType.IsParentOrSameTypeAs<TSubject>())
                                .Cast<IInteraction<TSubject, TActor>>();
         }
 
-        public static void RegisterInteraction<TInteraction>() where TInteraction : IInteractionTypeProvider, new()
+        public static void RegisterInteraction<TInteraction>() where TInteraction : IInteraction, new()
         {
             Interactions.Add(Activator.CreateInstance<TInteraction>());
         }
 
-        public static TargetedInteractionCreator<TSubject, TActor> CreateTargetedInteraction<TSubject, TActor>(TSubject subject, TActor actor) where TSubject : PhysicalEntity where TActor : MobileEntity
+        public static TargetedInteractionCreator<TSubject, TActor> CreateTargetedInteractionFor<TSubject, TActor>(TSubject subject, TActor actor) where TSubject : PhysicalEntity where TActor : MobileEntity
         {
             return new TargetedInteractionCreator<TSubject, TActor>(subject, actor);
         }
 
-        private static TInteraction GetInteractionOfType<TInteraction>()
+        private static TInteraction GetInteractionOfType<TInteraction>() where TInteraction : IInteraction
         {
             return (TInteraction)Interactions.Single(i => i is TInteraction);
         }

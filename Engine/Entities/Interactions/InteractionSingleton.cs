@@ -2,7 +2,7 @@
 
 namespace Engine.Entities.Interactions
 {
-    public abstract class InteractionSingleton<TSubject, TActor> : IInteraction<TSubject, TActor>, IInteractionTypeProvider
+    public abstract class InteractionSingleton<TSubject, TActor> : IInteraction<TSubject, TActor>
     {
         public abstract int MillisToCompleteAction { get; }
 

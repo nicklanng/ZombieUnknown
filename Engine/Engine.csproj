@@ -82,7 +82,7 @@
     <Compile Include="Drawing\VirtualScreen.cs" />
     <Compile Include="Entities\IBaseEntityFactory.cs" />
     <Compile Include="Entities\ILightSource.cs" />
-    <Compile Include="Entities\Interactions\IInteractionTypeProvider.cs" />
+    <Compile Include="Entities\Interactions\IInteraction.cs" />
     <Compile Include="Entities\Interactions\Interaction.cs" />
     <Compile Include="Entities\Interactions\InteractionExtensions.cs" />
     <Compile Include="Entities\Interactions\InteractionIsPossibleWrapper.cs" />
