@@ -22,7 +22,7 @@ namespace Engine.AI.BehaviorTrees.Actions
 
             var moveAmount = distanceToTarget;
             moveAmount.Normalize();
-            moveAmount = moveAmount * entity.Speed * 0.001f;
+            moveAmount = moveAmount * entity.MaxVelocity * 0.001f;
 
             Vector2 estimatedEndPosition;
             if (moveAmount.Length() >= distanceToTarget.Length())

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Engine.Maps;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Pathfinding
 {
@@ -31,10 +33,28 @@ namespace Engine.Pathfinding
             return GetEnumerator();
         }
 
-        public List<Coordinate> ToCoordinateList()
+        public List<Vector2> ToWaypoints()
         {
-            var result = new List<Coordinate> { LastStep.Coordinate };
-            if (PreviousSteps != null) result.AddRange(PreviousSteps.Select(step => step.Coordinate).ToList());
+            var result = new List<Vector2> { LastStep.Coordinate };
+            var lastDirection = Vector2.Zero;
+
+            if (PreviousSteps != null)
+            {
+                foreach (var node in PreviousSteps)
+                {
+                    var coordinates = node.Coordinate;
+                    var direction = (Vector2) coordinates - result.Last();
+                    if (direction == lastDirection)
+                    {
+                        result.RemoveAt(result.Count - 1);
+                    }
+                    lastDirection = direction;
+                    result.Add(coordinates);
+                }
+
+                result.Reverse();
+            }
+
             return result;
         }
     }

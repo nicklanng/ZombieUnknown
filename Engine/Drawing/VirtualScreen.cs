@@ -9,20 +9,18 @@ namespace Engine.Drawing
         public readonly int VirtualHeight;
         public readonly float VirtualAspectRatio;
 
-        private readonly GraphicsDevice _graphicsDevice;
         private readonly RenderTarget2D _screen;
 
         private Rectangle _area;
         private bool _areaIsDirty = true;
 
-        public VirtualScreen(int virtualWidth, int virtualHeight, GraphicsDevice graphicsDevice)
+        public VirtualScreen(int virtualWidth, int virtualHeight)
         {
             VirtualWidth = virtualWidth;
             VirtualHeight = virtualHeight;
             VirtualAspectRatio = virtualWidth / (float)(virtualHeight);
 
-            _graphicsDevice = graphicsDevice;
-            _screen = new RenderTarget2D(graphicsDevice, virtualWidth, virtualHeight, false, graphicsDevice.PresentationParameters.BackBufferFormat, graphicsDevice.PresentationParameters.DepthStencilFormat, graphicsDevice.PresentationParameters.MultiSampleCount, RenderTargetUsage.DiscardContents);
+            _screen = new RenderTarget2D(GameState.GraphicsDevice, virtualWidth, virtualHeight, false, GameState.GraphicsDevice.PresentationParameters.BackBufferFormat, GameState.GraphicsDevice.PresentationParameters.DepthStencilFormat, GameState.GraphicsDevice.PresentationParameters.MultiSampleCount, RenderTargetUsage.DiscardContents);
         }
 
         public void PhysicalResolutionChanged()
@@ -38,9 +36,9 @@ namespace Engine.Drawing
             }
 
             _areaIsDirty = false;
-            var physicalWidth = _graphicsDevice.Viewport.Width;
-            var physicalHeight = _graphicsDevice.Viewport.Height;
-            var physicalAspectRatio = _graphicsDevice.Viewport.AspectRatio;
+            var physicalWidth = GameState.GraphicsDevice.Viewport.Width;
+            var physicalHeight = GameState.GraphicsDevice.Viewport.Height;
+            var physicalAspectRatio = GameState.GraphicsDevice.Viewport.AspectRatio;
 
             if ((int)(physicalAspectRatio * 10) == (int)(VirtualAspectRatio * 10))
             {
@@ -69,17 +67,25 @@ namespace Engine.Drawing
 
         public void BeginCapture()
         {
-            _graphicsDevice.SetRenderTarget(_screen);
+            GameState.GraphicsDevice.SetRenderTarget(_screen);
         }
 
         public void EndCapture()
         {
-            _graphicsDevice.SetRenderTarget(null);
+            GameState.GraphicsDevice.SetRenderTarget(null);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_screen, _area, Color.White);
+        }
+
+        public Vector2 ConvertScreenCoordinatesToVirtualScreenCoordinates(Vector2 coordinates)
+        {
+            var widthScalar = VirtualWidth * 1.0f / GameState.GraphicsDevice.Viewport.Width * 1.0f;
+            var heightScalar = VirtualHeight * 1.0f / GameState.GraphicsDevice.Viewport.Height * 1.0f;
+
+            return new Vector2(coordinates.X * widthScalar, coordinates.Y * heightScalar);
         }
     }
 }

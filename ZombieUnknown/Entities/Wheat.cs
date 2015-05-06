@@ -1,6 +1,7 @@
 ﻿using Engine.Entities;
 using Engine.Maps;
 using Engine;
+using Microsoft.Xna.Framework;
 using ZombieUnknown.AI.FiniteStateMachines.Wheat;
 
 namespace ZombieUnknown.Entities
@@ -9,7 +10,7 @@ namespace ZombieUnknown.Entities
     {
         public double Growth = 0;
 
-        public Wheat(string name, Coordinate mapPosition)
+        public Wheat(string name, Vector2 mapPosition)
             : base(name, ResourceManager.GetSprite("wheat"), mapPosition)
         {
             CurrentState = WheatStates.Instance.SownState;

@@ -55,12 +55,12 @@ namespace Engine.Maps
 
         public static implicit operator Vector2(Coordinate c)
         {
-            return new Vector2(c.X, c.Y);
+            return new Vector2(c.X + 0.5f, c.Y + 0.5f);
         }
 
         public static implicit operator Coordinate(Vector2 v)
         {
-            return new Coordinate((int)Math.Round(v.X), (int)Math.Round(v.Y));
+            return new Coordinate((int)Math.Floor(v.X), (int)Math.Floor(v.Y));
         }
 
         public override string ToString ()

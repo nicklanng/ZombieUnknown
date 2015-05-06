@@ -1,5 +1,4 @@
-﻿using System;
-using Engine.Maps;
+﻿using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 

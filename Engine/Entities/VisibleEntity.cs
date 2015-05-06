@@ -5,12 +5,12 @@ using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public class VisibleEntity : PhysicalEntity, IDrawingProvider
+    public abstract class VisibleEntity : PhysicalEntity, IDrawingProvider
     {
         protected Sprite Sprite;
         protected Color LightValue { get; set; }
 
-        public VisibleEntity(string name, Sprite sprite, Vector2 mapPosition) 
+        protected VisibleEntity(string name, Sprite sprite, Vector2 mapPosition) 
             : base(name, mapPosition)
         {
             Sprite = sprite.ShallowCopy();
@@ -22,6 +22,8 @@ namespace Engine.Entities
 
             var parentTile = GameState.Map.GetTile(MapPosition);
             if (parentTile != null) LightValue = parentTile.Light;
+
+            if (GameState.PathfindingMap.IsPointOutOfBounds(MapPosition)) LightValue = Color.Red;
             Sprite.Update();
         }
 

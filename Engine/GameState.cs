@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using Engine.AI.Steering;
+using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
 using Microsoft.Xna.Framework;
@@ -17,6 +20,10 @@ namespace Engine
         public static Random RandomNumberGenerator = new Random();
 
         public static PhysicalEntity InteractionObject { get; set; } // temporary
-        public static PhysicalEntity ZombieTarget { get; set; } // temporary
+        public static PhysicalEntity ZombieTarget { get; set; }
+        public static List<IActor> Actors { get; set; }
+        public static VirtualScreen VirtualScreen { get; set; }
+
+// temporary
     }
 }

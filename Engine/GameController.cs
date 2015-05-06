@@ -1,4 +1,5 @@
-﻿using Engine.Entities;
+﻿using Engine.AI.Steering;
+using Engine.Entities;
 
 namespace Engine
 {
@@ -12,6 +13,10 @@ namespace Engine
         public static void SpawnEntity(PhysicalEntity entity)
         {
             GameState.Map.AddEntity(entity);
+            if (entity is IActor)
+            {
+                GameState.Actors.Add(entity as IActor);
+            }
         }
     }
 }

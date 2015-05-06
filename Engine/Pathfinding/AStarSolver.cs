@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Engine.Maps;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Pathfinding
 {
@@ -11,7 +12,7 @@ namespace Engine.Pathfinding
         private readonly Node _startingNode;
         private readonly Node _endingNode;
 
-        public List<Coordinate> Solution { get; private set; } 
+        public List<Vector2> Solution { get; private set; } 
 
         public AStarSolver(Node startingNode, Node endingNode)
         {
@@ -31,8 +32,7 @@ namespace Engine.Pathfinding
 
             if (path == null) return false;
 
-            Solution = path.ToCoordinateList();
-            Solution.Reverse();
+            Solution = path.ToWaypoints();
 
             return true;
         }

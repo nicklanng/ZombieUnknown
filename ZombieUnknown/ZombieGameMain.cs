@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Engine;
+using Engine.AI.Steering;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
@@ -13,6 +15,7 @@ using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Mobiles;
 using Console = Engine.Drawing.Console;
+using Mouse = Engine.Input.Mouse;
 
 namespace ZombieUnknown
 {
@@ -41,13 +44,16 @@ namespace ZombieUnknown
 #if WINDOWS
             _graphics = new GraphicsDeviceManager(this)
                 {
-                    
-                    PreferredBackBufferWidth = 1920,
-                    PreferredBackBufferHeight = 1080,
+
+                    PreferredBackBufferWidth = 1280,
+                    PreferredBackBufferHeight = 720,
                     IsFullScreen = false
+                    //PreferredBackBufferWidth = 2560,
+                    //PreferredBackBufferHeight = 1440,
+                    //IsFullScreen = true
                 };
 
-            //Window.IsBorderless = true;
+            Window.IsBorderless = true;
 #endif
 #if MAC
             _graphics = new GraphicsDeviceManager(this)
@@ -74,9 +80,11 @@ namespace ZombieUnknown
         /// </summary>
         protected override void Initialize()
         {
+            GameState.GraphicsDevice = GraphicsDevice;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(640, 360, GraphicsDevice);
+            _virtualScreen = new VirtualScreen(640, 360);
+            GameState.VirtualScreen = _virtualScreen;
 
 #if WINDOWS
             Window.ClientSizeChanged += Window_ClientSizeChanged;
@@ -89,7 +97,6 @@ namespace ZombieUnknown
             _drawingManager = new DrawingManager(_camera);
             _uiManager = new UIManager();
 
-            GameState.GraphicsDevice = GraphicsDevice;
             GameState.GameTime = new GameTime();
 
             base.Initialize();
@@ -107,6 +114,7 @@ namespace ZombieUnknown
         protected override void LoadContent()
         {
             BehaviorTreeStore.Generate();
+            GameState.Actors = new List<IActor>();
 
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
@@ -114,10 +122,13 @@ namespace ZombieUnknown
             var wallSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/walls");
             var itemsSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/items");
             var agricultureSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/agriculture");
-            var debugTileNetworkSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/debug-tile-network");
             var humanSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/civf");
             var zombieSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/civm");
-            
+            var uiSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/ui");
+
+            var cursorSprite = new StaticSprite("cursor", uiSpriteSheet, Vector2.Zero, "cursor");
+            ResourceManager.RegisterSprite(cursorSprite);
+
             var terrainSprites = new List<Sprite>
             {
                 new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "grass"),
@@ -144,12 +155,12 @@ namespace ZombieUnknown
             var deadHumansprite = new StaticSprite("deadHuman", humanSpriteSheet, new Vector2(16, 32), "dead");
             ResourceManager.RegisterSprite(deadHumansprite);
 
-            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 32), "food");
+            var foodSprite = new StaticSprite("food", itemsSpriteSheet, new Vector2(16, 40), "food");
             ResourceManager.RegisterSprite(foodSprite);
-            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 32), "lamp");
+            var lampSprite = new StaticSprite("lamp", itemsSpriteSheet, new Vector2(16, 40), "lamp");
             ResourceManager.RegisterSprite(lampSprite);
 
-            var cultivatedLandSprite = new StaticSprite("cultivatedLand", agricultureSpriteSheet, new Vector2(16, 32), "cultivatedLand");
+            var cultivatedLandSprite = new StaticSprite("cultivatedLand", agricultureSpriteSheet, new Vector2(16, 40), "cultivatedLand");
             ResourceManager.RegisterSprite(cultivatedLandSprite);
 
             var wheatAnimationList = new AnimationList();
@@ -162,21 +173,9 @@ namespace ZombieUnknown
             wheatAnimationList.Add("sown", sown);
             wheatAnimationList.Add("growing", growing);
             wheatAnimationList.Add("grown", grown);
-            var wheatSprite = new AnimatedSprite("wheat", agricultureSpriteSheet, new Vector2(16, 32), wheatAnimationList);
+            var wheatSprite = new AnimatedSprite("wheat", agricultureSpriteSheet, new Vector2(16, 40), wheatAnimationList);
             ResourceManager.RegisterSprite(wheatSprite);
-
-            var debugTileNetwork = new List<Sprite>
-            {
-                new StaticSprite("north", debugTileNetworkSpriteSheet, new Vector2(16, 32), "north"),
-                new StaticSprite("west", debugTileNetworkSpriteSheet, new Vector2(16, 32), "west"),
-                new StaticSprite("east", debugTileNetworkSpriteSheet, new Vector2(16, 32), "east"),
-                new StaticSprite("south", debugTileNetworkSpriteSheet, new Vector2(16, 32), "south"),
-                new StaticSprite("northeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), "northeast"),
-                new StaticSprite("southeast", debugTileNetworkSpriteSheet, new Vector2(16, 32), "southeast"),
-                new StaticSprite("southwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), "southwest"),
-                new StaticSprite("northwest", debugTileNetworkSpriteSheet, new Vector2(16, 32), "northwest")
-            };
-
+            
             var tiles = new Tile[(int)_mapSize.X, (int)_mapSize.Y];
             for (var y = 0; y < (int) _mapSize.Y; y++)
             {
@@ -185,7 +184,8 @@ namespace ZombieUnknown
                     tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[0], null, null, null);
                 }
             }
-
+            var rand = new Random();
+            
             tiles[3, 4].SetLeftWall(leftWallSprite);
             tiles[3, 4].SetRightWall(rightWallSprite);
             tiles[3, 4].SetJoinWall(internalJoinWallSprite);
@@ -199,43 +199,56 @@ namespace ZombieUnknown
             tiles[6, 6].SetRightWall(rightWallSprite);
             tiles[6, 7].SetJoinWall(externalJoinWallSprite);
 
+            tiles[10, 10].SetLeftWall(leftWallSprite);
+            tiles[11, 10].SetLeftWall(leftWallSprite);
+            tiles[12, 10].SetLeftWall(leftWallSprite);
+
+
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             GameState.Map = _map;
 
-            _pathfindingMap = new PathfindingMap(debugTileNetwork);
+            _pathfindingMap = new PathfindingMap();
             GameState.PathfindingMap = _pathfindingMap;
             
             var light = new PhantomLight("light", new Coordinate(2, 1), Color.Blue, 10);
-            _map.AddEntity(light);
+            GameController.SpawnEntity(light);
 
             var light2 = new PhantomLight("light2", new Coordinate(4, 5), Color.White, 10);
-            _map.AddEntity(light2);
-            
-            var rand = new Random();
-            for (var i = 0; i < 1; i++)
-            {
-                var newLocationX = rand.Next(GameState.Map.Width);
-                var newLocationY = rand.Next(GameState.Map.Height);
-                var h = new Human("human" + i, new Coordinate(newLocationX, newLocationY));
-                _map.AddEntity(h);
+            GameController.SpawnEntity(light2);
 
-                GameState.ZombieTarget = h;
+            var listOfTiles = new List<Coordinate>();
+            for (var y = 0; y < (int)_mapSize.Y - 1; y++)
+            {
+                for (var x = 0; x < (int)_mapSize.X - 1; x++)
+                {
+                    listOfTiles.Add(new Coordinate(x, y));
+                }
             }
+            listOfTiles = listOfTiles.OrderBy(x => Guid.NewGuid()).ToList();
 
             for (var i = 0; i < 50; i++)
             {
-                var newLocationX = rand.Next(GameState.Map.Width);
-                var newLocationY = rand.Next(GameState.Map.Height);
-                var zombie = new Zombie("zombie" + i, new Coordinate(newLocationX, newLocationY));
-                _map.AddEntity(zombie);
+                var human = new Human("human" + i, (Vector2)listOfTiles.ElementAt(0) + new Vector2(0.5f, 0.5f));
+                listOfTiles.RemoveAt(0);
+                human.ForceFaceDirection(Direction.North);
+                GameController.SpawnEntity(human);
+                GameState.ZombieTarget = human;
             }
 
-            var food = new FoodContainer("food", new Coordinate(13, 15));
-            _map.AddEntity(food);
+            for (var i = 0; i < 0; i++)
+            {
+                var zombie = new Zombie("zombie" + i, (Vector2)listOfTiles.ElementAt(0) + new Vector2(0.5f, 0.5f));
+                listOfTiles.RemoveAt(0);
+                zombie.ForceFaceDirection(Direction.North);
+                GameController.SpawnEntity(zombie);
+            }
+
+            var food = new FoodContainer("food", new Coordinate(4, 5));
+            GameController.SpawnEntity(food);
             _pathfindingMap.AddBlockage(food);
 
             var lamp = new Lamp("lamp", new Coordinate(13, 14));
-            _map.AddEntity(lamp);
+            GameController.SpawnEntity(lamp);
             _pathfindingMap.AddBlockage(lamp);
 
             var lamp2 = new Lamp("lamp2", new Coordinate(13, 4));
@@ -243,20 +256,21 @@ namespace ZombieUnknown
             _pathfindingMap.AddBlockage(lamp2);
 
             var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 3));
-            _map.AddEntity(cultivatedLand);
+            GameController.SpawnEntity(cultivatedLand);
 
-            for (var x = 10; x < 14; x++)
+            for (var x = 10; x < 15; x++)
             {
-                for (var y = 5; y < 10; y++)
+                for (var y = 5; y < 9; y++)
                 {
                     var h = new Wheat("wheat", new Coordinate(x, y));
-                    _map.AddEntity(h);
+                    GameController.SpawnEntity(h);
                 }
             }
 
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
             //_lightMap = new LightMap(_map, new Color(0.8f, 0.8f, 0.8f));
 
+            Mouse.Initialize();
             Console.Initialize(_spriteBatch, font, 1);
             Console.WriteLine("Post-apocalyptic Management Game");
             FrameRater.Initialize(_spriteBatch, font);
@@ -265,6 +279,7 @@ namespace ZombieUnknown
             //_drawingManager.RegisterProvider(_pathfindingMap);
             _uiManager.RegisterProvider(Console.DrawingProvider);
             _uiManager.RegisterProvider(FrameRater.DrawingProvider);
+            _uiManager.RegisterProvider(Mouse.DrawingProvider);
 
             GameState.InteractionObject = food;
             //GameState.MainCharacter = human;
@@ -519,7 +534,7 @@ namespace ZombieUnknown
             humanAnimationList.Add("interactNorthEast", interactNorthEast);
             humanAnimationList.Add("interactEast", interactEast);
 
-            var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 32), humanAnimationList);
+            var humanSprite = new AnimatedSprite("human", humanSpriteSheet, new Vector2(16, 40), humanAnimationList);
 
             return humanSprite;
         }
@@ -773,7 +788,7 @@ namespace ZombieUnknown
             zombieAnimationList.Add("interactNorthEast", interactNorthEast);
             zombieAnimationList.Add("interactEast", interactEast);
 
-            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 32), zombieAnimationList);
+            var zombieSprite = new AnimatedSprite("zombie", zombieSpriteSheet, new Vector2(16, 40), zombieAnimationList);
 
             return zombieSprite;
         }
@@ -802,7 +817,7 @@ namespace ZombieUnknown
             }
 
             GameState.GameTime = gameTime;
-            Engine.Input.Mouse.Update(gameTime);
+            Engine.Input.Mouse.Instance.Update(gameTime);
 
             _camera.Update(gameTime);
             _map.Update(gameTime);

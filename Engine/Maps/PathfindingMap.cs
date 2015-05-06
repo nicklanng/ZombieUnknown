@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using ClipperLib;
 using Engine.Drawing;
 using Engine.Entities;
+using Engine.Extensions;
+using Engine.Maths;
 using Engine.Pathfinding;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
@@ -12,25 +16,142 @@ namespace Engine.Maps
     {
         private Node[,] _nodes;
         private List<Sprite>[,] _tileSprites;
-        private readonly IEnumerable<Sprite> _debugSprites;
+        public List<List<IntPoint>> NavMesh { get; private set; }
+        public List<List<IntPoint>> NoGoAreas { get; private set; }
 
         public int Height { get; private set; }
         public int Width { get; private set; }
 
-        public PathfindingMap(IEnumerable<Sprite> debugSprites)
+        public PathfindingMap()
         {
-            _debugSprites = debugSprites;
+            NavMesh = new List<List<IntPoint>>(); 
 
             var map = GameState.Map;
             Height = map.Height;
             Width = map.Width;
             RegeneratePathfindingMap();
-            RebuildSprites();
+
+            var floorClipper = new Clipper();
+            var wallClipper = new Clipper();
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    var tile = map.GetTile(new Coordinate(x, y));
+
+                    if (tile.HasFloor)
+                    {
+                        var floorPolygon = new List<IntPoint>
+                        {
+                            new IntPoint(10*x - 1, 10*y - 1),
+                            new IntPoint(10*x + 11, 10*y - 1),
+                            new IntPoint(10*x + 11, 10*y + 11),
+                            new IntPoint(10*x - 1, 10*y + 11)
+                        };
+                        floorClipper.AddPath(floorPolygon, PolyType.ptSubject, Closed: true);
+                    }
+
+                    if (tile.HasLeftWall)
+                    {
+                        var wallPolygon = new List<IntPoint>
+                        {
+                            new IntPoint(10*x - 4, 10*y - 4),
+                            new IntPoint(10*x + 14, 10*y - 4),
+                            new IntPoint(10*x + 14, 10*y + 4),
+                            new IntPoint(10*x - 4, 10*y + 4)
+                        };
+                        wallClipper.AddPath(wallPolygon, PolyType.ptSubject, Closed: true);
+                    }
+
+                    if (tile.HasRightWall)
+                    {
+                        var wallPolygon = new List<IntPoint>
+                        {
+                            new IntPoint(10*x - 4, 10*y - 4),
+                            new IntPoint(10*x + 4, 10*y - 4),
+                            new IntPoint(10*x + 4, 10*y + 14),
+                            new IntPoint(10*x - 4, 10*y + 14)
+                        };
+                        wallClipper.AddPath(wallPolygon, PolyType.ptSubject, Closed: true);
+                    }
+                }
+            }
+
+            var floors = new List<List<IntPoint>>();
+            floorClipper.Execute(ClipType.ctUnion, floors, PolyFillType.pftNonZero, PolyFillType.pftNonZero);
+            
+            //join walls
+            NoGoAreas = new List<List<IntPoint>>();
+            wallClipper.Execute(ClipType.ctUnion, NoGoAreas, PolyFillType.pftNonZero, PolyFillType.pftNonZero);
+
+            //subtract walls
+            var clipper = new Clipper();
+            clipper.AddPaths(floors, PolyType.ptSubject, closed: true);
+            clipper.AddPaths(NoGoAreas, PolyType.ptClip, closed: true);
+            clipper.Execute(ClipType.ctDifference, NavMesh);
+
+            /*
+            var floorTriPolys = floors.Select(polygon => new Polygon(polygon.Select(point => new PolygonPoint(point.X, point.Y)))).ToList();
+            var floor = floorTriPolys.First();
+            var wallTriPolys = walls.Select(polygon => new Polygon(polygon.Select(point => new PolygonPoint(point.X, point.Y)).Reverse())).ToList();
+            foreach (var wallTriPoly in wallTriPolys)
+            {
+                floor.AddHole(wallTriPoly);
+            }
+            for (var y = 2.5; y < Height; y+=5)
+            {
+                for (var x = 2.5; x < Width; x+=5)
+                {
+                    //var steinerPoint = new TriangulationPoint(x*10, y*10);
+                    //if (wallTriPolys.Any(t => t.IsPointInside(steinerPoint))) continue;
+                    //floor.Add(steinerPoint);
+                }
+            }
+            Poly2Tri.P2T.Triangulate(floor);
+
+            
+            System.Console.WriteLine("X,Y");
+            foreach (var triangle in floor.Triangles)
+            {
+                for (var i = 0; i < triangle.Points.Count(); i++)
+                {
+                    System.Console.Write(triangle.Points[i].X + " " + triangle.Points[i].Y + " 0 ");
+                }
+                System.Console.WriteLine();
+            }
+            */
+             
         }
 
         public Node GetNodeAt(Coordinate coordinate)
         {
             return _nodes[coordinate.X, coordinate.Y];
+        }
+
+        public bool DirectPathBetween(Vector2 origin, Vector2 target)
+        {
+            var checkLine = new Line(origin, target);
+
+            foreach (var area in NavMesh)
+            {
+                for (var i = 0; i < area.Count; i++)
+                {
+                    var j = (i + 1) % area.Count;
+                    var wall = new Line(new Vector2(area[i].X / 10.0f, area[i].Y / 10.0f), new Vector2(area[j].X / 10.0f, area[j].Y / 10.0f));
+                    float howFarThrough;
+                    if (checkLine.IntersectsLine(wall, out howFarThrough))
+                    {
+                        var angle = Math.Acos(Vector2.Dot((target-origin).NormalizeFixed(), wall.Normal.NormalizeFixed()));
+                        if (angle < MathHelper.PiOver2)
+                        {
+                            continue;
+                        }
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
         
         public IEnumerable<DrawingRequest> GetDrawings()
@@ -193,36 +314,7 @@ namespace Engine.Maps
                 }
             }
         }
-
-        private void RebuildSprites()
-        {
-            _tileSprites = new List<Sprite>[Width, Height];
-
-            for (var x = 0; x < Width; x++)
-            {
-                for (var y = 0; y < Height; y++)
-                {
-                    _tileSprites[x, y] = new List<Sprite>(8);
-                    var node = GetNodeAt(new Coordinate(x, y));
-                    var neighbors = node.Neighbors;
-
-                    foreach (var neighbor in neighbors)
-                    {
-                        var direction = node.Coordinate - neighbor.Coordinate;
-
-                        if (direction == Direction.SouthEast.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "northwest"));
-                        if (direction == Direction.SouthWest.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "northeast"));
-                        if (direction == Direction.NorthEast.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "southwest"));
-                        if (direction == Direction.NorthWest.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "southeast"));
-                        if (direction == Direction.West.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "east"));
-                        if (direction == Direction.East.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "west"));
-                        if (direction == Direction.North.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "south"));
-                        if (direction == Direction.South.Coordinate) _tileSprites[x, y].Add(_debugSprites.Single(s => s.Name == "north"));
-                    }
-                }
-            }
-        }
-
+        
         public void AddBlockage(PhysicalEntity blockage)
         {
             var blocker = blockage as IMovementBlocker;
@@ -284,8 +376,14 @@ namespace Engine.Maps
 
 
             //_nodes[position.X, position.Y] = new Node(position);
+        }
 
-            RebuildSprites();
+        public bool IsPointOutOfBounds(Vector2 mapPosition)
+        {
+            var xCoord = (int) Math.Round(mapPosition.X*10);
+            var yCoord = (int) Math.Round(mapPosition.Y*10);
+
+            return NoGoAreas.Select(area => Clipper.PointInPolygon(new IntPoint(xCoord, yCoord), area) != 0).Any(inArea => inArea);
         }
     }
 }

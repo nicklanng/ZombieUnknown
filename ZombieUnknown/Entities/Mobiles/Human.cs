@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Engine;
+using Engine.AI.Steering;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.InventoryObjects;
@@ -18,30 +19,58 @@ namespace ZombieUnknown.Entities.Mobiles
 
         public WearableRig Rig { get; private set; }
         public double Hunger { get; set; }
-        public override float Speed { get { return 15; } }
+        public override float MaxVelocity { get { return 0.012f; } }
 
-        public Human(string name, Coordinate mapPosition)
+        public Human(string name, Vector2 mapPosition)
             : base(name, ResourceManager.GetSprite("human"), mapPosition)
         {
             Rig = new WearableRig();
             Rig.PutOn(new Backback());
 
-            _mind = new HumanMind(this);
+            //_mind = new HumanMind(this);
 
             IsStatic = false;
 
             CurrentState = HumanStates.Instance.IdleState;
             CurrentState.OnEnter(this);
 
+            var newLocationX = GameState.RandomNumberGenerator.Next(GameState.Map.Width - 1);
+            var newLocationY = GameState.RandomNumberGenerator.Next(GameState.Map.Height - 1);
+
+
+            var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(MapPosition), GameState.PathfindingMap.GetNodeAt(new Coordinate(newLocationX, newLocationY)));
+            aStarSolver.Solve();
+            if (aStarSolver.Solution != null)
+            {
+                AvoidActorsBehavior = new AvoidActorsBehavior();
+                FollowPathBehavior = new FollowPathBehavior(aStarSolver.Solution);
+            }
+            ContainmentBehavior = new ContainmentBehavior();
+            AvoidanceBehavior = new AvoidanceBehavior();
+            QueueBehavior = new QueueBehavior();
+            
             Hunger = 20;
         }
 
         public override void Update()
         {
-            _mind.Think();
-            CurrentState.Update(this);
+            //_mind.Think();
+            //CurrentState.Update(this);
 
-            Hunger -= GameState.GameTime.ElapsedGameTime.TotalSeconds;
+            //Hunger -= GameState.GameTime.ElapsedGameTime.TotalSeconds;
+            if (FollowPathBehavior == null)
+            {
+                
+                var newLocationX = GameState.RandomNumberGenerator.Next(GameState.Map.Width - 1);
+                var newLocationY = GameState.RandomNumberGenerator.Next(GameState.Map.Height - 1);
+                var aStarSolver = new AStarSolver(GameState.PathfindingMap.GetNodeAt(MapPosition), GameState.PathfindingMap.GetNodeAt(new Coordinate(newLocationX, newLocationY)));
+                aStarSolver.Solve();
+                if (aStarSolver.Solution != null)
+                {
+                    FollowPathBehavior = new FollowPathBehavior(aStarSolver.Solution);
+                }
+                
+            }
 
             base.Update();
         }

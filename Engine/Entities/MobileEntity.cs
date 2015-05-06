@@ -1,12 +1,25 @@
-﻿using Engine.Maps;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Engine.AI.Steering;
+using Engine.Extensions;
+using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public abstract class MobileEntity : VisibleEntity
+    public abstract class MobileEntity : VisibleEntity, IActor
     {
-        public abstract float Speed { get; }
+        public abstract float MaxVelocity { get; }
+        public Vector2 Velocity { get; private set; }
+        public float Radius { get { { return 0.5f; }}}
+
+        public SeekBehavior SeekBehavior { get; set; }
+        public AvoidActorsBehavior AvoidActorsBehavior { get; set; }
+        public FollowPathBehavior FollowPathBehavior { get; set; }
+        public AvoidanceBehavior AvoidanceBehavior { get; set; }
+        public ContainmentBehavior ContainmentBehavior { get; set; }
+        public QueueBehavior QueueBehavior { get; set; }
 
         public IDirection FacingDirection { get; protected set; }
 
@@ -15,6 +28,44 @@ namespace Engine.Entities
             IsStatic = false;
             FacingDirection = Direction.North;
             CurrentAnimationType = "idle";
+            Velocity = Vector2.Zero;
+        }
+        
+        public override void Update()
+        {
+            var seekVector = SeekBehavior == null ? Vector2.Zero : SeekBehavior.GetForce(this);
+            var avoidActorsVector = AvoidActorsBehavior == null ? Vector2.Zero : AvoidActorsBehavior.GetForce(this);
+            var followPathVector = FollowPathBehavior == null ? Vector2.Zero : FollowPathBehavior.GetForce(this);
+            
+            var currentVector = (seekVector + avoidActorsVector + followPathVector).Truncate(1);
+            var avoidanceVector = AvoidanceBehavior == null ? Vector2.Zero : AvoidanceBehavior.GetForce(this, currentVector);
+
+            currentVector = (seekVector + avoidActorsVector + followPathVector + avoidanceVector).Truncate(1);
+            var containmentVector = ContainmentBehavior == null ? Vector2.Zero : ContainmentBehavior.GetForce(this, currentVector);
+
+            currentVector = (seekVector + avoidActorsVector + followPathVector + avoidanceVector).Truncate(1);
+            var queueVector = QueueBehavior == null ? Vector2.Zero : QueueBehavior.GetForce(this, currentVector);
+
+            currentVector = (seekVector + avoidActorsVector + followPathVector + avoidanceVector + containmentVector + queueVector).Truncate(1);
+            Velocity = currentVector * MaxVelocity;
+            
+            MapPosition = MapPosition + Velocity;
+
+            var intendedMovement = (seekVector + followPathVector);
+            if (intendedMovement != Vector2.Zero)
+            {
+                var direction = Direction.GetDirectionFromVector(intendedMovement * 1000);
+                FaceDirection(direction);
+            }
+
+            base.Update();
+        }
+
+        public virtual void ForceFaceDirection(IDirection direction)
+        {
+            FacingDirection = direction;
+
+            UpdateAnimation();
         }
 
         public virtual void FaceDirection(IDirection direction)

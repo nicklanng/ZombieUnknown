@@ -11,6 +11,8 @@
     <AssemblyName>Engine</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,14 +48,19 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.3.0.2238, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Poly2Tri">
+      <HintPath>..\packages\Poly2Tri.1.0.1.0\lib\net35-Client\Poly2Tri.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\packages\MonoGame.Binaries.3.2.0\build\MonoMac\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\Actions\MoveTowardsTarget.cs" />
@@ -69,8 +76,16 @@
     <Compile Include="AI\BehaviorTrees\SubTrees\FollowPathSubTree.cs" />
     <Compile Include="AI\FiniteStateMachines\IInteractableState.cs" />
     <Compile Include="AI\GoalStatus.cs" />
-    <Compile Include="AI\Senses\Sense.cs" />
-    <Compile Include="AI\Senses\Vision.cs" />
+    <Compile Include="AI\Steering\AvoidActorsBehavior.cs" />
+    <Compile Include="AI\Steering\AvoidanceBehavior.cs" />
+    <Compile Include="AI\Steering\ContainmentBehavior.cs" />
+    <Compile Include="AI\Steering\FollowPathBehavior.cs" />
+    <Compile Include="AI\Steering\ILookAheadBehavior.cs" />
+    <Compile Include="AI\Steering\IBehavior.cs" />
+    <Compile Include="AI\Steering\IActor.cs" />
+    <Compile Include="AI\Steering\ITarget.cs" />
+    <Compile Include="AI\Steering\QueueBehavior.cs" />
+    <Compile Include="AI\Steering\SeekBehavior.cs" />
     <Compile Include="Drawing\Console.cs" />
     <Compile Include="Drawing\DrawingManager.cs" />
     <Compile Include="Drawing\DrawingRequest.cs" />
@@ -85,6 +100,7 @@
     <Compile Include="Entities\Interactions\Interaction.cs" />
     <Compile Include="Entities\VisibleEntity.cs" />
     <Compile Include="Entities\PhantomLight.cs" />
+    <Compile Include="Extensions\Vector2Extensions.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
     <Compile Include="InventoryObjects\IInventoryObject.cs" />
@@ -140,7 +156,12 @@
     <Compile Include="AI\FiniteStateMachines\FiniteStateMachine.cs" />
     <Compile Include="Entities\MobileEntity.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdParty\Clipper\clipper_library.csproj">
+      <Project>{9B062971-A88E-4A3D-B3C9-12B78D15FA66}</Project>
+      <Name>clipper_library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -154,4 +175,5 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

@@ -1,27 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
+using Engine.Drawing;
+using Engine.Maps;
+using Engine.Sprites;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Engine.Input
 {
-    public static class Mouse
+    public class Mouse : IUIProvider
     {
-        private static bool _lmbDown;
-        private static bool _rmbDown;
+        private bool _lmbDown;
+        private bool _rmbDown;
 
-        public static event EventHandler MouseMoved;
-        public static event EventHandler LmbDown;
-        public static event EventHandler LmbUp;
-        public static event EventHandler RmbDown;
-        public static event EventHandler RmbUp;
+        public event EventHandler MouseMoved;
+        public event EventHandler LmbDown;
+        public event EventHandler LmbUp;
+        public event EventHandler RmbDown;
+        public event EventHandler RmbUp;
 
-        public static Vector2 ScreenCoordinates { get; private set; }
+        private Mouse() { }
+        public static readonly Mouse Instance = new Mouse();
+        private static Sprite _sprite;
 
-        public static void Update(GameTime gameTime)
+        public Vector2 ScreenCoordinates { get; private set; }
+
+        public static void Initialize()
+        {
+            _sprite = ResourceManager.GetSprite("cursor");
+        }
+
+        public void Update(GameTime gameTime)
         {
             var mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
             var newScreenCoordinates = new Vector2(mouseState.X, mouseState.Y);
+            newScreenCoordinates = GameState.VirtualScreen.ConvertScreenCoordinatesToVirtualScreenCoordinates(newScreenCoordinates);
             if (newScreenCoordinates != ScreenCoordinates)
             {
                 var handler = MouseMoved;
@@ -60,6 +75,16 @@ namespace Engine.Input
 
                 _rmbDown = false;
             }
+        }
+
+        public IEnumerable<UIRequest> GetDrawings()
+        {
+            return new[] {new UIRequest(_sprite, new Coordinate((int)ScreenCoordinates.X, (int)ScreenCoordinates.Y), 1.0f)};
+        }
+
+        public static IUIProvider DrawingProvider
+        {
+            get { return Instance; }
         }
     }
 }

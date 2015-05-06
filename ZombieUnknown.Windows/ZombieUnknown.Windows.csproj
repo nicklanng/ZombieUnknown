@@ -98,8 +98,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.3.0.2238, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -128,14 +129,6 @@
       <Link>Content\Spritesheets\civm.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="..\Content\SpriteSheets\cursor.png">
-      <Link>Content\Spritesheets\cursor.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Content\SpriteSheets\debug-tile-network.png">
-      <Link>Content\Spritesheets\debug-tile-network.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Content\SpriteSheets\debugIcons.png">
       <Link>Content\Spritesheets\debugIcons.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -154,6 +147,10 @@
     </None>
     <None Include="..\Content\SpriteSheets\items.png">
       <Link>Content\Spritesheets\items.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\ui.png">
+      <Link>Content\Spritesheets\ui.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="..\Content\SpriteSheets\walls.png">
@@ -182,16 +179,16 @@
       <Link>Content\Fonts\dbmf_4x5_box.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\Content\SpriteSheets\debug-tile-network.json">
-      <Link>Content\Spritesheets\debug-tile-network.json</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\Content\SpriteSheets\ethereal.json">
       <Link>Content\Spritesheets\ethereal.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Content\SpriteSheets\items.json">
       <Link>Content\Spritesheets\items.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\ui.json">
+      <Link>Content\Spritesheets\ui.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Content\SpriteSheets\walls.json">

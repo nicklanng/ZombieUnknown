@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Engine.AI.FiniteStateMachines;
+using Engine.AI.Steering;
 using Engine.Entities.Interactions;
 using Microsoft.Xna.Framework;
 
 namespace Engine.Entities
 {
-    public abstract class PhysicalEntity : Entity
+    public abstract class PhysicalEntity : Entity, ITarget
     {
         protected string CurrentAnimationType;
 

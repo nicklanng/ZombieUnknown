@@ -16,6 +16,7 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Human
             {
                 GameController.DeleteEntity(human);
                 GameController.SpawnEntity(new DeadHuman(human));
+                GameState.ZombieTarget = null;
             }
 
             return this;
