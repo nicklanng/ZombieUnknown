@@ -9,9 +9,9 @@ namespace Engine.Drawing
         private readonly ICamera _camera;
         private readonly List<IDrawingProvider> _drawingProviders;
 
-        public DrawingManager(ICamera camera)
+        public DrawingManager()
         {
-            _camera = camera;
+            _camera = GameState.Camera;
             _drawingProviders = new List<IDrawingProvider>();
         }
 

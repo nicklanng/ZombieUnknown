@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Security.Cryptography.X509Certificates;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Drawing
@@ -8,8 +9,9 @@ namespace Engine.Drawing
         public readonly int VirtualWidth;
         public readonly int VirtualHeight;
         public readonly float VirtualAspectRatio;
+        public int ZoomFactor = 1;
 
-        private readonly RenderTarget2D _screen;
+        private RenderTarget2D _screen;
 
         private Rectangle _area;
         private bool _areaIsDirty = true;
@@ -20,7 +22,33 @@ namespace Engine.Drawing
             VirtualHeight = virtualHeight;
             VirtualAspectRatio = virtualWidth / (float)(virtualHeight);
 
-            _screen = new RenderTarget2D(GameState.GraphicsDevice, virtualWidth, virtualHeight, false, GameState.GraphicsDevice.PresentationParameters.BackBufferFormat, GameState.GraphicsDevice.PresentationParameters.DepthStencilFormat, GameState.GraphicsDevice.PresentationParameters.MultiSampleCount, RenderTargetUsage.DiscardContents);
+            ReInitialize();
+        }
+
+        public void ZoomIn()
+        {
+            if (ZoomFactor == 2) return;
+
+            ZoomFactor = 2;
+
+            GameState.Camera.Translate(GameState.Camera.ScreenSize/4);
+
+            ReInitialize();
+        }
+
+        public void ZoomOut()
+        {
+            if (ZoomFactor == 1) return;
+            ZoomFactor = 1;
+
+            GameState.Camera.Translate(GameState.Camera.ScreenSize / -4);
+
+            ReInitialize();
+        }
+
+        private void ReInitialize()
+        {
+            _screen = new RenderTarget2D(GameState.GraphicsDevice, VirtualWidth / ZoomFactor, VirtualHeight / ZoomFactor, false, GameState.GraphicsDevice.PresentationParameters.BackBufferFormat, GameState.GraphicsDevice.PresentationParameters.DepthStencilFormat, GameState.GraphicsDevice.PresentationParameters.MultiSampleCount, RenderTargetUsage.DiscardContents);
         }
 
         public void PhysicalResolutionChanged()
@@ -45,8 +73,7 @@ namespace Engine.Drawing
                 _area = new Rectangle(0, 0, physicalWidth, physicalHeight);
                 return;
             }
-
-
+            
             if (VirtualAspectRatio > physicalAspectRatio)
             {
                 var scaling = physicalWidth / (float)VirtualWidth;
@@ -85,7 +112,7 @@ namespace Engine.Drawing
             var widthScalar = VirtualWidth * 1.0f / GameState.GraphicsDevice.Viewport.Width * 1.0f;
             var heightScalar = VirtualHeight * 1.0f / GameState.GraphicsDevice.Viewport.Height * 1.0f;
 
-            return new Vector2(coordinates.X * widthScalar, coordinates.Y * heightScalar);
+            return new Vector2(coordinates.X * widthScalar / ZoomFactor, coordinates.Y * heightScalar / ZoomFactor);
         }
     }
 }

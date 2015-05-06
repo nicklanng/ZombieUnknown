@@ -4,7 +4,6 @@ using Engine.Drawing;
 using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Engine.Input
@@ -22,16 +21,16 @@ namespace Engine.Input
 
         private Mouse() { }
         public static readonly Mouse Instance = new Mouse();
-        private static Sprite _sprite;
+        private Sprite _sprite;
 
         public Vector2 ScreenCoordinates { get; private set; }
 
-        public static void Initialize()
+        public void Initialize()
         {
             _sprite = ResourceManager.GetSprite("cursor");
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             var mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 

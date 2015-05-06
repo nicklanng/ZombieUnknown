@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Engine
+namespace Engine.Drawing
 {
     public interface ICamera
     {

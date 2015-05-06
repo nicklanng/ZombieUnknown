@@ -5,6 +5,7 @@ using Engine;
 using Engine.AI.Steering;
 using Engine.Drawing;
 using Engine.Entities;
+using Engine.Input;
 using Engine.Maps;
 using Engine.Serialization;
 using Engine.Sprites;
@@ -16,6 +17,7 @@ using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Mobiles;
 using Console = Engine.Drawing.Console;
 using Mouse = Engine.Input.Mouse;
+using Keyboard = Engine.Input.Keyboard;
 
 namespace ZombieUnknown
 {
@@ -28,7 +30,6 @@ namespace ZombieUnknown
         private Map _map;
         private PathfindingMap _pathfindingMap;
         private LightMap _lightMap;
-        private ICamera _camera;
 
         private VirtualScreen _virtualScreen;
         private DrawingManager _drawingManager;
@@ -48,8 +49,8 @@ namespace ZombieUnknown
                     PreferredBackBufferWidth = 1280,
                     PreferredBackBufferHeight = 720,
                     IsFullScreen = false
-                    //PreferredBackBufferWidth = 2560,
-                    //PreferredBackBufferHeight = 1440,
+                    //PreferredBackBufferWidth = 1920,
+                    //PreferredBackBufferHeight = 1080,
                     //IsFullScreen = true
                 };
 
@@ -91,10 +92,10 @@ namespace ZombieUnknown
             Window.AllowUserResizing = true;
 #endif
 
-            _camera = new Camera(new Vector2(_virtualScreen.VirtualWidth, _virtualScreen.VirtualHeight), 100, new IsometricConfiguration());
-            _camera.ScreenCenterPosition = new Vector2(3, 143);
+            GameState.Camera = new Camera(new Vector2(_virtualScreen.VirtualWidth, _virtualScreen.VirtualHeight), 100, new IsometricConfiguration());
+            GameState.Camera.ScreenCenterPosition = new Vector2(3, 143);
 
-            _drawingManager = new DrawingManager(_camera);
+            _drawingManager = new DrawingManager();
             _uiManager = new UIManager();
 
             GameState.GameTime = new GameTime();
@@ -270,8 +271,25 @@ namespace ZombieUnknown
             _lightMap = new LightMap(_map, new Color(0.15f, 0.15f, 0.25f));
             //_lightMap = new LightMap(_map, new Color(0.8f, 0.8f, 0.8f));
 
-            Mouse.Initialize();
-            Console.Initialize(_spriteBatch, font, 1);
+            Mouse.Instance.Initialize();
+            Keyboard.Instance.Initialize();
+            Keyboard.Instance.KeyPressed += (o, i) =>
+            {
+                var args = (KeyEventArgs) i;
+                Console.WriteLine("Pressed: " + args.Key.ToString());
+
+                switch (args.Key)
+                {
+                    case Keys.Add:
+                        GameState.VirtualScreen.ZoomIn();
+                        break;
+                    case Keys.Subtract:
+                        GameState.VirtualScreen.ZoomOut();
+                        break;
+                }
+            };
+
+            Console.Initialize(_spriteBatch, font, 5);
             Console.WriteLine("Post-apocalyptic Management Game");
             FrameRater.Initialize(_spriteBatch, font);
 
@@ -811,15 +829,16 @@ namespace ZombieUnknown
         {
             FrameRater.NewUpdate((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.Instance.IsKeyDown(Keys.Escape))
             {
                 Exit();
             }
 
             GameState.GameTime = gameTime;
-            Engine.Input.Mouse.Instance.Update(gameTime);
+            Mouse.Instance.Update();
+            Keyboard.Instance.Update();
 
-            _camera.Update(gameTime);
+            GameState.Camera.Update(gameTime);
             _map.Update(gameTime);
 
             _virtualScreen.Update();

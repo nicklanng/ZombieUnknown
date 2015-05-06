@@ -103,12 +103,14 @@
     <Compile Include="Extensions\Vector2Extensions.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
+    <Compile Include="Input\Keyboard.cs" />
+    <Compile Include="Input\KeyEventArgs.cs" />
     <Compile Include="InventoryObjects\IInventoryObject.cs" />
     <Compile Include="InventoryObjects\IStorage.cs" />
     <Compile Include="InventoryObjects\Size.cs" />
     <Compile Include="InventoryObjects\Storage.cs" />
     <Compile Include="InventoryObjects\StorageLocation.cs" />
-    <Compile Include="Manual2dCamera.cs" />
+    <Compile Include="Drawing\Manual2dCamera.cs" />
     <Compile Include="EngineSettings.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Light.cs" />

@@ -23,6 +23,7 @@ namespace Engine
         public static PhysicalEntity ZombieTarget { get; set; }
         public static List<IActor> Actors { get; set; }
         public static VirtualScreen VirtualScreen { get; set; }
+        public static ICamera Camera { get; set; }
 
 // temporary
     }
