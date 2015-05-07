@@ -31,7 +31,7 @@ namespace ZombieUnknown.Entities.Mobiles
 
             IsStatic = false;
 
-            CurrentState = HumanStates.Instance.IdleState;
+            CurrentState = HumanStates.Instance.WalkingState;
             CurrentState.OnEnter(this);
 
             var newLocationX = GameState.RandomNumberGenerator.Next(GameState.Map.Width - 1);

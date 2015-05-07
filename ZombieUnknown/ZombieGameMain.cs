@@ -54,7 +54,7 @@ namespace ZombieUnknown
                     //IsFullScreen = true
                 };
 
-            Window.IsBorderless = true;
+            Window.IsBorderless = false;
 #endif
 #if MAC
             _graphics = new GraphicsDeviceManager(this)

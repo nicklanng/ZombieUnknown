@@ -23,7 +23,7 @@ namespace Engine.Entities
             var parentTile = GameState.Map.GetTile(MapPosition);
             if (parentTile != null) LightValue = parentTile.Light;
 
-            if (GameState.PathfindingMap.IsPointOutOfBounds(MapPosition)) LightValue = Color.Red;
+            //if (GameState.PathfindingMap.IsPointOutOfBounds(MapPosition)) LightValue = Color.Red;
             Sprite.Update();
         }
 
