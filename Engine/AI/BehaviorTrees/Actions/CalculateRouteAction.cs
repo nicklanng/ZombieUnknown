@@ -1,4 +1,5 @@
-﻿using Engine.Entities;
+﻿using Engine.AI.Steering;
+using Engine.Entities;
 using Engine.Maps;
 using Engine.Pathfinding;
 
@@ -8,9 +9,10 @@ namespace Engine.AI.BehaviorTrees.Actions
     {
         protected override GoalStatus Action(Blackboard blackboard)
         {
+            var targetEntity = blackboard.GetValue<ITarget>("targetEntity");
             var aStarSolver = new AStarSolver(
-                GameState.PathfindingMap.GetNodeAt(((PhysicalEntity) blackboard["subject"]).MapPosition), 
-                GameState.PathfindingMap.GetNodeAt((Coordinate) blackboard["TargetCoordinate"])
+                GameState.PathfindingMap.GetNodeAt(((PhysicalEntity) blackboard["subject"]).MapPosition),
+                GameState.PathfindingMap.GetNodeAt(targetEntity.MapPosition)
             );
             var solutionFound = aStarSolver.Solve();
             if (solutionFound == false)
@@ -18,7 +20,7 @@ namespace Engine.AI.BehaviorTrees.Actions
                 return GoalStatus.Failed;
             }
 
-            blackboard["MovementPath"] = aStarSolver.Solution;
+            blackboard["movementPath"] = aStarSolver.Solution;
 
             return GoalStatus.Completed;
         }

@@ -37,7 +37,7 @@ namespace Engine.Entities
         
         public override void Update()
         {
-            const int previousVelocityCount = 50;
+            const int previousVelocityCount = 20;
 
             var seekVector = SeekBehavior == null ? Vector2.Zero : SeekBehavior.GetForce(this);
             var avoidActorsVector = AvoidActorsBehavior == null ? Vector2.Zero : AvoidActorsBehavior.GetForce(this);

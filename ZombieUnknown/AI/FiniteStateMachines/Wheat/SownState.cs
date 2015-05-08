@@ -28,7 +28,7 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Wheat
             var wheat = (Entities.Wheat)entity;
             wheat.SetAnimation("sown");
 
-            _nextStateTrigger = 10000;
+            _nextStateTrigger = 45000;
         }
 
         public override void OnExit(Entity entity)

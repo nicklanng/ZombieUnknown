@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine.AI.Steering;
+using Engine.AI.Tasks;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Maps;
@@ -18,6 +19,7 @@ namespace Engine
         public static GraphicsDevice GraphicsDevice { get; set; }
         public static Entity MainCharacter { get; set; }
         public static Random RandomNumberGenerator = new Random();
+        public static TaskList TaskList { get; set; }
 
         public static PhysicalEntity InteractionObject { get; set; } // temporary
         public static PhysicalEntity ZombieTarget { get; set; }

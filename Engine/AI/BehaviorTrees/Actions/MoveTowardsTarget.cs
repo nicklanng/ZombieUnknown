@@ -1,7 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using Engine.AI.Steering;
 using Engine.Entities;
-using Engine.Maps;
-using Engine.Pathfinding;
+using Engine.Extensions;
 using Microsoft.Xna.Framework;
 
 namespace Engine.AI.BehaviorTrees.Actions
@@ -11,46 +11,37 @@ namespace Engine.AI.BehaviorTrees.Actions
         protected override GoalStatus Action(Blackboard blackboard)
         {
             var entity = (MobileEntity)blackboard["subject"];
+            var targetEntity = (ITarget)blackboard["targetEntity"];
 
-            var target = (Vector2) blackboard["TargetCoordinate"];
+            var path = blackboard.GetValue<List<Vector2>>("movementPath");
 
-
-            var distanceToTarget = (target - entity.MapPosition);
-            var direction = Direction.GetDirectionFromVector(distanceToTarget);
-            entity.FaceDirection(direction);
-            entity.TransitionState("walk");
-
-            var moveAmount = distanceToTarget;
-            moveAmount.Normalize();
-            moveAmount = moveAmount * entity.MaxVelocity * 0.001f;
-
-            Vector2 estimatedEndPosition;
-            if (moveAmount.Length() >= distanceToTarget.Length())
+            if (SavedResult == GoalStatus.Inactive)
             {
-                estimatedEndPosition = target;
-                
+                entity.SeekBehavior = null;
+                entity.FollowPathBehavior = new FollowPathBehavior(path);
+                entity.TransitionState("walk");
+
+                return GoalStatus.Running;
+            }
+
+            if (SavedResult == GoalStatus.Running && entity.SeekBehavior == null)
+            {
+                var directLine = GameState.PathfindingMap.DirectPathBetween(entity.MapPosition, targetEntity.MapPosition);
+                if (directLine)
+                {
+                    entity.FollowPathBehavior = null;
+                    entity.SeekBehavior = new SeekBehavior(targetEntity);
+                }
+            }
+
+            if (entity.MapPosition.DistanceTo(targetEntity.MapPosition) < entity.Radius)
+            {
                 entity.TransitionState("idle");
-            }
-            else
-            {
-                estimatedEndPosition = entity.MapPosition + moveAmount;
-            }
-
-            var movementblocker = (IMovementBlocker)entity;
-            if (movementblocker == null)
-            {
-                entity.MapPosition = estimatedEndPosition;
                 return GoalStatus.Completed;
             }
 
-            var canMoveThere = GameState.Map.IsPositionClear(movementblocker, estimatedEndPosition, 0.5f);
-            if (canMoveThere)
-            {
-                entity.MapPosition = estimatedEndPosition;
-                return GoalStatus.Completed;
-            }
 
-            return GoalStatus.Failed;
+            return GoalStatus.Running;
         }
 
         

@@ -63,7 +63,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\BehaviorTrees\Actions\CompleteTask.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\GetTaskAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\MoveTowardsTarget.cs" />
+    <Compile Include="AI\BehaviorTrees\Actions\PerformTask.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\HasPathConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\IdleAction.cs" />
     <Compile Include="AI\BehaviorTrees\Composites\BehaviorComposite.cs" />
@@ -86,6 +89,11 @@
     <Compile Include="AI\Steering\ITarget.cs" />
     <Compile Include="AI\Steering\QueueBehavior.cs" />
     <Compile Include="AI\Steering\SeekBehavior.cs" />
+    <Compile Include="AI\Tasks\ITask.cs" />
+    <Compile Include="AI\Tasks\Task.cs" />
+    <Compile Include="AI\Tasks\TaskList.cs" />
+    <Compile Include="AI\UtilityBehaviors\IUtilityBehavior.cs" />
+    <Compile Include="AI\UtilityBehaviors\UtilityBehaviorRepository.cs" />
     <Compile Include="Drawing\Console.cs" />
     <Compile Include="Drawing\DrawingManager.cs" />
     <Compile Include="Drawing\DrawingRequest.cs" />
@@ -150,7 +158,6 @@
     <Compile Include="AI\BehaviorTrees\Actions\BehaviorAction.cs" />
     <Compile Include="AI\BehaviorTrees\Blackboard.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CalculateRouteAction.cs" />
-    <Compile Include="AI\BehaviorTrees\Actions\FollowPathAction.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\InteractAction.cs" />
     <Compile Include="Entities\AccessPosition.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\GetFoodSource.cs" />
@@ -175,7 +182,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

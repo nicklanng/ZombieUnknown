@@ -4,16 +4,15 @@ using Engine.Entities.Interactions;
 
 namespace ZombieUnknown.Entities.Interactions
 {
-    class SowSeedInteraction : Interaction
+    public class HarvestWheatInteraction : Interaction
     {
-        public static string Text = "Sow Seed";
+        public static string Text = "Harvest";
+        public override int MillisToCompleteAction { get { return 2000; } }
 
-        public override int MillisToCompleteAction { get { return 1000; } }
-        
         public override void Interact(MobileEntity actor, PhysicalEntity subject)
         {
             GameController.DeleteEntity(subject);
-            GameController.SpawnEntity(new Wheat("wheat", subject.MapPosition));
+            GameController.SpawnEntity(new CultivatedLand("cultivatedLand", subject.MapPosition));
         }
     }
 }

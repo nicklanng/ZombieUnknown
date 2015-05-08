@@ -1,27 +1,26 @@
-﻿using System.Linq;
+﻿using Engine.AI.Tasks;
 using Engine.Entities;
 
 namespace Engine.AI.BehaviorTrees.Actions
 {
-    public abstract class InteractAction : BehaviorAction
+    public class PerformTask : BehaviorAction
     {
-        protected abstract string InteractionText { get; }
-
         protected override GoalStatus Action(Blackboard blackboard)
         {
-            var entity = (MobileEntity)blackboard["subject"];
+            var entity = blackboard.GetValue<MobileEntity>("subject");
+            var task = blackboard.GetValue<ITask>("currentTask");
 
             var interactionTarget = blackboard.GetValue<PhysicalEntity>("targetEntity");
-            if (interactionTarget == null) 
+            if (interactionTarget == null)
             {
                 return GoalStatus.Failed;
             }
 
-            if (interactionTarget.Interactions.ContainsKey(InteractionText) == false)
+            if (interactionTarget.Interactions.ContainsKey(task.Action) == false)
             {
                 return GoalStatus.Failed;
             }
-            var interactionAction = interactionTarget.Interactions[InteractionText];
+            var interactionAction = interactionTarget.Interactions[task.Action];
 
             if (SavedResult == GoalStatus.Inactive)
             {
@@ -45,9 +44,8 @@ namespace Engine.AI.BehaviorTrees.Actions
                     return GoalStatus.Completed;
                 }
             }
-            
+
             return GoalStatus.Running;
         }
     }
 }
-

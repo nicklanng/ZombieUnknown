@@ -3,6 +3,7 @@ using Engine;
 using Engine.Entities;
 using Engine.Entities.Interactions;
 using Engine.Maps;
+using ZombieUnknown.AI.Tasks;
 using ZombieUnknown.Entities.Interactions;
 
 namespace ZombieUnknown.Entities
@@ -12,6 +13,7 @@ namespace ZombieUnknown.Entities
         public CultivatedLand(string name, Coordinate mapPosition) 
             : base(name, ResourceManager.GetSprite("cultivatedLand"), mapPosition)
         {
+            GameState.TaskList.AddTask(new SowWheatSeedTask(this));
         }
 
         public override AccessPosition[] AccessPositions
@@ -37,7 +39,7 @@ namespace ZombieUnknown.Entities
             {
                 return new Dictionary<string, Interaction>
                 {
-                    { SowSeedInteraction.Text, new SowSeedInteraction(this) }
+                    { SowSeedInteraction.Text, new SowSeedInteraction() }
                 };
             }
         }

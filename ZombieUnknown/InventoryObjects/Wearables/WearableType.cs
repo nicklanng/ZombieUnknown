@@ -1,6 +1,6 @@
 ﻿namespace ZombieUnknown.InventoryObjects.Wearables
 {
-    enum WearableType
+    public enum WearableType
     {
         Hat,
         Face,

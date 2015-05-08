@@ -13,7 +13,7 @@ namespace ZombieUnknown.Entities
         public Lamp(string name, Coordinate mapPosition) 
             : base(name, ResourceManager.GetSprite("lamp"), mapPosition)
         {
-            Light = new Light(mapPosition, Color.White, 4);
+            Light = new Light(mapPosition, Color.White, 5);
         }
 
         public bool BlocksTile { get { return true; } }

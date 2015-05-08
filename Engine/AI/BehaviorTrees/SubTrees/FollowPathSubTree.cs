@@ -8,7 +8,7 @@ namespace Engine.AI.BehaviorTrees.SubTrees
     public class FollowPathSubTree : RepeaterUntilFail
     {
         public FollowPathSubTree() 
-            : base(new Sequence(new HasPathConditional(), new FollowPathAction(), new IdleAction()))
+            : base(new Sequence(new HasPathConditional(),new IdleAction()))
         {
         }
     }

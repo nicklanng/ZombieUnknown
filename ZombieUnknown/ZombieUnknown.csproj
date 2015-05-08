@@ -71,6 +71,7 @@
     <Compile Include="AI\BehaviorTrees\BehaviorTreeStore.cs" />
     <Compile Include="AI\BehaviorTrees\Actions\CreateRandomMovementTargetAction.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\HasFoodConditional.cs" />
+    <Compile Include="AI\BehaviorTrees\Conditionals\HasTaskConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\IsDeadConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\ShouldDieConditional.cs" />
     <Compile Include="AI\BehaviorTrees\Conditionals\NeedToEatConditional.cs" />
@@ -84,10 +85,15 @@
     <Compile Include="AI\FiniteStateMachines\Wheat\GrownState.cs" />
     <Compile Include="AI\FiniteStateMachines\Wheat\SownState.cs" />
     <Compile Include="AI\FiniteStateMachines\Wheat\WheatStates.cs" />
+    <Compile Include="AI\Tasks\HarvestWheatTask.cs" />
+    <Compile Include="AI\Tasks\SowWheatSeedTask.cs" />
+    <Compile Include="AI\UtilityBehaviors\HarvestWheatUtility.cs" />
+    <Compile Include="AI\UtilityBehaviors\SowWheatSeedUtility.cs" />
     <Compile Include="Entities\CultivatedLand.cs" />
     <Compile Include="Entities\DeadHuman.cs" />
     <Compile Include="Entities\FoodContainer.cs" />
     <Compile Include="Entities\Interactions\GetFoodInteraction.cs" />
+    <Compile Include="Entities\Interactions\HarvestWheatInteraction.cs" />
     <Compile Include="Entities\Interactions\SowSeedInteraction.cs" />
     <Compile Include="Entities\Lamp.cs" />
     <Compile Include="Entities\TallGrass1.cs" />
@@ -105,6 +111,7 @@
     <Compile Include="Entities\Wheat.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="MonoGame.Framework, Version=3.3.0.2238, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>

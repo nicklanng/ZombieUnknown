@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Engine;
 using Engine.AI.Steering;
+using Engine.AI.Tasks;
+using Engine.AI.UtilityBehaviors;
 using Engine.Drawing;
 using Engine.Entities;
 using Engine.Input;
@@ -13,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ZombieUnknown.AI.BehaviorTrees;
+using ZombieUnknown.AI.UtilityBehaviors;
 using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Mobiles;
 using Console = Engine.Drawing.Console;
@@ -100,6 +103,10 @@ namespace ZombieUnknown
 
             GameState.GameTime = new GameTime();
 
+            UtilityBehaviorRepository.Initialize();
+            UtilityBehaviorRepository.RegisterUtilityBehavior(new HarvestWheatUtility());
+            UtilityBehaviorRepository.RegisterUtilityBehavior(new SowWheatSeedUtility());
+
             base.Initialize();
         }
 
@@ -116,6 +123,8 @@ namespace ZombieUnknown
         {
             BehaviorTreeStore.Generate();
             GameState.Actors = new List<IActor>();
+
+            GameState.TaskList = new TaskList();
 
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
@@ -227,7 +236,7 @@ namespace ZombieUnknown
             }
             listOfTiles = listOfTiles.OrderBy(x => Guid.NewGuid()).ToList();
 
-            for (var i = 0; i < 50; i++)
+            for (var i = 0; i < 4; i++)
             {
                 var human = new Human("human" + i, (Vector2)listOfTiles.ElementAt(0) + new Vector2(0.5f, 0.5f));
                 listOfTiles.RemoveAt(0);
@@ -248,22 +257,19 @@ namespace ZombieUnknown
             GameController.SpawnEntity(food);
             _pathfindingMap.AddBlockage(food);
 
-            var lamp = new Lamp("lamp", new Coordinate(13, 14));
-            GameController.SpawnEntity(lamp);
-            _pathfindingMap.AddBlockage(lamp);
+            GameController.SpawnEntity(new Lamp("lamp", new Coordinate(0, 19)));
+            GameController.SpawnEntity(new Lamp("lamp2", new Coordinate(0, 11)));
+            GameController.SpawnEntity(new Lamp("lamp3", new Coordinate(9, 19)));
+            GameController.SpawnEntity(new Lamp("lamp4", new Coordinate(9, 11)));
 
-            var lamp2 = new Lamp("lamp2", new Coordinate(13, 4));
-            _map.AddEntity(lamp2);
-            _pathfindingMap.AddBlockage(lamp2);
+            //var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 3));
+            //GameController.SpawnEntity(cultivatedLand);
 
-            var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 3));
-            GameController.SpawnEntity(cultivatedLand);
-
-            for (var x = 10; x < 15; x++)
+            for (var x = 1; x < 9; x++)
             {
-                for (var y = 5; y < 9; y++)
+                for (var y = 12; y < 19; y++)
                 {
-                    var h = new Wheat("wheat", new Coordinate(x, y));
+                    var h = new CultivatedLand("cultivatedLand", new Coordinate(x, y));
                     GameController.SpawnEntity(h);
                 }
             }
@@ -276,8 +282,6 @@ namespace ZombieUnknown
             Keyboard.Instance.KeyPressed += (o, i) =>
             {
                 var args = (KeyEventArgs) i;
-                Console.WriteLine("Pressed: " + args.Key.ToString());
-
                 switch (args.Key)
                 {
                     case Keys.Add:

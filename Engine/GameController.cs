@@ -7,6 +7,7 @@ namespace Engine
     {
         public static void DeleteEntity(PhysicalEntity entity)
         {
+            entity.Delete();
             GameState.Map.RemoveEntity(entity);
         }
 

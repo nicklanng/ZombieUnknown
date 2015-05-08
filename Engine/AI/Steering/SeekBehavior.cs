@@ -1,5 +1,4 @@
 ﻿using Engine.Extensions;
-using Engine.Maps;
 using Microsoft.Xna.Framework;
 
 namespace Engine.AI.Steering
@@ -22,11 +21,9 @@ namespace Engine.AI.Steering
                 return Vector2.Zero;
             }
 
-            var desiredVelocity = desiredMovement.Truncate(actor.MaxVelocity);
-            var steering = (desiredVelocity - actor.Velocity).Truncate(actor.MaxVelocity / 1);
+            var desiredVelocity = desiredMovement.Truncate(1);
 
-            
-            return steering;
+            return desiredVelocity;
         }
     }
 }

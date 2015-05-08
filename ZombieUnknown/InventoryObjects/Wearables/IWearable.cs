@@ -1,6 +1,6 @@
 ﻿namespace ZombieUnknown.InventoryObjects.Wearables
 {
-    interface IWearable
+    public interface IWearable
     {
         WearableType WearableType { get; }
     }

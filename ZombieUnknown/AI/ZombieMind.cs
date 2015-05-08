@@ -1,24 +1,19 @@
-﻿using Engine.AI.BehaviorTrees;
-using ZombieUnknown.AI.BehaviorTrees;
-using ZombieUnknown.Entities.Mobiles;
+﻿using ZombieUnknown.Entities.Mobiles;
 
 namespace ZombieUnknown.AI
 {
     class ZombieMind
     {
-        private readonly Blackboard _blackboard;
-        private readonly Behavior _behavior;
+        private readonly Zombie _entity;
 
         public ZombieMind(Zombie entity)
         {
-            _blackboard = new Blackboard(entity);
-
-            _behavior = BehaviorTreeStore.ZombieBehavior;
+            _entity = entity;
         }
 
         public void Think()
         {
-            _behavior.Update(_blackboard);
+            
         }
     }
 }

@@ -4,7 +4,7 @@ using Engine.InventoryObjects;
 
 namespace ZombieUnknown.InventoryObjects.Wearables
 {
-    class WearableRig
+    public class WearableRig
     {
         private readonly Dictionary<WearableType, IWearable> _wearables;
 

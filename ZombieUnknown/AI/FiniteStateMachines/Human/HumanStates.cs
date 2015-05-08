@@ -23,7 +23,6 @@ namespace ZombieUnknown.AI.FiniteStateMachines.Human
             IdleState.AddTransition("die", DyingState);
 
             WalkingState.AddTransition("idle", IdleState);
-            WalkingState.AddTransition("interact", InteractingState);
 
             InteractingState.AddTransition("walk", WalkingState);
             InteractingState.AddTransition("idle", IdleState);
