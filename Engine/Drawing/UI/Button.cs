@@ -90,5 +90,10 @@ namespace Engine.Drawing.UI
                 OnClick(this, new EventArgs());
             }
         }
+
+        public bool TestClick(Vector2 clickPosition)
+        {
+            return Bounds.Contains(clickPosition);
+        }
     }
 }

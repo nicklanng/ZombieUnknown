@@ -88,7 +88,7 @@ namespace ZombieUnknown
             GameState.GraphicsDevice = GraphicsDevice;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(1920/2, 1080/2);
+            _virtualScreen = new VirtualScreen(1920/3, 1080/3);
             GameState.VirtualScreen = _virtualScreen;
 
 #if WINDOWS

@@ -111,5 +111,14 @@ namespace ZombieUnknown.Entities.Mobiles
             }
         }
 
+        public bool TestClick(Vector2 clickPosition)
+        {
+            var inBounds = Bounds.Contains(clickPosition);
+            if (!inBounds) return false;
+
+            var positionInBounds = clickPosition - Bounds.Location.ToVector2();
+            var scaledPosition = GameState.VirtualScreen.ConvertScreenCoordinatesToVirtualScreenCoordinates(positionInBounds);
+            return Sprite.IsPixelFilledIn(scaledPosition);
+        }
     }
 }

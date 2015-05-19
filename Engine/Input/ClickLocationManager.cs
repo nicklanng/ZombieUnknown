@@ -52,7 +52,8 @@ namespace Engine.Input
         {
             foreach (var clickLocation in _clickLocations.Where(clickLocation => clickLocation.IsEnabled))
             {
-                if (clickLocation.Bounds.Contains(clickPosition))
+                
+                if (clickLocation.TestClick(clickPosition))
                 {
                     clickLocation.Click();
                     return;

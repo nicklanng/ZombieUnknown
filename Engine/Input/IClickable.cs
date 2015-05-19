@@ -10,5 +10,6 @@ namespace Engine.Input
         void Click();
 
         event EventHandler OnClick;
+        bool TestClick(Vector2 clickPosition);
     }
 }

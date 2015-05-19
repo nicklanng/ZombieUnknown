@@ -57,5 +57,13 @@ namespace Engine.Sprites
         {
             return (Sprite)MemberwiseClone();
         }
+
+        public bool IsPixelFilledIn(Vector2 scaledPosition)
+        {
+            var bits = new Color[SpriteSheet.Texture.Width * SpriteSheet.Texture.Height];
+            SpriteSheet.Texture.GetData(bits);
+            var a = bits[((int)scaledPosition.X - SpriteSheet.Texture.Bounds.X) + ((int)scaledPosition.Y - SpriteSheet.Texture.Bounds.Y) * SpriteSheet.Texture.Width];
+            return a.A != 0;
+        }
     }
 }
