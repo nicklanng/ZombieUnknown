@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Engine;
 using Engine.AI.Steering;
 using Engine.Drawing;
 using Engine.Entities;
+using Engine.Input;
 using Engine.InventoryObjects;
 using Engine.Pathfinding;
 using Microsoft.Xna.Framework;
 using ZombieUnknown.AI;
 using ZombieUnknown.AI.FiniteStateMachines.Human;
 using ZombieUnknown.InventoryObjects.Wearables;
+using Console = Engine.Drawing.UI.Console;
 
 namespace ZombieUnknown.Entities.Mobiles
 {
-    public class Human : MobileEntity, IMovementBlocker
+    public class Human : MobileEntity, IMovementBlocker, IClickable
     {
         private readonly HumanMind _mind;
 
@@ -39,6 +42,8 @@ namespace ZombieUnknown.Entities.Mobiles
             QueueBehavior = new QueueBehavior();
             
             Hunger = 20;
+
+            ClickLocationManager.Instance.RegisterClickLocation(this);
         }
 
         public override void Update()
@@ -77,5 +82,34 @@ namespace ZombieUnknown.Entities.Mobiles
 
         public bool BlocksTile { get; private set; }
         public bool BlocksDiagonals { get; private set; }
+
+
+        public Rectangle Bounds
+        {
+            get
+            {
+                var coords = new Vector2();
+                if (GameState.Camera.GetScreenCoordinates(MapPosition, out coords))
+                {
+                    var topLeft = GameState.VirtualScreen.ConvertVirtualScreenCoordinatesToScreenCoordinates(coords);
+                    var offset = GameState.VirtualScreen.ConvertVirtualScreenCoordinatesToScreenCoordinates(Sprite.Offset);
+                    var size = GameState.VirtualScreen.ConvertVirtualScreenCoordinatesToScreenCoordinates(new Vector2(Sprite.Width, Sprite.Height));
+                    return new Rectangle((int)(topLeft.X - offset.X), (int)(topLeft.Y - offset.Y), (int)size.X, (int)size.Y); 
+                }
+                return new Rectangle();
+            }
+        }
+        public bool IsEnabled { get { return true; } }
+
+        public event EventHandler OnClick;
+        public void Click()
+        {
+            Console.WriteLine(Name);
+            if (OnClick != null)
+            {
+                OnClick(this, new EventArgs());
+            }
+        }
+
     }
 }

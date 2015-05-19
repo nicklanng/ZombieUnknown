@@ -36,18 +36,17 @@ namespace Engine.Input
             var mouseState = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
             var newScreenCoordinates = new Vector2(mouseState.X, mouseState.Y);
-            newScreenCoordinates = GameState.VirtualScreen.ConvertScreenCoordinatesToVirtualScreenCoordinates(newScreenCoordinates);
             if (newScreenCoordinates != ScreenCoordinates)
             {
                 var handler = MouseMoved;
-                if (handler != null) handler(null, new EventArgs());
+                if (handler != null) handler(null, new MouseArgs(newScreenCoordinates));
                 ScreenCoordinates = newScreenCoordinates;
             }
 
             if (!_lmbDown && mouseState.LeftButton == ButtonState.Pressed)
             {
                 var handler = LmbDown;
-                if (handler != null) handler(null, new EventArgs());
+                if (handler != null) handler(null, new MouseArgs(newScreenCoordinates));
 
                 _lmbDown = true;
             }
@@ -55,7 +54,7 @@ namespace Engine.Input
             if (_lmbDown && mouseState.LeftButton == ButtonState.Released)
             {
                 var handler = LmbUp;
-                if (handler != null) handler(null, new EventArgs());
+                if (handler != null) handler(null, new MouseArgs(newScreenCoordinates));
 
                 _lmbDown = false;
             }
@@ -63,7 +62,7 @@ namespace Engine.Input
             if (!_rmbDown && mouseState.RightButton == ButtonState.Pressed)
             {
                 var handler = RmbDown;
-                if (handler != null) handler(null, new EventArgs());
+                if (handler != null) handler(null, new MouseArgs(newScreenCoordinates));
 
                 _rmbDown = true;
             }
@@ -71,7 +70,7 @@ namespace Engine.Input
             if (_rmbDown && mouseState.RightButton == ButtonState.Released)
             {
                 var handler = RmbUp;
-                if (handler != null) handler(null, new EventArgs());
+                if (handler != null) handler(null, new MouseArgs(newScreenCoordinates));
 
                 _rmbDown = false;
             }
@@ -79,7 +78,8 @@ namespace Engine.Input
 
         public IEnumerable<UIRequest> GetDrawings()
         {
-            return new[] {new UIRequest(_sprite, new Coordinate((int)ScreenCoordinates.X, (int)ScreenCoordinates.Y), 1.0f)};
+            var virtualScreenCoordinates = GameState.VirtualScreen.ConvertScreenCoordinatesToVirtualScreenCoordinates(ScreenCoordinates);
+            return new[] { new UIRequest(_sprite, new Coordinate((int)virtualScreenCoordinates.X, (int)virtualScreenCoordinates.Y), 1.0f) };
         }
 
         public static IUIProvider DrawingProvider

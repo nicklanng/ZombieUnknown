@@ -88,7 +88,7 @@ namespace ZombieUnknown
             GameState.GraphicsDevice = GraphicsDevice;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(1920/3, 1080/3);
+            _virtualScreen = new VirtualScreen(1920/2, 1080/2);
             GameState.VirtualScreen = _virtualScreen;
 
 #if WINDOWS
@@ -243,6 +243,7 @@ namespace ZombieUnknown
                 var human = new Human("human" + i, (Vector2)listOfTiles.ElementAt(0) + new Vector2(0.5f, 0.5f));
                 listOfTiles.RemoveAt(0);
                 human.ForceFaceDirection(Direction.North);
+
                 GameController.SpawnEntity(human);
                 GameState.ZombieTarget = human;
             }
@@ -280,6 +281,7 @@ namespace ZombieUnknown
             //_lightMap = new LightMap(_map, new Color(0.8f, 0.8f, 0.8f));
 
             Mouse.Instance.Initialize();
+            Mouse.Instance.LmbDown += (o, i) => ClickLocationManager.Instance.TryToClick(((MouseArgs)i).ScreenPosition);
             Keyboard.Instance.Initialize();
             Keyboard.Instance.KeyPressed += (o, i) =>
             {
@@ -287,10 +289,10 @@ namespace ZombieUnknown
                 switch (args.Key)
                 {
                     case Keys.Add:
-                        GameState.VirtualScreen.ZoomIn();
+                        //GameState.VirtualScreen.ZoomIn();
                         break;
                     case Keys.Subtract:
-                        GameState.VirtualScreen.ZoomOut();
+                        //GameState.VirtualScreen.ZoomOut();
                         break;
                 }
             };
@@ -310,8 +312,14 @@ namespace ZombieUnknown
 
             var peopleButton = new Button(buttonSprite, font, "people", new UIPosition(new Vector2(5, 5), UIAnchor.BottomLeft), 4);
             _uiManager.RegisterProvider(peopleButton);
-            var jobButton = new Button(buttonSprite, font, "jobs", new UIPosition(new Vector2(70, 5), UIAnchor.BottomLeft), 4);
+            var jobButton = new Button(buttonSprite, font, "jobs", new UIPosition(new Vector2(60, 5), UIAnchor.BottomLeft), 4);
             _uiManager.RegisterProvider(jobButton);
+            var debugButton = new Button(buttonSprite, font, "debug", new UIPosition(new Vector2(115, 5), UIAnchor.BottomLeft), 4);
+            _uiManager.RegisterProvider(debugButton);
+            debugButton.OnClick += (o, i) =>
+            {
+                ClickLocationManager.Instance.IsEnabled = !ClickLocationManager.Instance.IsEnabled;
+            };
         }
 
         private AnimatedSprite BuildHumanSprite(SpriteSheet humanSpriteSheet)
@@ -882,6 +890,10 @@ namespace ZombieUnknown
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             _virtualScreen.Draw(_spriteBatch);
+            _spriteBatch.End();
+
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+            ClickLocationManager.Instance.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);

@@ -94,6 +94,8 @@
     <Compile Include="AI\Tasks\TaskList.cs" />
     <Compile Include="AI\UtilityBehaviors\IUtilityBehavior.cs" />
     <Compile Include="AI\UtilityBehaviors\UtilityBehaviorRepository.cs" />
+    <Compile Include="Input\ClickLocationManager.cs" />
+    <Compile Include="Drawing\PrimiviteDrawing.cs" />
     <Compile Include="Drawing\UI\Button.cs" />
     <Compile Include="Drawing\UI\Console.cs" />
     <Compile Include="Drawing\DrawingManager.cs" />
@@ -114,8 +116,10 @@
     <Compile Include="Extensions\Vector2Extensions.cs" />
     <Compile Include="GameController.cs" />
     <Compile Include="IIsometricConfiguration.cs" />
+    <Compile Include="Input\IClickable.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\KeyEventArgs.cs" />
+    <Compile Include="Input\MouseArgs.cs" />
     <Compile Include="InventoryObjects\IInventoryObject.cs" />
     <Compile Include="InventoryObjects\IStorage.cs" />
     <Compile Include="InventoryObjects\Size.cs" />

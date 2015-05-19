@@ -13,6 +13,7 @@ namespace Engine.Sprites
 
         public short Width { get { return (short)SpriteSheetRectangle.Width; } }
         public short Height { get { return (short)SpriteSheetRectangle.Height; } }
+        public Vector2 Offset { get { return Center; } }
 
         protected Sprite(string name, SpriteSheet spriteSheet)
             : this(name, spriteSheet, Vector2.Zero)
