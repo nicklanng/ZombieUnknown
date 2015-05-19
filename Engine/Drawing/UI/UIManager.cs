@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Drawing
+namespace Engine.Drawing.UI
 {
     public class UIManager
     {

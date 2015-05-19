@@ -6,6 +6,7 @@ using Engine.AI.Steering;
 using Engine.AI.Tasks;
 using Engine.AI.UtilityBehaviors;
 using Engine.Drawing;
+using Engine.Drawing.UI;
 using Engine.Entities;
 using Engine.Input;
 using Engine.Maps;
@@ -18,7 +19,7 @@ using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.AI.UtilityBehaviors;
 using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Mobiles;
-using Console = Engine.Drawing.Console;
+using Console = Engine.Drawing.UI.Console;
 using Mouse = Engine.Input.Mouse;
 using Keyboard = Engine.Input.Keyboard;
 
@@ -49,15 +50,15 @@ namespace ZombieUnknown
             _graphics = new GraphicsDeviceManager(this)
                 {
 
-                    PreferredBackBufferWidth = 1280,
-                    PreferredBackBufferHeight = 720,
+                    PreferredBackBufferWidth = 1920,
+                    PreferredBackBufferHeight = 1080,
                     IsFullScreen = false
-                    //PreferredBackBufferWidth = 1920,
-                    //PreferredBackBufferHeight = 1080,
+                    //PreferredBackBufferWidth = 2560,
+                    //PreferredBackBufferHeight = 1440,
                     //IsFullScreen = true
                 };
 
-            Window.IsBorderless = false;
+            Window.IsBorderless = true;
 #endif
 #if MAC
             _graphics = new GraphicsDeviceManager(this)
@@ -87,7 +88,7 @@ namespace ZombieUnknown
             GameState.GraphicsDevice = GraphicsDevice;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(640, 360);
+            _virtualScreen = new VirtualScreen(1920/3, 1080/3);
             GameState.VirtualScreen = _virtualScreen;
 
 #if WINDOWS
@@ -137,6 +138,7 @@ namespace ZombieUnknown
             var uiSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/ui");
 
             var cursorSprite = new StaticSprite("cursor", uiSpriteSheet, Vector2.Zero, "cursor");
+            var buttonSprite = new StaticSprite("button", uiSpriteSheet, Vector2.Zero, "button");
             ResourceManager.RegisterSprite(cursorSprite);
 
             var terrainSprites = new List<Sprite>
@@ -236,7 +238,7 @@ namespace ZombieUnknown
             }
             listOfTiles = listOfTiles.OrderBy(x => Guid.NewGuid()).ToList();
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < 5; i++)
             {
                 var human = new Human("human" + i, (Vector2)listOfTiles.ElementAt(0) + new Vector2(0.5f, 0.5f));
                 listOfTiles.RemoveAt(0);
@@ -305,6 +307,11 @@ namespace ZombieUnknown
 
             GameState.InteractionObject = food;
             //GameState.MainCharacter = human;
+
+            var peopleButton = new Button(buttonSprite, font, "people", new UIPosition(new Vector2(5, 5), UIAnchor.BottomLeft), 4);
+            _uiManager.RegisterProvider(peopleButton);
+            var jobButton = new Button(buttonSprite, font, "jobs", new UIPosition(new Vector2(70, 5), UIAnchor.BottomLeft), 4);
+            _uiManager.RegisterProvider(jobButton);
         }
 
         private AnimatedSprite BuildHumanSprite(SpriteSheet humanSpriteSheet)

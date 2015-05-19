@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine.Drawing;
+using Engine.Drawing.UI;
 using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework;

@@ -34,9 +34,10 @@ namespace Engine.Entities
         {
             get
             {
-                if (CurrentState is IInteractableState)
+                var state = CurrentState as IInteractableState;
+                if (state != null)
                 {
-                    var interactableState = (IInteractableState)CurrentState;
+                    var interactableState = state;
                     return interactableState.Interactions;
                 }
 

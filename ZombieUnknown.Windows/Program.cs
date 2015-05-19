@@ -15,7 +15,7 @@ namespace ZombieUnknown.Windows
         /// </summary>
         [STAThread]
         static void Main()
-        {
+         {
             using (var game = new ZombieGameMain())
                 game.Run();
         }

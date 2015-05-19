@@ -17,7 +17,7 @@ namespace Engine.Drawing
             _light = light;
             Sprite = sprite;
             MapPosition = mapPosition;
-            _depth = (MapPosition.X + MapPosition.Y) / (GameState.Map.Width + GameState.Map.Height);
+            _depth = (MapPosition.X + MapPosition.Y) / (GameState.Map.Width + GameState.Map.Height) * 0.49f;
         }
 
         public DrawingRequest(Sprite sprite, Vector2 mapPosition, Color light, float depth)
@@ -29,7 +29,7 @@ namespace Engine.Drawing
         public DrawingRequest(Sprite sprite, Vector2 mapPosition, Color light, Vector2 depthOffset)
             : this(sprite, mapPosition, light)
         {
-            _depth = ((MapPosition.X + depthOffset.X) + (MapPosition.Y + depthOffset.Y)) / (GameState.Map.Width + GameState.Map.Height);
+            _depth = ((MapPosition.X + depthOffset.X) + (MapPosition.Y + depthOffset.Y)) / (GameState.Map.Width + GameState.Map.Height) * 0.49f;
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -2,7 +2,7 @@
 using Engine.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Drawing
+namespace Engine.Drawing.UI
 {
     public class UIRequest
     {

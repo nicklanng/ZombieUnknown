@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Engine.Drawing
+namespace Engine.Drawing.UI
 {
     public interface IUIProvider
     {

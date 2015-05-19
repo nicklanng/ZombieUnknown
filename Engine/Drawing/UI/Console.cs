@@ -3,7 +3,7 @@ using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Drawing
+namespace Engine.Drawing.UI
 {
     public class Console : IUIProvider
     {
@@ -35,7 +35,7 @@ namespace Engine.Drawing
 
         public IEnumerable<UIRequest> GetDrawings()
         {
-            var maxWidth = _spriteBatch.GraphicsDevice.Viewport.Width;
+            var maxWidth = GameState.GraphicsDevice.Viewport.Width;
 
             var x = 5;
             var y = 5;

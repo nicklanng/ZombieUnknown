@@ -3,9 +3,17 @@
 		{
       "name" : "cursor",
 		  "height" : "20",
-      "width" : "20",
+      "width" : "8",
       "x" : "0",
       "y" : "0"
+    },
+    {
+      "name" : "button",
+      "height" : "13",
+      "width" : "52",
+      "x" : "8",
+      "y" : "0"
     }
+
   ]
 }

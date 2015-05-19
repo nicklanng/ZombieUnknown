@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Engine.Maps;
 using Engine.Sprites;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Engine.Drawing
+namespace Engine.Drawing.UI
 {
     public class FrameRater : IUIProvider
     {

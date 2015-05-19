@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Engine.Entities;
 
 namespace Engine.AI.Tasks
 {
@@ -25,6 +26,15 @@ namespace Engine.AI.Tasks
         public void Remove(ITask task)
         {
             _tasks.Remove(task);
+        }
+
+        public void ReleaseTasks(PhysicalEntity actor)
+        {
+            var assignedTasks = _tasks.Where(x => x.Assigned == actor);
+            foreach (var assignedTask in assignedTasks)
+            {
+                assignedTask.PutBack();
+            }
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Engine.AI.Tasks
 
         public void Pick(PhysicalEntity actor)
         {
+            GameState.TaskList.ReleaseTasks(actor);
             Assigned = actor;
         }
 
