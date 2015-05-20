@@ -1,0 +1,18 @@
+{ "frames" : 
+  [ 
+    {
+      "height" : "40",
+      "name" : "grass",
+      "width" : "32",
+      "x" : "0",
+      "y" : "0"
+    },
+    { 
+	  "height" : "40",
+      "name" : "concrete",
+      "width" : "32",
+      "x" : "32",
+      "y" : "0"
+    }
+  ]
+}

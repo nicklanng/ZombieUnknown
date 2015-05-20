@@ -39,7 +39,7 @@ namespace ZombieUnknown
         private DrawingManager _drawingManager;
         private UIManager _uiManager;
 
-        private Vector2 _mapSize = new Vector2(20, 20);
+        private Vector2 _mapSize = new Vector2(50, 50);
         private SpriteBatch _spriteBatch;
 
         public ZombieGameMain()
@@ -129,7 +129,7 @@ namespace ZombieUnknown
 
             // All of the initialization stuff should be somewhere else, and probably load from data files
             var fontSpriteSheet = SpriteSheetLoader.FromPath("Content/Fonts/dbmf_4x5_box");
-            var terrainSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/xcom-forest");
+            var floorsSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/floors");
             var wallSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/walls");
             var itemsSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/items");
             var agricultureSpriteSheet = SpriteSheetLoader.FromPath("Content/SpriteSheets/agriculture");
@@ -141,25 +141,17 @@ namespace ZombieUnknown
             var buttonSprite = new StaticSprite("button", uiSpriteSheet, Vector2.Zero, "button");
             ResourceManager.RegisterSprite(cursorSprite);
 
-            var terrainSprites = new List<Sprite>
-            {
-                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "grass"),
-                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass1"),
-                new StaticSprite("grass", terrainSpriteSheet, new Vector2(16, 32), "tallGrass2")
-            };
+            var grassFloor = new StaticSprite("grassFloor", floorsSpriteSheet, new Vector2(16, 32), "grass");
+            ResourceManager.RegisterSprite(grassFloor);
+            var concreteFloor = new StaticSprite("concreteFloor", floorsSpriteSheet, new Vector2(16, 32), "concrete");
+            ResourceManager.RegisterSprite(concreteFloor);
+
             var zombieSprite = BuildZombieSprite(zombieSpriteSheet);
             ResourceManager.RegisterSprite(zombieSprite);
 
             var font = new Font(fontSpriteSheet);
 
-            var leftWallSprite = new StaticSprite("left", wallSpriteSheet, new Vector2(16, 40), "left");
-            ResourceManager.RegisterSprite(leftWallSprite);
-            var rightWallSprite = new StaticSprite("right", wallSpriteSheet, new Vector2(16, 40), "right");
-            ResourceManager.RegisterSprite(rightWallSprite);
-            var internalJoinWallSprite = new StaticSprite("internalJoin", wallSpriteSheet, new Vector2(16, 40), "join");
-            ResourceManager.RegisterSprite(internalJoinWallSprite);
-            var externalJoinWallSprite = new StaticSprite("externalJoin", wallSpriteSheet, new Vector2(16, 41), "join");
-            ResourceManager.RegisterSprite(externalJoinWallSprite);
+            BuildWallSprites(wallSpriteSheet);
 
             var humanSprite = BuildHumanSprite(humanSpriteSheet);
             ResourceManager.RegisterSprite(humanSprite);
@@ -193,28 +185,41 @@ namespace ZombieUnknown
             {
                 for (var x = 0; x < (int)_mapSize.X; x++)
                 {
-                    tiles[x, y] = new Tile(new Vector2(x, y), terrainSprites[0], null, null, null);
+                    tiles[x, y] = new Tile(new Vector2(x, y), grassFloor, null, null, null);
                 }
             }
             var rand = new Random();
-            
-            tiles[3, 4].SetLeftWall(leftWallSprite);
-            tiles[3, 4].SetRightWall(rightWallSprite);
-            tiles[3, 4].SetJoinWall(internalJoinWallSprite);
-            tiles[3, 5].SetRightWall(rightWallSprite);
-            tiles[3, 6].SetRightWall(rightWallSprite);
-            tiles[3, 7].SetLeftWall(leftWallSprite);
-            tiles[4, 4].SetLeftWall(leftWallSprite);
-            tiles[5, 4].SetLeftWall(leftWallSprite);
-            tiles[5, 7].SetLeftWall(leftWallSprite);
-            tiles[6, 4].SetRightWall(rightWallSprite);
-            tiles[6, 6].SetRightWall(rightWallSprite);
-            tiles[6, 7].SetJoinWall(externalJoinWallSprite);
 
-            tiles[10, 10].SetLeftWall(leftWallSprite);
-            tiles[11, 10].SetLeftWall(leftWallSprite);
-            tiles[12, 10].SetLeftWall(leftWallSprite);
+            tiles[3, 4].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+            tiles[3, 4].SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+            tiles[3, 4].SetJoinWall(ResourceManager.GetSprite("urbanInternalJoin"));
 
+            tiles[3, 5].SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+
+            tiles[3, 6].SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+
+            tiles[3, 7].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+
+            tiles[4, 4].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+
+            tiles[5, 4].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+
+            tiles[5, 7].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+
+            tiles[6, 4].SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+            tiles[6, 6].SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+            tiles[6, 7].SetJoinWall(ResourceManager.GetSprite("urbanExternalJoin"));
+
+            tiles[10, 10].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+            tiles[11, 10].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+            tiles[12, 10].SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+            for (var y = 4; y < 7; y++)
+            {
+                for (var x = 3; x < 6; x++)
+                {
+                    tiles[x, y].SetFloor(ResourceManager.GetSprite("concreteFloor"));
+                }
+            }
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             GameState.Map = _map;
@@ -310,16 +315,30 @@ namespace ZombieUnknown
             GameState.InteractionObject = food;
             //GameState.MainCharacter = human;
 
-            var peopleButton = new Button(buttonSprite, font, "people", new UIPosition(new Vector2(5, 5), UIAnchor.BottomLeft), 4);
-            _uiManager.RegisterProvider(peopleButton);
-            var jobButton = new Button(buttonSprite, font, "jobs", new UIPosition(new Vector2(60, 5), UIAnchor.BottomLeft), 4);
-            _uiManager.RegisterProvider(jobButton);
-            var debugButton = new Button(buttonSprite, font, "debug", new UIPosition(new Vector2(115, 5), UIAnchor.BottomLeft), 4);
+            var debugButton = new Button(buttonSprite, font, "debug", new UIPosition(new Vector2(5, 50), UIAnchor.TopRight), 4);
             _uiManager.RegisterProvider(debugButton);
             debugButton.OnClick += (o, i) =>
             {
                 ClickLocationManager.Instance.IsEnabled = !ClickLocationManager.Instance.IsEnabled;
             };
+            var peopleButton = new Button(buttonSprite, font, "people", new UIPosition(new Vector2(5, 65), UIAnchor.TopRight), 4);
+            _uiManager.RegisterProvider(peopleButton);
+            var buildButton = new Button(buttonSprite, font, "build", new UIPosition(new Vector2(5, 80), UIAnchor.TopRight), 4);
+            _uiManager.RegisterProvider(buildButton);
+            var zoneButton = new Button(buttonSprite, font, "zone", new UIPosition(new Vector2(5, 95), UIAnchor.TopRight), 4);
+            _uiManager.RegisterProvider(zoneButton);
+        }
+
+        private void BuildWallSprites(SpriteSheet wallSpriteSheet)
+        {
+            var leftWallSprite = new StaticSprite("urbanLeftWall", wallSpriteSheet, new Vector2(16, 40), "urbanLeft");
+            ResourceManager.RegisterSprite(leftWallSprite);
+            var rightWallSprite = new StaticSprite("urbanRightWall", wallSpriteSheet, new Vector2(16, 40), "urbanRight");
+            ResourceManager.RegisterSprite(rightWallSprite);
+            var internalJoinWallSprite = new StaticSprite("urbanInternalJoin", wallSpriteSheet, new Vector2(16, 40), "urbanJoin");
+            ResourceManager.RegisterSprite(internalJoinWallSprite);
+            var externalJoinWallSprite = new StaticSprite("urbanExternalJoin", wallSpriteSheet, new Vector2(16, 41), "urbanJoin");
+            ResourceManager.RegisterSprite(externalJoinWallSprite);
         }
 
         private AnimatedSprite BuildHumanSprite(SpriteSheet humanSpriteSheet)

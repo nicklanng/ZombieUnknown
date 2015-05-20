@@ -11,7 +11,7 @@ namespace Engine.Maps
         private Sprite _leftWallSprite;
         private Sprite _rightWallSprite;
         private Sprite _wallJoinSprite;
-        private readonly Sprite _floorSprite;
+        private Sprite _floorSprite;
 
         public bool IsBlocked { get; set; }
         public Color Light { get; set; }
@@ -75,19 +75,24 @@ namespace Engine.Maps
             }
         }
 
-        public void SetLeftWall(StaticSprite leftWallSprite)
+        public void SetLeftWall(Sprite leftWallSprite)
         {
             _leftWallSprite = leftWallSprite;
         }
 
-        public void SetRightWall(StaticSprite rightWallSprite)
+        public void SetRightWall(Sprite rightWallSprite)
         {
             _rightWallSprite = rightWallSprite;
         }
 
-        public void SetJoinWall(StaticSprite joinWallSprite)
+        public void SetJoinWall(Sprite joinWallSprite)
         {
             _wallJoinSprite = joinWallSprite;
+        }
+
+        public void SetFloor(Sprite floorSprite)
+        {
+            _floorSprite = floorSprite;
         }
     }
 }

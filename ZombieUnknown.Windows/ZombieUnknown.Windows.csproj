@@ -137,12 +137,12 @@
       <Link>Content\Spritesheets\ethereal.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Content\SpriteSheets\grass.png">
-      <Link>Content\Spritesheets\grass.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="..\Content\SpriteSheets\civm.json">
       <Link>Content\Spritesheets\civm.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Content\SpriteSheets\floors.json">
+      <Link>Content\Spritesheets\floors.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Content\SpriteSheets\items.png">
@@ -153,6 +153,10 @@
       <Link>Content\Spritesheets\ui.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Content\SpriteSheets\floors.png">
+      <Link>Content\Spritesheets\floors.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Content\SpriteSheets\walls.png">
       <Link>Content\Spritesheets\walls.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
