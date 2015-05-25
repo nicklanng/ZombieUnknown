@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Entities;
 using Engine.Maps;
 using Microsoft.Xna.Framework;
 
@@ -22,17 +23,35 @@ namespace ZombieUnknown.ProceduralGeneration
             // draw Left Walls
             for (var x = worldPosition.X + Location.X; x < worldPosition.X + Location.X + Location.Width; x++)
             {
-                map.GetTile(new Coordinate(x, worldPosition.Y + Location.Y)).SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+                map.GetTile(new Coordinate(x, worldPosition.Y + Location.Y)).SetLeftWall(ResourceManager.GetSprite("urbanInterior001Left"));
             }
 
             // draw Right Walls
             for (var y = worldPosition.Y + Location.Y; y < worldPosition.Y + Location.Y + Location.Height; y++)
             {
-                map.GetTile(new Coordinate(worldPosition.X + Location.X, y)).SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+                map.GetTile(new Coordinate(worldPosition.X + Location.X, y)).SetRightWall(ResourceManager.GetSprite("urbanInterior001Right"));
             }
 
             // draw innerJoins
-            map.GetTile(new Coordinate(worldPosition.X + Location.X, worldPosition.Y + Location.Y)).SetJoinWall(ResourceManager.GetSprite("urbanInternalJoin"));
+            map.GetTile(new Coordinate(worldPosition.X + Location.X, worldPosition.Y + Location.Y)).SetJoinWall(ResourceManager.GetSprite("urbanInterior001InternalJoin"));
+
+            // draw Floor
+            for (var x = worldPosition.X + Location.X; x < worldPosition.X + Location.X + Location.Width; x++)
+            {
+                for (var y = worldPosition.Y + Location.Y; y < worldPosition.Y + Location.Y + Location.Height; y++)
+                {
+                    var sprite = Type == RoomType.Kitchen ? "urbanInterior002" : "urbanInterior001";
+                    map.GetTile(new Coordinate(x, y)).SetFloor(ResourceManager.GetSprite(sprite));
+                }
+            }
+
+            
+            // create ceiling light
+            var centre = worldPosition + new Coordinate(Location.Center.X, Location.Center.Y);
+            if (GameState.RandomNumberGenerator.Next(2) == 1)
+            {
+                GameController.SpawnEntity(new PhantomLight("light", centre, Color.White, 10));
+            }
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Engine.Entities
 
 
             GenerateIntensityMap();
-            UpdateVisibility(coordinate);
         }
 
         private void GenerateIntensityMap()
@@ -94,14 +93,14 @@ namespace Engine.Entities
                             {
                                 continue;
                             }
-                            if (Math.Abs(wall.Start.X - wallLine.End.X) < 0.001)
+                            if (Math.Abs(wall.Start.Y - wallLine.End.Y) < 0.001 && Math.Abs(wall.Start.X - wallLine.End.X) < 0.001)
                             {
                                 wall.Start = wallLine.Start;
                                 extendingLine = true;
                                 walls[index] = wall;
                                 break;
                             }
-                            if (Math.Abs(wall.End.X - wallLine.Start.X) < 0.001)
+                            if (Math.Abs(wall.End.Y - wallLine.Start.Y) < 0.001 && Math.Abs(wall.End.X - wallLine.Start.X) < 0.001)
                             {
                                 wall.End = wallLine.End;
                                 extendingLine = true;
@@ -123,14 +122,14 @@ namespace Engine.Entities
                             {
                                 continue;
                             }
-                            if (Math.Abs(wall.Start.Y - wallLine.End.Y) < 0.001)
+                            if (Math.Abs(wall.Start.Y - wallLine.End.Y) < 0.001 && Math.Abs(wall.Start.X - wallLine.End.X) < 0.001)
                             {
                                 wall.End = wallLine.End;
                                 extendingLine = true;
                                 walls[index] = wall;
                                 break;
                             }
-                            if (Math.Abs(wall.End.Y - wallLine.Start.Y) < 0.001)
+                            if (Math.Abs(wall.End.Y - wallLine.Start.Y) < 0.001 && Math.Abs(wall.End.X - wallLine.Start.X) < 0.001)
                             {
                                 wall.End = wallLine.End;
                                 extendingLine = true;
@@ -186,6 +185,26 @@ namespace Engine.Entities
                     }
                     VisiblityMap[x, y] = 1 - (float)(shadowTiles / Math.Pow(EngineSettings.ShadowQuality, 2));
                 }
+            }
+
+
+
+            Console.WriteLine("----------");
+            foreach (var wall in walls)
+            {
+                Console.WriteLine("{0}, {1} - {2}, {3}", wall.Start.X, wall.Start.Y, wall.End.X, wall.End.Y);
+            }
+
+
+            Console.WriteLine("----------");
+            for (var y = 0; y < _mapSize; y++)
+            {
+                for (var x = 0; x < _mapSize; x++)
+                {
+                    Console.Write(VisiblityMap[x, y]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
             }
         }
 

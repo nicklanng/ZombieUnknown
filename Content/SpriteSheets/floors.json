@@ -8,10 +8,24 @@
       "y" : "0"
     },
     { 
-	  "height" : "40",
+      "height" : "40",
       "name" : "concrete",
       "width" : "32",
       "x" : "32",
+      "y" : "0"
+    },
+    { 
+      "height" : "40",
+      "name" : "urbanInterior001",
+      "width" : "32",
+      "x" : "64",
+      "y" : "0"
+    },
+    { 
+      "height" : "40",
+      "name" : "urbanInterior002",
+      "width" : "32",
+      "x" : "96",
       "y" : "0"
     }
   ]

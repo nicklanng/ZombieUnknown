@@ -45,7 +45,6 @@ namespace Engine.Maths
             return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
         }
 
-
         public override string ToString()
         {
             return string.Format("Line: ({0}, {1}) - ({2}, {3})", Start.X, Start.Y, End.X, End.Y);

@@ -21,21 +21,40 @@
     },
     {
       "height" : "48",
-      "name" : "urbanLeft",
+      "name" : "urbanExterior001Left",
       "width" : "32",
       "x" : "96",
       "y" : "0"
     },
     { "height" : "48",
-      "name" : "urbanRight",
+      "name" : "urbanExterior001Right",
       "width" : "32",
       "x" : "128",
       "y" : "0"
     },
     { "height" : "48",
-      "name" : "urbanJoin",
+      "name" : "urbanExterior001Join",
       "width" : "32",
       "x" : "160",
+      "y" : "0"
+    },
+    {
+      "height" : "48",
+      "name" : "urbanInterior001Left",
+      "width" : "32",
+      "x" : "192",
+      "y" : "0"
+    },
+    { "height" : "48",
+      "name" : "urbanInterior001Right",
+      "width" : "32",
+      "x" : "224",
+      "y" : "0"
+    },
+    { "height" : "48",
+      "name" : "urbanInterior001Join",
+      "width" : "32",
+      "x" : "256",
       "y" : "0"
     }
   ]

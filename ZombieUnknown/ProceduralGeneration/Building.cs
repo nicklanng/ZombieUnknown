@@ -28,15 +28,16 @@ namespace ZombieUnknown.ProceduralGeneration
             // draw external walls
             for (var x = worldPosition.X + _totalArea.X; x < worldPosition.X + _totalArea.X + _totalArea.Width; x++)
             {
-                map.GetTile(new Coordinate(x, worldPosition.Y + _totalArea.Y + _totalArea.Height)).SetLeftWall(ResourceManager.GetSprite("urbanLeftWall"));
+                map.GetTile(new Coordinate(x, worldPosition.Y + _totalArea.Y + _totalArea.Height)).SetLeftWall(ResourceManager.GetSprite("urbanExterior001Left"));
             }
             for (var y = worldPosition.Y + _totalArea.Y; y < worldPosition.Y + _totalArea.Y + _totalArea.Height; y++)
             {
-                map.GetTile(new Coordinate(worldPosition.X + _totalArea.X + _totalArea.Width, y)).SetRightWall(ResourceManager.GetSprite("urbanRightWall"));
+                map.GetTile(new Coordinate(worldPosition.X + _totalArea.X + _totalArea.Width, y)).SetRightWall(ResourceManager.GetSprite("urbanExterior001Right"));
             }
 
             // draw outer Join
-            map.GetTile(new Coordinate(worldPosition.X + _totalArea.X + _totalArea.Width, worldPosition.Y + _totalArea.Y + _totalArea.Height)).SetJoinWall(ResourceManager.GetSprite("urbanExternalJoin"));
+            map.GetTile(new Coordinate(worldPosition.X + _totalArea.X + _totalArea.Width, worldPosition.Y + _totalArea.Y + _totalArea.Height)).SetJoinWall(ResourceManager.GetSprite("urbanExterior001ExternalJoin"));
+
         }
     }
 }

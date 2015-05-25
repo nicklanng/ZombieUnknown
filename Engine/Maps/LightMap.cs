@@ -5,7 +5,7 @@ namespace Engine.Maps
 {
     public class LightMap
     {
-        private Map _map;
+        private readonly Map _map;
 
         private Color _ambientLight;
 
@@ -17,7 +17,10 @@ namespace Engine.Maps
             _ambientLight = ambientLight;
 
             _lightValues = new byte[map.Width, map.Height, 3];
-            
+        }
+
+        public void Build()
+        {
             AddLightEntities();
 
             SaveLightMapToTiles();
@@ -27,6 +30,8 @@ namespace Engine.Maps
         {
             foreach (var lightsource in _map.Lights)
             {
+                lightsource.Light.UpdateVisibility(lightsource.Light.Coordinate);
+
                 var light = lightsource.Light;
 
                 var lightColor = light.Color;
