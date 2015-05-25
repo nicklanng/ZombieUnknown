@@ -40,7 +40,19 @@ namespace ZombieUnknown.ProceduralGeneration
             {
                 for (var y = worldPosition.Y + Location.Y; y < worldPosition.Y + Location.Y + Location.Height; y++)
                 {
-                    var sprite = Type == RoomType.Kitchen ? "urbanInterior002" : "urbanInterior001";
+                    string sprite;
+                    if (Type == RoomType.Kitchen)
+                    {
+                        sprite = "urbanInterior002";
+                    }
+                    else if (Type == RoomType.Bathroom)
+                    {
+                        sprite = "urbanInterior003";
+                    }
+                    else
+                    {
+                        sprite = "urbanInterior001";
+                    }
                     map.GetTile(new Coordinate(x, y)).SetFloor(ResourceManager.GetSprite(sprite));
                 }
             }
