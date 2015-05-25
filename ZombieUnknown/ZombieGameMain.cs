@@ -89,7 +89,7 @@ namespace ZombieUnknown
             GameState.GraphicsDevice = GraphicsDevice;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _virtualScreen = new VirtualScreen(1920/4, 1080/4);
+            _virtualScreen = new VirtualScreen(1920/3, 1080/3);
             GameState.VirtualScreen = _virtualScreen;
 
 #if WINDOWS
@@ -262,10 +262,10 @@ namespace ZombieUnknown
             GameController.SpawnEntity(food);
             _pathfindingMap.AddBlockage(food);
 
-            //GameController.SpawnEntity(new Lamp("lamp", new Coordinate(0, 19)));
-            //GameController.SpawnEntity(new Lamp("lamp2", new Coordinate(0, 11)));
-            //GameController.SpawnEntity(new Lamp("lamp3", new Coordinate(9, 19)));
-            //GameController.SpawnEntity(new Lamp("lamp4", new Coordinate(9, 11)));
+            GameController.SpawnEntity(new Lamp("lamp", new Coordinate(0, 19)));
+            GameController.SpawnEntity(new Lamp("lamp2", new Coordinate(0, 11)));
+            GameController.SpawnEntity(new Lamp("lamp3", new Coordinate(9, 19)));
+            GameController.SpawnEntity(new Lamp("lamp4", new Coordinate(9, 11)));
 
             //var cultivatedLand = new CultivatedLand("cultivatedLand", new Coordinate(10, 3));
             //GameController.SpawnEntity(cultivatedLand);
@@ -346,12 +346,17 @@ namespace ZombieUnknown
             ResourceManager.RegisterSprite(new StaticSprite("urbanExterior001Left", wallSpriteSheet, new Vector2(16, 41), "urbanExterior001Left"));
             ResourceManager.RegisterSprite(new StaticSprite("urbanExterior001Right", wallSpriteSheet, new Vector2(16, 41), "urbanExterior001Right"));
             ResourceManager.RegisterSprite(new StaticSprite("urbanExterior001InternalJoin", wallSpriteSheet, new Vector2(16, 41), "urbanExterior001Join"));
-            ResourceManager.RegisterSprite(new StaticSprite("urbanExterior001ExternalJoin", wallSpriteSheet, new Vector2(16, 41), "urbanExterior001Join"));
+            ResourceManager.RegisterSprite(new StaticSprite("urbanExterior001ExternalJoin", wallSpriteSheet, new Vector2(16, 42), "urbanExterior001Join"));
 
             ResourceManager.RegisterSprite(new StaticSprite("urbanInterior001Left", wallSpriteSheet, new Vector2(16, 41), "urbanInterior001Left"));
             ResourceManager.RegisterSprite(new StaticSprite("urbanInterior001Right", wallSpriteSheet, new Vector2(16, 41), "urbanInterior001Right"));
             ResourceManager.RegisterSprite(new StaticSprite("urbanInterior001InternalJoin", wallSpriteSheet, new Vector2(16, 41), "urbanInterior001Join"));
-            ResourceManager.RegisterSprite(new StaticSprite("urbanInterior001ExternalJoin", wallSpriteSheet, new Vector2(16, 41), "urbanInterior001Join"));
+            ResourceManager.RegisterSprite(new StaticSprite("urbanInterior001ExternalJoin", wallSpriteSheet, new Vector2(16, 42), "urbanInterior001Join"));
+
+            ResourceManager.RegisterSprite(new StaticSprite("urbanInterior002Left", wallSpriteSheet, new Vector2(16, 41), "urbanInterior002Left"));
+            ResourceManager.RegisterSprite(new StaticSprite("urbanInterior002Right", wallSpriteSheet, new Vector2(16, 41), "urbanInterior002Right"));
+            ResourceManager.RegisterSprite(new StaticSprite("urbanInterior002InternalJoin", wallSpriteSheet, new Vector2(16, 41), "urbanInterior002Join"));
+            ResourceManager.RegisterSprite(new StaticSprite("urbanInterior002ExternalJoin", wallSpriteSheet, new Vector2(16, 42), "urbanInterior002Join"));
         }
 
         private static AnimatedSprite BuildHumanSprite(SpriteSheet humanSpriteSheet)

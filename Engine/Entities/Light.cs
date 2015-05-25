@@ -186,26 +186,6 @@ namespace Engine.Entities
                     VisiblityMap[x, y] = 1 - (float)(shadowTiles / Math.Pow(EngineSettings.ShadowQuality, 2));
                 }
             }
-
-
-
-            Console.WriteLine("----------");
-            foreach (var wall in walls)
-            {
-                Console.WriteLine("{0}, {1} - {2}, {3}", wall.Start.X, wall.Start.Y, wall.End.X, wall.End.Y);
-            }
-
-
-            Console.WriteLine("----------");
-            for (var y = 0; y < _mapSize; y++)
-            {
-                for (var x = 0; x < _mapSize; x++)
-                {
-                    Console.Write(VisiblityMap[x, y]);
-                    Console.Write(" ");
-                }
-                Console.WriteLine();
-            }
         }
 
         private Vector2 GetPointExtrapolation(Vector2 point)

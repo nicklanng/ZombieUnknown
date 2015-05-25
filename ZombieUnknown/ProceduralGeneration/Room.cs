@@ -20,27 +20,53 @@ namespace ZombieUnknown.ProceduralGeneration
         {
             var map = GameState.Map;
 
+            string sprite;
+
+            
             // draw Left Walls
             for (var x = worldPosition.X + Location.X; x < worldPosition.X + Location.X + Location.Width; x++)
             {
-                map.GetTile(new Coordinate(x, worldPosition.Y + Location.Y)).SetLeftWall(ResourceManager.GetSprite("urbanInterior001Left"));
+                if (Type == RoomType.Bathroom)
+                {
+                    sprite = "urbanInterior002Left";
+                }
+                else
+                {
+                    sprite = "urbanInterior001Left";
+                }
+                map.GetTile(new Coordinate(x, worldPosition.Y + Location.Y)).SetLeftWall(ResourceManager.GetSprite(sprite));
             }
 
             // draw Right Walls
             for (var y = worldPosition.Y + Location.Y; y < worldPosition.Y + Location.Y + Location.Height; y++)
             {
-                map.GetTile(new Coordinate(worldPosition.X + Location.X, y)).SetRightWall(ResourceManager.GetSprite("urbanInterior001Right"));
+                if (Type == RoomType.Bathroom)
+                {
+                    sprite = "urbanInterior002Right";
+                }
+                else
+                {
+                    sprite = "urbanInterior001Right";
+                }
+                map.GetTile(new Coordinate(worldPosition.X + Location.X, y)).SetRightWall(ResourceManager.GetSprite(sprite));
             }
 
             // draw innerJoins
-            map.GetTile(new Coordinate(worldPosition.X + Location.X, worldPosition.Y + Location.Y)).SetJoinWall(ResourceManager.GetSprite("urbanInterior001InternalJoin"));
+            if (Type == RoomType.Bathroom)
+            {
+                sprite = "urbanInterior002InternalJoin";
+            }
+            else
+            {
+                sprite = "urbanInterior001InternalJoin";
+            }
+            map.GetTile(new Coordinate(worldPosition.X + Location.X, worldPosition.Y + Location.Y)).SetJoinWall(ResourceManager.GetSprite(sprite));
 
             // draw Floor
             for (var x = worldPosition.X + Location.X; x < worldPosition.X + Location.X + Location.Width; x++)
             {
                 for (var y = worldPosition.Y + Location.Y; y < worldPosition.Y + Location.Y + Location.Height; y++)
                 {
-                    string sprite;
                     if (Type == RoomType.Kitchen)
                     {
                         sprite = "urbanInterior002";
