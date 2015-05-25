@@ -385,23 +385,5 @@ namespace Engine.Maps
 
             return NoGoAreas.Select(area => Clipper.PointInPolygon(new IntPoint(xCoord, yCoord), area) != 0).Any(inArea => inArea);
         }
-
-        public IEnumerable<Line> GetWallsInsideRectangle(Rectangle rectangle)
-        {
-            var navmesh = NavMesh;
-            foreach (var area in navmesh)
-            {
-                for (var i = 0; i < area.Count; i++)
-                {
-                    var j = (i + 1)%area.Count;
-                    var wall = new Line(new Vector2(area[i].X / 10.0f, area[i].Y / 10.0f), new Vector2(area[j].X / 10.0f, area[j].Y / 10.0f));
-
-                    if (wall.IntersectsRect(rectangle))
-                    {
-                        yield return wall;
-                    }
-                }
-            }
-        }
     }
 }
