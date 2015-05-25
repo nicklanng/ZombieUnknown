@@ -94,6 +94,7 @@
     <Compile Include="AI\Tasks\TaskList.cs" />
     <Compile Include="AI\UtilityBehaviors\IUtilityBehavior.cs" />
     <Compile Include="AI\UtilityBehaviors\UtilityBehaviorRepository.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
     <Compile Include="Input\ClickLocationManager.cs" />
     <Compile Include="Drawing\PrimiviteDrawing.cs" />
     <Compile Include="Drawing\UI\Button.cs" />

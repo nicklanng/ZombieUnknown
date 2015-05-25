@@ -107,6 +107,12 @@
     <Compile Include="AI\ZombieMind.cs" />
     <Compile Include="Entities\Mobiles\Human.cs" />
     <Compile Include="Entities\Mobiles\Zombie.cs" />
+    <Compile Include="ProceduralGeneration\Building.cs" />
+    <Compile Include="ProceduralGeneration\HouseGenerator.cs" />
+    <Compile Include="ProceduralGeneration\Room.cs" />
+    <Compile Include="ProceduralGeneration\RoomRequirement.cs" />
+    <Compile Include="ProceduralGeneration\RoomRequirementProvider.cs" />
+    <Compile Include="ProceduralGeneration\RoomType.cs" />
     <Compile Include="ZombieGameMain.cs" />
     <Compile Include="Entities\Wheat.cs" />
   </ItemGroup>

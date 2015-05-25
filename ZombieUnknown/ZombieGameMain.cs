@@ -19,6 +19,7 @@ using ZombieUnknown.AI.BehaviorTrees;
 using ZombieUnknown.AI.UtilityBehaviors;
 using ZombieUnknown.Entities;
 using ZombieUnknown.Entities.Mobiles;
+using ZombieUnknown.ProceduralGeneration;
 using Console = Engine.Drawing.UI.Console;
 using Mouse = Engine.Input.Mouse;
 using Keyboard = Engine.Input.Keyboard;
@@ -220,6 +221,7 @@ namespace ZombieUnknown
                     tiles[x, y].SetFloor(ResourceManager.GetSprite("concreteFloor"));
                 }
             }
+           
 
             _map = new Map((short)_mapSize.X, (short)_mapSize.Y, tiles);
             GameState.Map = _map;
@@ -327,6 +329,13 @@ namespace ZombieUnknown
             _uiManager.RegisterProvider(buildButton);
             var zoneButton = new Button(buttonSprite, font, "zone", new UIPosition(new Vector2(5, 95), UIAnchor.TopRight), 4);
             _uiManager.RegisterProvider(zoneButton);
+
+
+
+
+            var houseGenerator = new HouseGenerator();
+            var house = houseGenerator.GenerateHouse(15, 11);
+            house.PlaceAt(new Coordinate(20, 20));
         }
 
         private void BuildWallSprites(SpriteSheet wallSpriteSheet)
