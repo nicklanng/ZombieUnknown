@@ -40,7 +40,7 @@ namespace ZombieUnknown.Entities.Mobiles
             ContainmentBehavior = new ContainmentBehavior();
             AvoidanceBehavior = new AvoidanceBehavior();
             QueueBehavior = new QueueBehavior();
-            
+
             Hunger = 20;
 
             ClickLocationManager.Instance.RegisterClickLocation(this);
@@ -94,7 +94,7 @@ namespace ZombieUnknown.Entities.Mobiles
                     var topLeft = GameState.VirtualScreen.ConvertVirtualScreenCoordinatesToScreenCoordinates(coords);
                     var offset = GameState.VirtualScreen.ConvertVirtualScreenCoordinatesToScreenCoordinates(Sprite.Offset);
                     var size = GameState.VirtualScreen.ConvertVirtualScreenCoordinatesToScreenCoordinates(new Vector2(Sprite.Width, Sprite.Height));
-                    return new Rectangle((int)(topLeft.X - offset.X), (int)(topLeft.Y - offset.Y), (int)size.X, (int)size.Y); 
+                    return new Rectangle((int)(topLeft.X - offset.X), (int)(topLeft.Y - offset.Y), (int)size.X, (int)size.Y);
                 }
                 return new Rectangle();
             }
@@ -116,7 +116,7 @@ namespace ZombieUnknown.Entities.Mobiles
             var inBounds = Bounds.Contains(clickPosition);
             if (!inBounds) return false;
 
-            var positionInBounds = clickPosition - Bounds.Location.ToVector2();
+            var positionInBounds = clickPosition - new Vector2(Bounds.Location.X, Bounds.Location.Y);
             var scaledPosition = GameState.VirtualScreen.ConvertScreenCoordinatesToVirtualScreenCoordinates(positionInBounds);
             return Sprite.IsPixelFilledIn(scaledPosition);
         }

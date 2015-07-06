@@ -46,12 +46,13 @@
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  <!-- Determine the Monogame path -->
+  <!-- Determine the Monogame path -
   <PropertyGroup>
     <MonogamePlatform>MonoMac</MonogamePlatform>
     <MonogamePlatform Condition=" '$(Configuration)' == 'Mac' ">MonoMac</MonogamePlatform>
     <MonogamePlatform Condition=" '$(Configuration)' == 'Windows' ">net40</MonogamePlatform>
   </PropertyGroup>
+-->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Windows|x86'">
     <OutputPath>bin\Windows\</OutputPath>
     <WarningLevel>4</WarningLevel>
@@ -60,6 +61,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="ZombieUnknown.csproj" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\BehaviorTrees\Actions\DieAction.cs" />
@@ -118,10 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="MonoGame.Framework, Version=3.3.0.2238, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -132,4 +130,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\MonoGame.Binaries.3.2.0\build\net40\MonoGame.Binaries.targets" Condition="Exists('..\packages\MonoGame.Binaries.3.2.0\build\net40\MonoGame.Binaries.targets')" />
 </Project>

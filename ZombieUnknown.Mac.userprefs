@@ -1,18 +1,8 @@
-﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="03/02/2015 21:21:54" StartupItem="ZombieUnknown.Mac/ZombieUnknown.Mac.csproj" GitUserInfo="UsingGIT">
+﻿<Properties MonoDevelop.MonoMac.LastXamMacNagTime="05/07/2015 19:02:14" StartupItem="ZombieUnknown.Mac/ZombieUnknown.Mac.csproj" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Mac" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ZombieUnknown/ZombieGameMain.cs">
     <Files>
-      <File FileName="ZombieUnknown/AI/ZombieMind.cs" Line="9" Column="9" />
-      <File FileName="Engine/AI/TraverseEdgeGoal.cs" Line="75" Column="75" />
-      <File FileName="Engine/AI/WaitGoal.cs" Line="27" Column="27" />
-      <File FileName="Engine/AI/TurnGoal.cs" Line="9" Column="9" />
-      <File FileName="Engine/AI/Goal.cs" Line="1" Column="1" />
-      <File FileName="ZombieUnknown/ZombieGameMain.cs" Line="33" Column="33" />
-      <File FileName="Engine/GameState.cs" Line="25" Column="25" />
-      <File FileName="ZombieUnknown/AI/HumanMind.cs" Line="14" Column="14" />
-      <File FileName="Engine/Maps/Map.cs" Line="27" Column="27" />
-      <File FileName="Engine/Pathfinding/AStarSolver.cs" Line="1" Column="1" />
-      <File FileName="Engine/Sprites/AnimationList.cs" Line="2" Column="2" />
+      <File FileName="ZombieUnknown/ZombieGameMain.cs" Line="219" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
